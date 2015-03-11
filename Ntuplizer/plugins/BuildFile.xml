@@ -1,0 +1,22 @@
+<use   name="DataFormats/EgammaCandidates"/>
+<use   name="DataFormats/EgammaReco"/>
+<use   name="DataFormats/Math"/>
+<use   name="DataFormats/VertexReco"/>
+<use   name="DataFormats/TrackReco"/>
+<use   name="DataFormats/METReco"/>
+<use   name="SimDataFormats/Vertex"/>
+<use   name="root"/>
+<use   name="rootcore"/>
+<use   name="CommonTools/UtilAlgos"/>
+<use name="FWCore/Framework"/>
+<use name="FWCore/PluginManager"/>
+<use name="FWCore/ParameterSet"/>
+<use name="FWCore/ServiceRegistry"/>
+<use   name="TrackingTools/IPTools"/>
+<use   name="RecoEgamma/EgammaTools"/>
+
+<use name="fBremTest/DemoAnalyzer"/>
+
+<library file="*.cc" name="AnalyzerNtuplizerPlugins">
+   <flags EDM_PLUGIN="1"/>
+</library>

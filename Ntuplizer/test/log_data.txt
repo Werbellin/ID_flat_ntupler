@@ -1,0 +1,341 @@
+['cmsRun', 'ntuple.py', 'maxEvents=100', 'isMC=0']
+['cmsRun', 'ntuple.py', 'maxEvents=100', 'isMC=0']
+cmsRun with options: 
+====================
+Singletons:
+  isMC           : 0
+                 - Tells if the sample is MC or not (default = 0).
+  maxEvents      : 100
+                 - Number of events to process (-1 for all)
+  output         : output.root
+                 - Name of output file (if needed)
+  secondaryOutput: 
+                 - Name of second output file (if needed)
+Lists:
+  files          : []
+                 - Files to process
+  secondaryFiles : []
+                 - Second group of files to process (if needed)
+
+Global Tag =  FT_R_70_V1::All
+24-Jun-2014 00:26:52 CEST  Initiating request to open file file:/data_CMS/cms/ochando/DATA/CMSSW7XX/981C8375-DED4-E311-86D0-0026189438BC.root
+24-Jun-2014 00:26:54 CEST  Successfully opened file file:/data_CMS/cms/ochando/DATA/CMSSW7XX/981C8375-DED4-E311-86D0-0026189438BC.root
+Begin processing the 1st record. Run 206476, Event 46645222, LumiSection 74 at 24-Jun-2014 00:27:05.390 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 2nd record. Run 206476, Event 46770366, LumiSection 74 at 24-Jun-2014 00:27:18.403 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v6*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 3rd record. Run 206476, Event 46783966, LumiSection 74 at 24-Jun-2014 00:27:18.406 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLTriggerFinalPath*
+
+Begin processing the 4th record. Run 206476, Event 46995198, LumiSection 74 at 24-Jun-2014 00:27:18.420 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 5th record. Run 206476, Event 46953470, LumiSection 74 at 24-Jun-2014 00:27:18.437 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 6th record. Run 206476, Event 47037150, LumiSection 74 at 24-Jun-2014 00:27:18.473 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 7th record. Run 206476, Event 47056694, LumiSection 74 at 24-Jun-2014 00:27:18.489 CEST
+trig = *HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*DST_Physics_v5*AlCa_EcalPi0EEonly_v6*HLTriggerFinalPath*
+
+Begin processing the 8th record. Run 206476, Event 47197566, LumiSection 74 at 24-Jun-2014 00:27:18.492 CEST
+trig = *HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v15*HLTriggerFinalPath*
+
+Begin processing the 9th record. Run 206476, Event 47072470, LumiSection 74 at 24-Jun-2014 00:27:18.495 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLTriggerFinalPath*
+
+Begin processing the 10th record. Run 206476, Event 47275926, LumiSection 74 at 24-Jun-2014 00:27:18.526 CEST
+trig = *HLT_L1SingleEG12_v6*HLT_Ele17_CaloIdL_CaloIsoVL_v17*HLTriggerFinalPath*
+
+Begin processing the 11th record. Run 206476, Event 47173846, LumiSection 74 at 24-Jun-2014 00:27:18.528 CEST
+trig = *HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v15*HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 12th record. Run 206476, Event 46923510, LumiSection 74 at 24-Jun-2014 00:27:18.531 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*DST_Physics_v5*AlCa_EcalPi0EBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 13th record. Run 206476, Event 47116494, LumiSection 74 at 24-Jun-2014 00:27:18.550 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLTriggerFinalPath*
+
+Begin processing the 14th record. Run 206476, Event 47241950, LumiSection 74 at 24-Jun-2014 00:27:18.554 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLTriggerFinalPath*
+
+Begin processing the 15th record. Run 206476, Event 47415582, LumiSection 74 at 24-Jun-2014 00:27:18.557 CEST
+trig = *HLT_Photon22_R9Id90_HE10_Iso40_EBOnly_v5*HLTriggerFinalPath*
+
+Begin processing the 16th record. Run 206476, Event 47497670, LumiSection 74 at 24-Jun-2014 00:27:18.590 CEST
+trig = *HLT_Photon22_R9Id90_HE10_Iso40_EBOnly_v5*HLT_Photon30_R9Id90_CaloId_HE10_Iso40_EBOnly_Met25_HBHENoiseCleaned_v1*HLTriggerFinalPath*
+
+Begin processing the 17th record. Run 206476, Event 47595086, LumiSection 74 at 24-Jun-2014 00:27:18.605 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*AlCa_EcalPi0EBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 18th record. Run 206476, Event 47667381, LumiSection 74 at 24-Jun-2014 00:27:18.635 CEST
+trig = *HLT_Photon30_v1*HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_DoubleEle10_CaloIdL_TrkIdVL_Ele10_CaloIdT_TrkIdVL_v12*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 19th record. Run 206476, Event 47721733, LumiSection 74 at 24-Jun-2014 00:27:18.659 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLTriggerFinalPath*
+
+Begin processing the 20th record. Run 206476, Event 47770421, LumiSection 74 at 24-Jun-2014 00:27:18.684 CEST
+trig = *HLT_Photon22_R9Id90_HE10_Iso40_EBOnly_v5*HLTriggerFinalPath*
+
+Begin processing the 21st record. Run 206476, Event 47757821, LumiSection 74 at 24-Jun-2014 00:27:18.688 CEST
+trig = *HLT_Photon30_R9Id90_CaloId_HE10_Iso40_EBOnly_Met25_HBHENoiseCleaned_v1*HLT_Photon90_R9Id90_HE10_Iso40_EBOnly_v5*HLT_DisplacedPhoton65_CaloIdVL_IsoL_PFMET25_v4*HLT_DisplacedPhoton65EBOnly_CaloIdVL_IsoL_PFMET30_v4*DST_HT250_v4*AlCa_EcalEtaEBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 22nd record. Run 206476, Event 47677413, LumiSection 74 at 24-Jun-2014 00:27:18.745 CEST
+trig = *HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLTriggerFinalPath*
+
+Begin processing the 23rd record. Run 206476, Event 48033641, LumiSection 74 at 24-Jun-2014 00:27:18.759 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 24th record. Run 206476, Event 48062273, LumiSection 74 at 24-Jun-2014 00:27:18.773 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLTriggerFinalPath*
+
+Begin processing the 25th record. Run 206476, Event 47715349, LumiSection 74 at 24-Jun-2014 00:27:18.789 CEST
+trig = *HLT_Ele27_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele15_CaloIdT_CaloIsoVL_trackless_v8*HLTriggerFinalPath*
+
+Begin processing the 26th record. Run 206476, Event 47736477, LumiSection 74 at 24-Jun-2014 00:27:18.816 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 27th record. Run 206476, Event 48153897, LumiSection 74 at 24-Jun-2014 00:27:18.868 CEST
+trig = *HLT_Photon22_R9Id90_HE10_Iso40_EBOnly_v5*HLTriggerFinalPath*
+
+Begin processing the 28th record. Run 206476, Event 48170985, LumiSection 74 at 24-Jun-2014 00:27:18.882 CEST
+trig = *HLT_Photon36_R9Id90_HE10_Iso40_EBOnly_v5*HLTriggerFinalPath*
+
+Begin processing the 29th record. Run 206476, Event 48151425, LumiSection 74 at 24-Jun-2014 00:27:18.884 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_WP80_v11*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLT_Ele22_eta2p1_WP90NoIso_LooseIsoPFTau20_v7*AlCa_EcalPi0EEonly_v6*HLTriggerFinalPath*
+
+Begin processing the 30th record. Run 206476, Event 48192729, LumiSection 74 at 24-Jun-2014 00:27:18.901 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*AlCa_EcalPi0EBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 31st record. Run 206476, Event 48117593, LumiSection 74 at 24-Jun-2014 00:27:18.940 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLTriggerFinalPath*
+
+Begin processing the 32nd record. Run 206476, Event 48369753, LumiSection 74 at 24-Jun-2014 00:27:18.965 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLTriggerFinalPath*
+
+Begin processing the 33rd record. Run 206476, Event 48215673, LumiSection 74 at 24-Jun-2014 00:27:18.968 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v6*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 34th record. Run 206476, Event 48291993, LumiSection 74 at 24-Jun-2014 00:27:19.013 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon30_R9Id90_CaloId_HE10_Iso40_EBOnly_v1*HLT_Photon36_R9Id85_Photon22_R9Id85_v4*HLT_Photon36_R9Id85_Photon22_CaloId10_Iso50_v6*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLT_Ele27_CaloIdL_CaloIsoVL_TrkIdVL_TrkIsoVL_v11*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLT_Ele24_WP80_CentralPFJet35_CentralPFJet25_v1*HLT_Ele24_WP80_CentralPFJet35_CentralPFJet25_PFMET20_v1*HLT_DoubleEle14_CaloIdT_TrkIdVL_Mass8_PFMET40_v8*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 35th record. Run 206476, Event 48381601, LumiSection 74 at 24-Jun-2014 00:27:19.029 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_R9Id85_Photon22_R9Id85_v4*HLT_Photon36_R9Id85_Photon22_CaloId10_Iso50_v6*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_WP80_v11*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Prong1_v4*HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_v4*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*AlCa_EcalEtaEBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 36th record. Run 206476, Event 46669470, LumiSection 74 at 24-Jun-2014 00:27:19.044 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_WP80_v11*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 37th record. Run 206476, Event 46730646, LumiSection 74 at 24-Jun-2014 00:27:19.051 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_DoubleEle10_CaloIdL_TrkIdVL_Ele10_CaloIdT_TrkIdVL_v12*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 38th record. Run 206476, Event 46818822, LumiSection 74 at 24-Jun-2014 00:27:19.070 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 39th record. Run 206476, Event 46858574, LumiSection 74 at 24-Jun-2014 00:27:19.106 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v6*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 40th record. Run 206476, Event 46755870, LumiSection 74 at 24-Jun-2014 00:27:19.109 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLTriggerFinalPath*
+
+Begin processing the 41st record. Run 206476, Event 46904910, LumiSection 74 at 24-Jun-2014 00:27:19.127 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_R9Id85_Photon22_CaloId10_Iso50_v6*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLT_DoublePhoton40_CaloIdL_Rsq0p035_v6*HLT_DoublePhoton40_CaloIdL_Rsq0p06_v6*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 42nd record. Run 206476, Event 47016694, LumiSection 74 at 24-Jun-2014 00:27:19.138 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 43rd record. Run 206476, Event 46920286, LumiSection 74 at 24-Jun-2014 00:27:19.148 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_WP80_v11*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*AlCa_EcalEtaEBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 44th record. Run 206476, Event 46929214, LumiSection 74 at 24-Jun-2014 00:27:19.185 CEST
+trig = *HLT_DoubleEle33_CaloIdL_v14*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLT_DoublePhoton40_CaloIdL_Rsq0p035_v6*HLTriggerFinalPath*
+
+Begin processing the 45th record. Run 206476, Event 47097662, LumiSection 74 at 24-Jun-2014 00:27:19.200 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v6*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*AlCa_EcalPi0EEonly_v6*HLTriggerFinalPath*
+
+Begin processing the 46th record. Run 206476, Event 47151334, LumiSection 74 at 24-Jun-2014 00:27:19.202 CEST
+trig = *HLT_Ele32_CaloIdT_CaloIsoT_TrkIdT_TrkIsoT_SC17_Mass50_v6*AlCa_EcalPi0EBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 47th record. Run 206476, Event 47153598, LumiSection 74 at 24-Jun-2014 00:27:19.205 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*AlCa_EcalPi0EEonly_v6*HLTriggerFinalPath*
+
+Begin processing the 48th record. Run 206476, Event 47265590, LumiSection 74 at 24-Jun-2014 00:27:19.223 CEST
+trig = *HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v15*HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 49th record. Run 206476, Event 47337542, LumiSection 74 at 24-Jun-2014 00:27:19.263 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 50th record. Run 206476, Event 47364294, LumiSection 74 at 24-Jun-2014 00:27:19.279 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 51st record. Run 206476, Event 47425254, LumiSection 74 at 24-Jun-2014 00:27:19.283 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v6*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*AlCa_EcalPi0EBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 52nd record. Run 206476, Event 47519758, LumiSection 74 at 24-Jun-2014 00:27:19.301 CEST
+trig = *HLT_Photon22_R9Id90_HE10_Iso40_EBOnly_v5*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 53rd record. Run 206476, Event 47319014, LumiSection 74 at 24-Jun-2014 00:27:19.303 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 54th record. Run 206476, Event 47661813, LumiSection 74 at 24-Jun-2014 00:27:19.345 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 55th record. Run 206476, Event 47429958, LumiSection 74 at 24-Jun-2014 00:27:19.365 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLT_Ele27_WP80_v11*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 56th record. Run 206476, Event 47778989, LumiSection 74 at 24-Jun-2014 00:27:19.388 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 57th record. Run 206476, Event 47799637, LumiSection 74 at 24-Jun-2014 00:27:19.429 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_Jet30_v7*AlCa_EcalPi0EBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 58th record. Run 206476, Event 47832033, LumiSection 74 at 24-Jun-2014 00:27:19.452 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 59th record. Run 206476, Event 47852817, LumiSection 74 at 24-Jun-2014 00:27:19.462 CEST
+trig = *HLT_L1SingleEG12_v6*HLT_Ele17_CaloIdL_CaloIsoVL_v17*DST_HT250_v4*HLTriggerFinalPath*
+
+Begin processing the 60th record. Run 206476, Event 48029297, LumiSection 74 at 24-Jun-2014 00:27:19.482 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_DoubleEle10_CaloIdL_TrkIdVL_Ele10_CaloIdT_TrkIdVL_v12*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 61st record. Run 206476, Event 47849057, LumiSection 74 at 24-Jun-2014 00:27:19.930 CEST
+trig = *HLT_Ele32_CaloIdT_CaloIsoT_TrkIdT_TrkIsoT_SC17_Mass50_v6*HLTriggerFinalPath*
+
+Begin processing the 62nd record. Run 206476, Event 47835209, LumiSection 74 at 24-Jun-2014 00:27:19.934 CEST
+trig = *HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLTriggerFinalPath*
+
+Begin processing the 63rd record. Run 206476, Event 48009713, LumiSection 74 at 24-Jun-2014 00:27:19.938 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 64th record. Run 206476, Event 48095625, LumiSection 74 at 24-Jun-2014 00:27:19.942 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 65th record. Run 206476, Event 48115705, LumiSection 74 at 24-Jun-2014 00:27:19.944 CEST
+trig = *HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v15*HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 66th record. Run 206476, Event 48059529, LumiSection 74 at 24-Jun-2014 00:27:19.946 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_DoubleEle10_CaloIdL_TrkIdVL_Ele10_CaloIdT_TrkIdVL_v12*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 67th record. Run 206476, Event 47902625, LumiSection 74 at 24-Jun-2014 00:27:19.963 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Prong1_v4*HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_v4*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 68th record. Run 206476, Event 48149569, LumiSection 74 at 24-Jun-2014 00:27:19.967 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 69th record. Run 206476, Event 47963305, LumiSection 74 at 24-Jun-2014 00:27:19.972 CEST
+trig = *HLT_DoublePhoton70_v6*HLT_DoublePhoton80_v7*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*DST_HT250_v4*DST_Mu5_HT250_v4*DST_Ele8_CaloIdL_CaloIsoVL_TrkIdVL_TrkIsoVL_HT250_v4*HLTriggerFinalPath*
+
+Begin processing the 70th record. Run 206476, Event 48186729, LumiSection 74 at 24-Jun-2014 00:27:20.059 CEST
+trig = *HLT_Photon30_R9Id90_CaloId_HE10_Iso40_EBOnly_Met25_HBHENoiseCleaned_v1*HLT_Photon75_R9Id90_HE10_Iso40_EBOnly_v5*HLT_Photon90_R9Id90_HE10_Iso40_EBOnly_v5*HLT_RsqMR45_Rsq0p09_v5*HLT_Photon40_CaloIdL_RsqMR45_Rsq0p09_MR150_v6*DST_HT250_v4*HLTriggerFinalPath*
+
+Begin processing the 71st record. Run 206476, Event 48159961, LumiSection 74 at 24-Jun-2014 00:27:20.061 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele27_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele15_CaloIdT_CaloIsoVL_trackless_v8*DST_HT250_v4*HLTriggerFinalPath*
+
+Begin processing the 72nd record. Run 206476, Event 48343289, LumiSection 74 at 24-Jun-2014 00:27:20.076 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_Jet30_v7*HLTriggerFinalPath*
+
+Begin processing the 73rd record. Run 206476, Event 48339409, LumiSection 74 at 24-Jun-2014 00:27:20.080 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_R9Id85_Photon22_CaloId10_Iso50_v6*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLTriggerFinalPath*
+
+Begin processing the 74th record. Run 206476, Event 48092633, LumiSection 74 at 24-Jun-2014 00:27:20.084 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele27_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele15_CaloIdT_CaloIsoVL_trackless_v8*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLTriggerFinalPath*
+
+Begin processing the 75th record. Run 206476, Event 48402585, LumiSection 74 at 24-Jun-2014 00:27:20.088 CEST
+trig = *HLT_Ele8_CaloIdL_CaloIsoVL_v17*HLTriggerFinalPath*
+
+Begin processing the 76th record. Run 206476, Event 48195137, LumiSection 74 at 24-Jun-2014 00:27:20.090 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele15_CaloIdT_CaloIsoVL_trackless_v8*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 77th record. Run 206476, Event 48265417, LumiSection 74 at 24-Jun-2014 00:27:20.105 CEST
+trig = *HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLT_Ele27_WP80_v11*HLT_Ele24_WP80_CentralPFJet35_CentralPFJet25_v1*HLT_Ele25_CaloIdVT_CaloIsoT_TrkIdT_TrkIsoT_CentralPFNoPUJet30_BTagIPIter_v9*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 78th record. Run 206476, Event 48302137, LumiSection 74 at 24-Jun-2014 00:27:20.109 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 79th record. Run 206476, Event 48166161, LumiSection 74 at 24-Jun-2014 00:27:20.113 CEST
+trig = *HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLT_Ele27_WP80_v11*HLT_Ele24_WP80_PFJet30_PFJet25_Deta3_v1*HLTriggerFinalPath*
+
+Begin processing the 80th record. Run 206476, Event 48396065, LumiSection 74 at 24-Jun-2014 00:27:20.212 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLT_DoubleEle10_CaloIdL_TrkIdVL_Ele10_CaloIdT_TrkIdVL_v12*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLT_DoubleEle14_CaloIdT_TrkIdVL_Mass8_PFMET40_v8*HLTriggerFinalPath*
+
+Begin processing the 81st record. Run 206476, Event 48353049, LumiSection 74 at 24-Jun-2014 00:27:20.217 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 82nd record. Run 206476, Event 46681954, LumiSection 74 at 24-Jun-2014 00:27:20.234 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_EG7_v2*HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v15*AlCa_EcalPi0EBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 83rd record. Run 206476, Event 46630002, LumiSection 74 at 24-Jun-2014 00:27:20.236 CEST
+trig = *HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele15_CaloIdT_CaloIsoVL_trackless_v8*AlCa_EcalPi0EEonly_v6*HLTriggerFinalPath*
+
+Begin processing the 84th record. Run 206476, Event 46748386, LumiSection 74 at 24-Jun-2014 00:27:20.239 CEST
+trig = *HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*AlCa_EcalEtaEBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 85th record. Run 206476, Event 46596130, LumiSection 74 at 24-Jun-2014 00:27:20.241 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon30_R9Id90_CaloId_HE10_Iso40_EBOnly_Met25_HBHENoiseCleaned_v1*HLT_Photon36_R9Id85_Photon22_CaloId10_Iso50_v6*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele20_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_SC4_Mass50_v7*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLT_Ele24_WP80_CentralPFJet35_CentralPFJet25_v1*HLT_Ele24_WP80_CentralPFJet35_CentralPFJet25_PFMET20_v1*HLT_Ele27_WP80_CentralPFJet80_v9*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 86th record. Run 206476, Event 46775146, LumiSection 74 at 24-Jun-2014 00:27:20.245 CEST
+trig = *HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v15*HLT_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Jet30_v7*AlCa_EcalPi0EEonly_v6*HLTriggerFinalPath*
+
+Begin processing the 87th record. Run 206476, Event 46727186, LumiSection 74 at 24-Jun-2014 00:27:20.262 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLTriggerFinalPath*
+
+Begin processing the 88th record. Run 206476, Event 46963954, LumiSection 74 at 24-Jun-2014 00:27:20.354 CEST
+trig = *HLT_Photon22_R9Id90_HE10_Iso40_EBOnly_v5*HLT_Photon30_R9Id90_CaloId_HE10_Iso40_EBOnly_Met25_HBHENoiseCleaned_v1*HLTriggerFinalPath*
+
+Begin processing the 89th record. Run 206476, Event 46841306, LumiSection 74 at 24-Jun-2014 00:27:20.356 CEST
+trig = *HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLTriggerFinalPath*
+
+Begin processing the 90th record. Run 206476, Event 46812866, LumiSection 74 at 24-Jun-2014 00:27:20.359 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_R9Id85_Photon22_R9Id85_v4*HLT_Photon36_R9Id85_Photon22_CaloId10_Iso50_v6*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon10_R9Id85_OR_CaloId10_Iso50_Mass80_v1*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele15_CaloIdT_CaloIsoVL_trackless_v8*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*HLTriggerFinalPath*
+
+Begin processing the 91st record. Run 206476, Event 47018330, LumiSection 74 at 24-Jun-2014 00:27:20.362 CEST
+trig = *HLT_DoubleEle10_CaloIdL_TrkIdVL_Ele10_CaloIdT_TrkIdVL_v12*HLT_TripleEle10_CaloIdL_TrkIdVL_v18*HLTriggerFinalPath*
+
+Begin processing the 92nd record. Run 206476, Event 47138810, LumiSection 74 at 24-Jun-2014 00:27:20.374 CEST
+trig = *HLT_Ele8_CaloIdT_TrkIdVL_Jet30_v7*AlCa_EcalEtaEBonly_v6*HLTriggerFinalPath*
+
+Begin processing the 93rd record. Run 206476, Event 47216978, LumiSection 74 at 24-Jun-2014 00:27:20.390 CEST
+trig = *HLT_Photon30_R9Id90_CaloId_HE10_Iso40_EBOnly_Met25_HBHENoiseCleaned_v1*HLT_Photon36_R9Id90_HE10_Iso40_EBOnly_v5*HLTriggerFinalPath*
+
+Begin processing the 94th record. Run 206476, Event 46967338, LumiSection 74 at 24-Jun-2014 00:27:20.392 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele25_CaloIdVT_CaloIsoVL_TrkIdVL_TrkIsoT_TriCentralPFNoPUJet30_v4*HLT_Ele25_CaloIdVT_CaloIsoVL_TrkIdVL_TrkIsoT_TriCentralPFNoPUJet45_35_25_v2*HLT_Ele25_CaloIdVT_CaloIsoVL_TrkIdVL_TrkIsoT_TriCentralPFNoPUJet50_40_30_v4*HLT_Ele27_WP80_v11*HLT_Ele27_WP80_PFMET_MT50_v7*HLT_Ele24_WP80_CentralPFJet35_CentralPFJet25_v1*HLT_Ele24_WP80_PFJet30_PFJet25_Deta3_v1*HLT_Ele24_WP80_PFJet30_PFJet25_Deta3_CentralPFJet30_v1*HLT_Ele24_WP80_CentralPFJet35_CentralPFJet25_PFMET20_v1*HLT_Ele22_eta2p1_WP90Rho_LooseIsoPFTau20_v7*HLTriggerFinalPath*
+
+Begin processing the 95th record. Run 206476, Event 47391458, LumiSection 74 at 24-Jun-2014 00:27:20.396 CEST
+trig = *HLT_L1SingleEG12_v6*HLT_Ele17_CaloIdL_CaloIsoVL_v17*HLTriggerFinalPath*
+
+Begin processing the 96th record. Run 206476, Event 47425426, LumiSection 74 at 24-Jun-2014 00:27:20.398 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*DST_Physics_v5*HLTriggerFinalPath*
+
+Begin processing the 97th record. Run 206476, Event 47437122, LumiSection 74 at 24-Jun-2014 00:27:20.403 CEST
+trig = *HLT_Ele15_Ele8_Ele5_CaloIdL_TrkIdVL_v6*HLTriggerFinalPath*
+
+Begin processing the 98th record. Run 206476, Event 47099394, LumiSection 74 at 24-Jun-2014 00:27:20.405 CEST
+trig = *HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*AlCa_EcalPi0EEonly_v6*HLTriggerFinalPath*
+
+Begin processing the 99th record. Run 206476, Event 47070938, LumiSection 74 at 24-Jun-2014 00:27:20.501 CEST
+trig = *HLT_Ele17_CaloIdVT_CaloIsoVT_TrkIdT_TrkIsoVT_Ele8_Mass50_v6*HLTriggerFinalPath*
+
+Begin processing the 100th record. Run 206476, Event 47429154, LumiSection 74 at 24-Jun-2014 00:27:20.505 CEST
+trig = *HLT_Photon26_R9Id85_OR_CaloId10_Iso50_Photon18_R9Id85_OR_CaloId10_Iso50_Mass70_v2*HLT_Photon36_R9Id85_Photon22_CaloId10_Iso50_v6*HLT_Photon36_CaloId10_Iso50_Photon22_R9Id85_v6*HLT_Photon36_CaloId10_Iso50_Photon22_CaloId10_Iso50_v6*HLT_Photon36_R9Id85_OR_CaloId10_Iso50_Photon22_R9Id85_OR_CaloId10_Iso50_v6*HLT_Ele17_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_Ele8_CaloIdT_CaloIsoVL_TrkIdVL_TrkIsoVL_v19*HLT_Ele27_WP80_v11*HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v7*HLT_DoubleEle33_CaloIdT_v10*AlCa_EcalPi0EEonly_v6*AlCa_EcalEtaEEonly_v6*HLTriggerFinalPath*
+
+24-Jun-2014 00:27:20 CEST  Closed file file:/data_CMS/cms/ochando/DATA/CMSSW7XX/981C8375-DED4-E311-86D0-0026189438BC.root
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 fileAction           -s file_close                             1        1
+    2 fileAction           -s file_open                              2        2
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 fileAction           PostEndRun                        
+    2 fileAction           pre-events       pre-events       
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+System                  3                   3

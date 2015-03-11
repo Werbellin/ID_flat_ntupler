@@ -1,0 +1,1165 @@
+['cmsRun', 'ntuple.py', 'maxEvents=1000', 'isMC=1']
+['cmsRun', 'ntuple.py', 'maxEvents=1000', 'isMC=1']
+cmsRun with options: 
+====================
+Singletons:
+  isMC           : 1
+                 - Tells if the sample is MC or not (default = 0).
+  ispythia6      : 1
+                 - Tells if the sample is pythia6 or not (default = 0).
+  maxEvents      : 1000
+                 - Number of events to process (-1 for all)
+  output         : output.root
+                 - Name of output file (if needed)
+  secondaryOutput: 
+                 - Name of second output file (if needed)
+Lists:
+  files          : []
+                 - Files to process
+  secondaryFiles : []
+                 - Second group of files to process (if needed)
+
+Global Tag =  PHYS14_25_V1::All
+06-Mar-2015 11:35:50 CET  Initiating request to open file file:/data_CMS/cms/ochando/1AD11194-BA6E-E411-A8A9-7845C4FC39E3.root
+06-Mar-2015 11:35:51 CET  Successfully opened file file:/data_CMS/cms/ochando/1AD11194-BA6E-E411-A8A9-7845C4FC39E3.root
+%MSG-w IdInformation:  VersionedGsfElectronIdProducer:egmGsfElectronIDs@ctor  06-Mar-2015 11:35:52 CET pre-events
+Instantiated ID: cutBasedElectronTrigID-CSA14-V0
+with MD5 hash: 13a18621e98e770366829759499f949c
+This ID is not POG approved and likely under development!!!
+Please make sure to report your progress with this ID at the next relevant POG meeting.
+
+%MSG
+rec EB = InputTag:  label = reducedEcalRecHitsEB, instance = 
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB1_5_oldscenario2phys14_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB1_5_oldscenario2phys14_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 0 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB1_5_oldscenario2phys14_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB2_5_oldscenario2phys14_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB2_5_oldscenario2phys14_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 1 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB2_5_oldscenario2phys14_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EE_5_oldscenario2phys14_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EE_5_oldscenario2phys14_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 2 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EE_5_oldscenario2phys14_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB1_10_oldscenario2phys14_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB1_10_oldscenario2phys14_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 3 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB1_10_oldscenario2phys14_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB2_10_oldscenario2phys14_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB2_10_oldscenario2phys14_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 4 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EB2_10_oldscenario2phys14_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EE_10_oldscenario2phys14_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EE_10_oldscenario2phys14_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 5 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14/EIDmva_EE_10_oldscenario2phys14_BDT.weights.xml
+Electron ID MVA Completed
+rec EB = InputTag:  label = reducedEcalRecHitsEB, instance = 
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB1_5_oldscenario2phys14FIX_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB1_5_oldscenario2phys14FIX_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 0 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB1_5_oldscenario2phys14FIX_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB2_5_oldscenario2phys14FIX_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB2_5_oldscenario2phys14FIX_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 1 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB2_5_oldscenario2phys14FIX_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EE_5_oldscenario2phys14FIX_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EE_5_oldscenario2phys14FIX_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 2 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EE_5_oldscenario2phys14FIX_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB1_10_oldscenario2phys14FIX_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB1_10_oldscenario2phys14FIX_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 3 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB1_10_oldscenario2phys14FIX_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB2_10_oldscenario2phys14FIX_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB2_10_oldscenario2phys14FIX_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 4 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EB2_10_oldscenario2phys14FIX_BDT.weights.xml
+--- Reader                   : Booking "BDTSimpleCat" of type "BDT" from /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EE_10_oldscenario2phys14FIX_BDT.weights.xml.
+--- MethodBase               : Reading weight file: /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EE_10_oldscenario2phys14FIX_BDT.weights.xml
+--- BDT                      : Read method "BDT" of type "BDT"
+--- BDT                      : MVA method was trained with TMVA Version: 4.1.2
+--- BDT                      : MVA method was trained with ROOT Version: 5.32/00
+--- DataSetInfo              : Added class "Signal"	 with internal class number 0
+--- DataSetInfo              : Added class "Background"	 with internal class number 1
+--- Reader                   : Booked classifier "BDT" of type: "BDT"
+MVABin 5 : MethodName = BDTSimpleCat , type == 2 , Load weights file : /grid_mnt/vol__vol_U__u/llr/cms/ochando/EGamma/CMSSW723_EID/src/EgammaAnalysis/ElectronTools/data/PHYS14FIX/EIDmva_EE_10_oldscenario2phys14FIX_BDT.weights.xml
+Electron ID MVA Completed
+Begin processing the 1st record. Run 1, Event 43801, LumiSection 439 at 06-Mar-2015 11:35:59.566 CET
+Begin processing the 2nd record. Run 1, Event 43802, LumiSection 439 at 06-Mar-2015 11:36:23.185 CET
+Begin processing the 3rd record. Run 1, Event 43803, LumiSection 439 at 06-Mar-2015 11:36:23.196 CET
+Begin processing the 4th record. Run 1, Event 43804, LumiSection 439 at 06-Mar-2015 11:36:23.208 CET
+Begin processing the 5th record. Run 1, Event 43805, LumiSection 439 at 06-Mar-2015 11:36:23.218 CET
+Begin processing the 6th record. Run 1, Event 43806, LumiSection 439 at 06-Mar-2015 11:36:23.222 CET
+Begin processing the 7th record. Run 1, Event 43807, LumiSection 439 at 06-Mar-2015 11:36:23.234 CET
+Begin processing the 8th record. Run 1, Event 43808, LumiSection 439 at 06-Mar-2015 11:36:23.336 CET
+Begin processing the 9th record. Run 1, Event 43809, LumiSection 439 at 06-Mar-2015 11:36:23.468 CET
+Begin processing the 10th record. Run 1, Event 43810, LumiSection 439 at 06-Mar-2015 11:36:23.518 CET
+Begin processing the 11th record. Run 1, Event 43811, LumiSection 439 at 06-Mar-2015 11:36:23.528 CET
+Begin processing the 12th record. Run 1, Event 43812, LumiSection 439 at 06-Mar-2015 11:36:23.537 CET
+Begin processing the 13th record. Run 1, Event 43813, LumiSection 439 at 06-Mar-2015 11:36:23.548 CET
+Begin processing the 14th record. Run 1, Event 43814, LumiSection 439 at 06-Mar-2015 11:36:23.557 CET
+Begin processing the 15th record. Run 1, Event 43815, LumiSection 439 at 06-Mar-2015 11:36:23.623 CET
+Begin processing the 16th record. Run 1, Event 43816, LumiSection 439 at 06-Mar-2015 11:36:23.762 CET
+Begin processing the 17th record. Run 1, Event 43817, LumiSection 439 at 06-Mar-2015 11:36:23.771 CET
+Begin processing the 18th record. Run 1, Event 43818, LumiSection 439 at 06-Mar-2015 11:36:23.821 CET
+Begin processing the 19th record. Run 1, Event 43819, LumiSection 439 at 06-Mar-2015 11:36:23.849 CET
+Begin processing the 20th record. Run 1, Event 43820, LumiSection 439 at 06-Mar-2015 11:36:23.863 CET
+Begin processing the 21st record. Run 1, Event 43821, LumiSection 439 at 06-Mar-2015 11:36:23.892 CET
+Begin processing the 22nd record. Run 1, Event 43822, LumiSection 439 at 06-Mar-2015 11:36:23.910 CET
+Begin processing the 23rd record. Run 1, Event 43823, LumiSection 439 at 06-Mar-2015 11:36:23.970 CET
+Begin processing the 24th record. Run 1, Event 43824, LumiSection 439 at 06-Mar-2015 11:36:23.982 CET
+Begin processing the 25th record. Run 1, Event 43825, LumiSection 439 at 06-Mar-2015 11:36:24.192 CET
+Begin processing the 26th record. Run 1, Event 43826, LumiSection 439 at 06-Mar-2015 11:36:24.208 CET
+Begin processing the 27th record. Run 1, Event 43827, LumiSection 439 at 06-Mar-2015 11:36:24.221 CET
+Begin processing the 28th record. Run 1, Event 43828, LumiSection 439 at 06-Mar-2015 11:36:24.244 CET
+Begin processing the 29th record. Run 1, Event 43829, LumiSection 439 at 06-Mar-2015 11:36:24.257 CET
+Begin processing the 30th record. Run 1, Event 43830, LumiSection 439 at 06-Mar-2015 11:36:24.265 CET
+Begin processing the 31st record. Run 1, Event 43831, LumiSection 439 at 06-Mar-2015 11:36:24.273 CET
+Begin processing the 32nd record. Run 1, Event 43832, LumiSection 439 at 06-Mar-2015 11:36:24.281 CET
+Begin processing the 33rd record. Run 1, Event 43833, LumiSection 439 at 06-Mar-2015 11:36:24.298 CET
+Begin processing the 34th record. Run 1, Event 43834, LumiSection 439 at 06-Mar-2015 11:36:24.305 CET
+Begin processing the 35th record. Run 1, Event 43835, LumiSection 439 at 06-Mar-2015 11:36:24.381 CET
+Begin processing the 36th record. Run 1, Event 43836, LumiSection 439 at 06-Mar-2015 11:36:24.402 CET
+Begin processing the 37th record. Run 1, Event 43837, LumiSection 439 at 06-Mar-2015 11:36:24.427 CET
+Begin processing the 38th record. Run 1, Event 43838, LumiSection 439 at 06-Mar-2015 11:36:24.436 CET
+Begin processing the 39th record. Run 1, Event 43839, LumiSection 439 at 06-Mar-2015 11:36:24.457 CET
+Begin processing the 40th record. Run 1, Event 43840, LumiSection 439 at 06-Mar-2015 11:36:24.485 CET
+Begin processing the 41st record. Run 1, Event 43841, LumiSection 439 at 06-Mar-2015 11:36:24.494 CET
+Begin processing the 42nd record. Run 1, Event 43842, LumiSection 439 at 06-Mar-2015 11:36:24.507 CET
+Begin processing the 43rd record. Run 1, Event 43843, LumiSection 439 at 06-Mar-2015 11:36:24.522 CET
+Begin processing the 44th record. Run 1, Event 43844, LumiSection 439 at 06-Mar-2015 11:36:24.536 CET
+Begin processing the 45th record. Run 1, Event 43845, LumiSection 439 at 06-Mar-2015 11:36:24.543 CET
+Begin processing the 46th record. Run 1, Event 43846, LumiSection 439 at 06-Mar-2015 11:36:24.552 CET
+Begin processing the 47th record. Run 1, Event 43847, LumiSection 439 at 06-Mar-2015 11:36:24.573 CET
+Begin processing the 48th record. Run 1, Event 43848, LumiSection 439 at 06-Mar-2015 11:36:24.585 CET
+Begin processing the 49th record. Run 1, Event 43849, LumiSection 439 at 06-Mar-2015 11:36:24.594 CET
+Begin processing the 50th record. Run 1, Event 43850, LumiSection 439 at 06-Mar-2015 11:36:24.598 CET
+Begin processing the 51st record. Run 1, Event 43851, LumiSection 439 at 06-Mar-2015 11:36:24.607 CET
+Begin processing the 52nd record. Run 1, Event 43852, LumiSection 439 at 06-Mar-2015 11:36:24.614 CET
+Begin processing the 53rd record. Run 1, Event 43853, LumiSection 439 at 06-Mar-2015 11:36:24.619 CET
+Begin processing the 54th record. Run 1, Event 43854, LumiSection 439 at 06-Mar-2015 11:36:24.643 CET
+Begin processing the 55th record. Run 1, Event 43855, LumiSection 439 at 06-Mar-2015 11:36:24.650 CET
+Begin processing the 56th record. Run 1, Event 43856, LumiSection 439 at 06-Mar-2015 11:36:24.663 CET
+Begin processing the 57th record. Run 1, Event 43857, LumiSection 439 at 06-Mar-2015 11:36:24.676 CET
+Begin processing the 58th record. Run 1, Event 43858, LumiSection 439 at 06-Mar-2015 11:36:24.686 CET
+Begin processing the 59th record. Run 1, Event 43859, LumiSection 439 at 06-Mar-2015 11:36:24.696 CET
+Begin processing the 60th record. Run 1, Event 43860, LumiSection 439 at 06-Mar-2015 11:36:24.702 CET
+Begin processing the 61st record. Run 1, Event 43861, LumiSection 439 at 06-Mar-2015 11:36:24.707 CET
+Begin processing the 62nd record. Run 1, Event 43862, LumiSection 439 at 06-Mar-2015 11:36:24.711 CET
+Begin processing the 63rd record. Run 1, Event 43863, LumiSection 439 at 06-Mar-2015 11:36:24.732 CET
+Begin processing the 64th record. Run 1, Event 43864, LumiSection 439 at 06-Mar-2015 11:36:24.743 CET
+Begin processing the 65th record. Run 1, Event 43865, LumiSection 439 at 06-Mar-2015 11:36:24.757 CET
+Begin processing the 66th record. Run 1, Event 43866, LumiSection 439 at 06-Mar-2015 11:36:25.795 CET
+Begin processing the 67th record. Run 1, Event 43867, LumiSection 439 at 06-Mar-2015 11:36:25.803 CET
+Begin processing the 68th record. Run 1, Event 43868, LumiSection 439 at 06-Mar-2015 11:36:25.834 CET
+Begin processing the 69th record. Run 1, Event 43869, LumiSection 439 at 06-Mar-2015 11:36:25.845 CET
+Begin processing the 70th record. Run 1, Event 43870, LumiSection 439 at 06-Mar-2015 11:36:25.851 CET
+Begin processing the 71st record. Run 1, Event 43871, LumiSection 439 at 06-Mar-2015 11:36:25.857 CET
+Begin processing the 72nd record. Run 1, Event 43872, LumiSection 439 at 06-Mar-2015 11:36:25.868 CET
+Begin processing the 73rd record. Run 1, Event 43873, LumiSection 439 at 06-Mar-2015 11:36:25.953 CET
+Begin processing the 74th record. Run 1, Event 43874, LumiSection 439 at 06-Mar-2015 11:36:26.110 CET
+Begin processing the 75th record. Run 1, Event 43875, LumiSection 439 at 06-Mar-2015 11:36:26.113 CET
+Begin processing the 76th record. Run 1, Event 43876, LumiSection 439 at 06-Mar-2015 11:36:26.123 CET
+Begin processing the 77th record. Run 1, Event 43877, LumiSection 439 at 06-Mar-2015 11:36:26.127 CET
+Begin processing the 78th record. Run 1, Event 43878, LumiSection 439 at 06-Mar-2015 11:36:26.132 CET
+Begin processing the 79th record. Run 1, Event 43879, LumiSection 439 at 06-Mar-2015 11:36:26.137 CET
+Begin processing the 80th record. Run 1, Event 43880, LumiSection 439 at 06-Mar-2015 11:36:26.158 CET
+Begin processing the 81st record. Run 1, Event 43881, LumiSection 439 at 06-Mar-2015 11:36:26.163 CET
+Begin processing the 82nd record. Run 1, Event 43882, LumiSection 439 at 06-Mar-2015 11:36:26.168 CET
+Begin processing the 83rd record. Run 1, Event 43883, LumiSection 439 at 06-Mar-2015 11:36:26.174 CET
+Begin processing the 84th record. Run 1, Event 43884, LumiSection 439 at 06-Mar-2015 11:36:26.177 CET
+Begin processing the 85th record. Run 1, Event 43885, LumiSection 439 at 06-Mar-2015 11:36:26.213 CET
+Begin processing the 86th record. Run 1, Event 43886, LumiSection 439 at 06-Mar-2015 11:36:26.225 CET
+Begin processing the 87th record. Run 1, Event 43887, LumiSection 439 at 06-Mar-2015 11:36:26.233 CET
+Begin processing the 88th record. Run 1, Event 43888, LumiSection 439 at 06-Mar-2015 11:36:26.238 CET
+Begin processing the 89th record. Run 1, Event 43889, LumiSection 439 at 06-Mar-2015 11:36:26.247 CET
+Begin processing the 90th record. Run 1, Event 43890, LumiSection 439 at 06-Mar-2015 11:36:26.251 CET
+Begin processing the 91st record. Run 1, Event 43891, LumiSection 439 at 06-Mar-2015 11:36:26.257 CET
+Begin processing the 92nd record. Run 1, Event 43892, LumiSection 439 at 06-Mar-2015 11:36:26.265 CET
+Begin processing the 93rd record. Run 1, Event 43893, LumiSection 439 at 06-Mar-2015 11:36:26.268 CET
+Begin processing the 94th record. Run 1, Event 43894, LumiSection 439 at 06-Mar-2015 11:36:26.277 CET
+Begin processing the 95th record. Run 1, Event 43895, LumiSection 439 at 06-Mar-2015 11:36:26.281 CET
+Begin processing the 96th record. Run 1, Event 43896, LumiSection 439 at 06-Mar-2015 11:36:26.322 CET
+Begin processing the 97th record. Run 1, Event 43897, LumiSection 439 at 06-Mar-2015 11:36:26.327 CET
+Begin processing the 98th record. Run 1, Event 43898, LumiSection 439 at 06-Mar-2015 11:36:26.329 CET
+Begin processing the 99th record. Run 1, Event 43899, LumiSection 439 at 06-Mar-2015 11:36:26.332 CET
+Begin processing the 100th record. Run 1, Event 43900, LumiSection 439 at 06-Mar-2015 11:36:26.346 CET
+Begin processing the 101st record. Run 1, Event 43901, LumiSection 440 at 06-Mar-2015 11:36:26.363 CET
+Begin processing the 102nd record. Run 1, Event 43902, LumiSection 440 at 06-Mar-2015 11:36:26.367 CET
+Begin processing the 103rd record. Run 1, Event 43903, LumiSection 440 at 06-Mar-2015 11:36:26.372 CET
+Begin processing the 104th record. Run 1, Event 43904, LumiSection 440 at 06-Mar-2015 11:36:26.378 CET
+Begin processing the 105th record. Run 1, Event 43905, LumiSection 440 at 06-Mar-2015 11:36:26.420 CET
+Begin processing the 106th record. Run 1, Event 43906, LumiSection 440 at 06-Mar-2015 11:36:26.426 CET
+Begin processing the 107th record. Run 1, Event 43907, LumiSection 440 at 06-Mar-2015 11:36:26.430 CET
+Begin processing the 108th record. Run 1, Event 43908, LumiSection 440 at 06-Mar-2015 11:36:26.436 CET
+Begin processing the 109th record. Run 1, Event 43909, LumiSection 440 at 06-Mar-2015 11:36:26.445 CET
+Begin processing the 110th record. Run 1, Event 43910, LumiSection 440 at 06-Mar-2015 11:36:26.450 CET
+Begin processing the 111th record. Run 1, Event 43911, LumiSection 440 at 06-Mar-2015 11:36:26.457 CET
+Begin processing the 112th record. Run 1, Event 43912, LumiSection 440 at 06-Mar-2015 11:36:26.467 CET
+Begin processing the 113th record. Run 1, Event 43913, LumiSection 440 at 06-Mar-2015 11:36:26.469 CET
+Begin processing the 114th record. Run 1, Event 43914, LumiSection 440 at 06-Mar-2015 11:36:26.474 CET
+Begin processing the 115th record. Run 1, Event 43915, LumiSection 440 at 06-Mar-2015 11:36:26.476 CET
+Begin processing the 116th record. Run 1, Event 43916, LumiSection 440 at 06-Mar-2015 11:36:26.512 CET
+Begin processing the 117th record. Run 1, Event 43917, LumiSection 440 at 06-Mar-2015 11:36:26.519 CET
+Begin processing the 118th record. Run 1, Event 43918, LumiSection 440 at 06-Mar-2015 11:36:26.523 CET
+Begin processing the 119th record. Run 1, Event 43919, LumiSection 440 at 06-Mar-2015 11:36:26.531 CET
+Begin processing the 120th record. Run 1, Event 43920, LumiSection 440 at 06-Mar-2015 11:36:26.540 CET
+Begin processing the 121st record. Run 1, Event 43921, LumiSection 440 at 06-Mar-2015 11:36:26.545 CET
+Begin processing the 122nd record. Run 1, Event 43922, LumiSection 440 at 06-Mar-2015 11:36:26.552 CET
+Begin processing the 123rd record. Run 1, Event 43923, LumiSection 440 at 06-Mar-2015 11:36:26.558 CET
+Begin processing the 124th record. Run 1, Event 43924, LumiSection 440 at 06-Mar-2015 11:36:26.561 CET
+Begin processing the 125th record. Run 1, Event 43925, LumiSection 440 at 06-Mar-2015 11:36:26.571 CET
+Begin processing the 126th record. Run 1, Event 43926, LumiSection 440 at 06-Mar-2015 11:36:26.576 CET
+Begin processing the 127th record. Run 1, Event 43927, LumiSection 440 at 06-Mar-2015 11:36:26.612 CET
+Begin processing the 128th record. Run 1, Event 43928, LumiSection 440 at 06-Mar-2015 11:36:26.621 CET
+Begin processing the 129th record. Run 1, Event 43929, LumiSection 440 at 06-Mar-2015 11:36:26.624 CET
+Begin processing the 130th record. Run 1, Event 43930, LumiSection 440 at 06-Mar-2015 11:36:26.628 CET
+Begin processing the 131st record. Run 1, Event 43931, LumiSection 440 at 06-Mar-2015 11:36:26.639 CET
+Begin processing the 132nd record. Run 1, Event 43932, LumiSection 440 at 06-Mar-2015 11:36:26.648 CET
+Begin processing the 133rd record. Run 1, Event 43933, LumiSection 440 at 06-Mar-2015 11:36:26.655 CET
+Begin processing the 134th record. Run 1, Event 43934, LumiSection 440 at 06-Mar-2015 11:36:26.660 CET
+Begin processing the 135th record. Run 1, Event 43935, LumiSection 440 at 06-Mar-2015 11:36:26.670 CET
+Begin processing the 136th record. Run 1, Event 43936, LumiSection 440 at 06-Mar-2015 11:36:26.701 CET
+Begin processing the 137th record. Run 1, Event 43937, LumiSection 440 at 06-Mar-2015 11:36:26.705 CET
+Begin processing the 138th record. Run 1, Event 43938, LumiSection 440 at 06-Mar-2015 11:36:26.710 CET
+Begin processing the 139th record. Run 1, Event 43939, LumiSection 440 at 06-Mar-2015 11:36:26.715 CET
+Begin processing the 140th record. Run 1, Event 43940, LumiSection 440 at 06-Mar-2015 11:36:26.724 CET
+Begin processing the 141st record. Run 1, Event 43941, LumiSection 440 at 06-Mar-2015 11:36:26.729 CET
+Begin processing the 142nd record. Run 1, Event 43942, LumiSection 440 at 06-Mar-2015 11:36:26.734 CET
+Begin processing the 143rd record. Run 1, Event 43943, LumiSection 440 at 06-Mar-2015 11:36:26.741 CET
+Begin processing the 144th record. Run 1, Event 43944, LumiSection 440 at 06-Mar-2015 11:36:26.971 CET
+Begin processing the 145th record. Run 1, Event 43945, LumiSection 440 at 06-Mar-2015 11:36:26.978 CET
+Begin processing the 146th record. Run 1, Event 43946, LumiSection 440 at 06-Mar-2015 11:36:26.987 CET
+Begin processing the 147th record. Run 1, Event 43947, LumiSection 440 at 06-Mar-2015 11:36:26.991 CET
+Begin processing the 148th record. Run 1, Event 43948, LumiSection 440 at 06-Mar-2015 11:36:26.997 CET
+Begin processing the 149th record. Run 1, Event 43949, LumiSection 440 at 06-Mar-2015 11:36:27.001 CET
+Begin processing the 150th record. Run 1, Event 43950, LumiSection 440 at 06-Mar-2015 11:36:27.010 CET
+Begin processing the 151st record. Run 1, Event 43951, LumiSection 440 at 06-Mar-2015 11:36:27.021 CET
+Begin processing the 152nd record. Run 1, Event 43952, LumiSection 440 at 06-Mar-2015 11:36:27.027 CET
+Begin processing the 153rd record. Run 1, Event 43953, LumiSection 440 at 06-Mar-2015 11:36:27.033 CET
+Begin processing the 154th record. Run 1, Event 43954, LumiSection 440 at 06-Mar-2015 11:36:27.078 CET
+Begin processing the 155th record. Run 1, Event 43955, LumiSection 440 at 06-Mar-2015 11:36:27.085 CET
+Begin processing the 156th record. Run 1, Event 43956, LumiSection 440 at 06-Mar-2015 11:36:27.091 CET
+Begin processing the 157th record. Run 1, Event 43957, LumiSection 440 at 06-Mar-2015 11:36:27.100 CET
+Begin processing the 158th record. Run 1, Event 43958, LumiSection 440 at 06-Mar-2015 11:36:27.108 CET
+Begin processing the 159th record. Run 1, Event 43959, LumiSection 440 at 06-Mar-2015 11:36:27.127 CET
+Begin processing the 160th record. Run 1, Event 43960, LumiSection 440 at 06-Mar-2015 11:36:27.134 CET
+Begin processing the 161st record. Run 1, Event 43961, LumiSection 440 at 06-Mar-2015 11:36:27.137 CET
+Begin processing the 162nd record. Run 1, Event 43962, LumiSection 440 at 06-Mar-2015 11:36:27.144 CET
+Begin processing the 163rd record. Run 1, Event 43963, LumiSection 440 at 06-Mar-2015 11:36:27.151 CET
+Begin processing the 164th record. Run 1, Event 43964, LumiSection 440 at 06-Mar-2015 11:36:27.154 CET
+Begin processing the 165th record. Run 1, Event 43965, LumiSection 440 at 06-Mar-2015 11:36:27.190 CET
+Begin processing the 166th record. Run 1, Event 43966, LumiSection 440 at 06-Mar-2015 11:36:27.197 CET
+Begin processing the 167th record. Run 1, Event 43967, LumiSection 440 at 06-Mar-2015 11:36:27.205 CET
+Begin processing the 168th record. Run 1, Event 43968, LumiSection 440 at 06-Mar-2015 11:36:27.210 CET
+Begin processing the 169th record. Run 1, Event 43969, LumiSection 440 at 06-Mar-2015 11:36:27.217 CET
+Begin processing the 170th record. Run 1, Event 43970, LumiSection 440 at 06-Mar-2015 11:36:27.220 CET
+Begin processing the 171st record. Run 1, Event 43971, LumiSection 440 at 06-Mar-2015 11:36:27.225 CET
+Begin processing the 172nd record. Run 1, Event 43972, LumiSection 440 at 06-Mar-2015 11:36:27.229 CET
+Begin processing the 173rd record. Run 1, Event 43973, LumiSection 440 at 06-Mar-2015 11:36:27.238 CET
+Begin processing the 174th record. Run 1, Event 43974, LumiSection 440 at 06-Mar-2015 11:36:27.243 CET
+Begin processing the 175th record. Run 1, Event 43975, LumiSection 440 at 06-Mar-2015 11:36:27.253 CET
+Begin processing the 176th record. Run 1, Event 43976, LumiSection 440 at 06-Mar-2015 11:36:27.257 CET
+Begin processing the 177th record. Run 1, Event 43977, LumiSection 440 at 06-Mar-2015 11:36:27.300 CET
+Begin processing the 178th record. Run 1, Event 43978, LumiSection 440 at 06-Mar-2015 11:36:27.304 CET
+Begin processing the 179th record. Run 1, Event 43979, LumiSection 440 at 06-Mar-2015 11:36:27.309 CET
+Begin processing the 180th record. Run 1, Event 43980, LumiSection 440 at 06-Mar-2015 11:36:27.318 CET
+Begin processing the 181st record. Run 1, Event 43981, LumiSection 440 at 06-Mar-2015 11:36:27.321 CET
+Begin processing the 182nd record. Run 1, Event 43982, LumiSection 440 at 06-Mar-2015 11:36:27.331 CET
+Begin processing the 183rd record. Run 1, Event 43983, LumiSection 440 at 06-Mar-2015 11:36:27.340 CET
+Begin processing the 184th record. Run 1, Event 43984, LumiSection 440 at 06-Mar-2015 11:36:27.345 CET
+Begin processing the 185th record. Run 1, Event 43985, LumiSection 440 at 06-Mar-2015 11:36:27.347 CET
+Begin processing the 186th record. Run 1, Event 43986, LumiSection 440 at 06-Mar-2015 11:36:27.357 CET
+Begin processing the 187th record. Run 1, Event 43987, LumiSection 440 at 06-Mar-2015 11:36:27.360 CET
+Begin processing the 188th record. Run 1, Event 43988, LumiSection 440 at 06-Mar-2015 11:36:27.365 CET
+Begin processing the 189th record. Run 1, Event 43989, LumiSection 440 at 06-Mar-2015 11:36:27.374 CET
+Begin processing the 190th record. Run 1, Event 43990, LumiSection 440 at 06-Mar-2015 11:36:27.410 CET
+Begin processing the 191st record. Run 1, Event 43991, LumiSection 440 at 06-Mar-2015 11:36:27.420 CET
+Begin processing the 192nd record. Run 1, Event 43992, LumiSection 440 at 06-Mar-2015 11:36:27.422 CET
+Begin processing the 193rd record. Run 1, Event 43993, LumiSection 440 at 06-Mar-2015 11:36:27.427 CET
+Begin processing the 194th record. Run 1, Event 43994, LumiSection 440 at 06-Mar-2015 11:36:27.431 CET
+Begin processing the 195th record. Run 1, Event 43995, LumiSection 440 at 06-Mar-2015 11:36:27.439 CET
+Begin processing the 196th record. Run 1, Event 43996, LumiSection 440 at 06-Mar-2015 11:36:27.447 CET
+Begin processing the 197th record. Run 1, Event 43997, LumiSection 440 at 06-Mar-2015 11:36:27.451 CET
+Begin processing the 198th record. Run 1, Event 43998, LumiSection 440 at 06-Mar-2015 11:36:27.456 CET
+Begin processing the 199th record. Run 1, Event 43999, LumiSection 440 at 06-Mar-2015 11:36:27.467 CET
+Begin processing the 200th record. Run 1, Event 44000, LumiSection 440 at 06-Mar-2015 11:36:27.472 CET
+Begin processing the 201st record. Run 1, Event 44001, LumiSection 441 at 06-Mar-2015 11:36:27.514 CET
+Begin processing the 202nd record. Run 1, Event 44002, LumiSection 441 at 06-Mar-2015 11:36:27.519 CET
+Begin processing the 203rd record. Run 1, Event 44003, LumiSection 441 at 06-Mar-2015 11:36:27.525 CET
+Begin processing the 204th record. Run 1, Event 44004, LumiSection 441 at 06-Mar-2015 11:36:27.534 CET
+Begin processing the 205th record. Run 1, Event 44005, LumiSection 441 at 06-Mar-2015 11:36:27.540 CET
+Begin processing the 206th record. Run 1, Event 44006, LumiSection 441 at 06-Mar-2015 11:36:27.544 CET
+Begin processing the 207th record. Run 1, Event 44007, LumiSection 441 at 06-Mar-2015 11:36:27.547 CET
+Begin processing the 208th record. Run 1, Event 44008, LumiSection 441 at 06-Mar-2015 11:36:27.550 CET
+Begin processing the 209th record. Run 1, Event 44009, LumiSection 441 at 06-Mar-2015 11:36:27.564 CET
+Begin processing the 210th record. Run 1, Event 44010, LumiSection 441 at 06-Mar-2015 11:36:27.569 CET
+Begin processing the 211th record. Run 1, Event 44011, LumiSection 441 at 06-Mar-2015 11:36:29.459 CET
+Begin processing the 212th record. Run 1, Event 44012, LumiSection 441 at 06-Mar-2015 11:36:29.465 CET
+Begin processing the 213th record. Run 1, Event 44013, LumiSection 441 at 06-Mar-2015 11:36:29.484 CET
+Begin processing the 214th record. Run 1, Event 44014, LumiSection 441 at 06-Mar-2015 11:36:29.492 CET
+Begin processing the 215th record. Run 1, Event 44015, LumiSection 441 at 06-Mar-2015 11:36:29.727 CET
+Begin processing the 216th record. Run 1, Event 44016, LumiSection 441 at 06-Mar-2015 11:36:29.732 CET
+Begin processing the 217th record. Run 1, Event 44017, LumiSection 441 at 06-Mar-2015 11:36:29.737 CET
+Begin processing the 218th record. Run 1, Event 44018, LumiSection 441 at 06-Mar-2015 11:36:29.741 CET
+Begin processing the 219th record. Run 1, Event 44019, LumiSection 441 at 06-Mar-2015 11:36:29.747 CET
+Begin processing the 220th record. Run 1, Event 44020, LumiSection 441 at 06-Mar-2015 11:36:29.749 CET
+Begin processing the 221st record. Run 1, Event 44021, LumiSection 441 at 06-Mar-2015 11:36:29.759 CET
+Begin processing the 222nd record. Run 1, Event 44022, LumiSection 441 at 06-Mar-2015 11:36:29.761 CET
+Begin processing the 223rd record. Run 1, Event 44023, LumiSection 441 at 06-Mar-2015 11:36:29.769 CET
+Begin processing the 224th record. Run 1, Event 44024, LumiSection 441 at 06-Mar-2015 11:36:29.774 CET
+Begin processing the 225th record. Run 1, Event 44025, LumiSection 441 at 06-Mar-2015 11:36:29.782 CET
+Begin processing the 226th record. Run 1, Event 44026, LumiSection 441 at 06-Mar-2015 11:36:29.785 CET
+Begin processing the 227th record. Run 1, Event 44027, LumiSection 441 at 06-Mar-2015 11:36:29.822 CET
+Begin processing the 228th record. Run 1, Event 44028, LumiSection 441 at 06-Mar-2015 11:36:29.832 CET
+Begin processing the 229th record. Run 1, Event 44029, LumiSection 441 at 06-Mar-2015 11:36:29.840 CET
+Begin processing the 230th record. Run 1, Event 44030, LumiSection 441 at 06-Mar-2015 11:36:29.846 CET
+Begin processing the 231st record. Run 1, Event 44031, LumiSection 441 at 06-Mar-2015 11:36:29.853 CET
+Begin processing the 232nd record. Run 1, Event 44032, LumiSection 441 at 06-Mar-2015 11:36:29.856 CET
+Begin processing the 233rd record. Run 1, Event 44033, LumiSection 441 at 06-Mar-2015 11:36:29.860 CET
+Begin processing the 234th record. Run 1, Event 44034, LumiSection 441 at 06-Mar-2015 11:36:29.863 CET
+Begin processing the 235th record. Run 1, Event 44035, LumiSection 441 at 06-Mar-2015 11:36:29.870 CET
+Begin processing the 236th record. Run 1, Event 44036, LumiSection 441 at 06-Mar-2015 11:36:29.885 CET
+Begin processing the 237th record. Run 1, Event 44037, LumiSection 441 at 06-Mar-2015 11:36:29.889 CET
+Begin processing the 238th record. Run 1, Event 44038, LumiSection 441 at 06-Mar-2015 11:36:29.932 CET
+Begin processing the 239th record. Run 1, Event 44039, LumiSection 441 at 06-Mar-2015 11:36:29.935 CET
+Begin processing the 240th record. Run 1, Event 44040, LumiSection 441 at 06-Mar-2015 11:36:29.941 CET
+Begin processing the 241st record. Run 1, Event 44041, LumiSection 441 at 06-Mar-2015 11:36:29.947 CET
+Begin processing the 242nd record. Run 1, Event 44042, LumiSection 441 at 06-Mar-2015 11:36:29.952 CET
+Begin processing the 243rd record. Run 1, Event 44043, LumiSection 441 at 06-Mar-2015 11:36:29.954 CET
+Begin processing the 244th record. Run 1, Event 44045, LumiSection 441 at 06-Mar-2015 11:36:29.967 CET
+Begin processing the 245th record. Run 1, Event 44046, LumiSection 441 at 06-Mar-2015 11:36:29.969 CET
+Begin processing the 246th record. Run 1, Event 44047, LumiSection 441 at 06-Mar-2015 11:36:29.974 CET
+Begin processing the 247th record. Run 1, Event 44048, LumiSection 441 at 06-Mar-2015 11:36:29.980 CET
+Begin processing the 248th record. Run 1, Event 44049, LumiSection 441 at 06-Mar-2015 11:36:29.989 CET
+Begin processing the 249th record. Run 1, Event 44050, LumiSection 441 at 06-Mar-2015 11:36:29.996 CET
+Begin processing the 250th record. Run 1, Event 44051, LumiSection 441 at 06-Mar-2015 11:36:30.033 CET
+Begin processing the 251st record. Run 1, Event 44052, LumiSection 441 at 06-Mar-2015 11:36:30.039 CET
+Begin processing the 252nd record. Run 1, Event 44053, LumiSection 441 at 06-Mar-2015 11:36:30.043 CET
+Begin processing the 253rd record. Run 1, Event 44054, LumiSection 441 at 06-Mar-2015 11:36:30.046 CET
+Begin processing the 254th record. Run 1, Event 44055, LumiSection 441 at 06-Mar-2015 11:36:30.054 CET
+Begin processing the 255th record. Run 1, Event 44056, LumiSection 441 at 06-Mar-2015 11:36:30.061 CET
+Begin processing the 256th record. Run 1, Event 44057, LumiSection 441 at 06-Mar-2015 11:36:30.065 CET
+Begin processing the 257th record. Run 1, Event 44058, LumiSection 441 at 06-Mar-2015 11:36:30.070 CET
+Begin processing the 258th record. Run 1, Event 44059, LumiSection 441 at 06-Mar-2015 11:36:30.079 CET
+Begin processing the 259th record. Run 1, Event 44060, LumiSection 441 at 06-Mar-2015 11:36:30.084 CET
+Begin processing the 260th record. Run 1, Event 44061, LumiSection 441 at 06-Mar-2015 11:36:30.089 CET
+Begin processing the 261st record. Run 1, Event 44062, LumiSection 441 at 06-Mar-2015 11:36:30.094 CET
+Begin processing the 262nd record. Run 1, Event 44063, LumiSection 441 at 06-Mar-2015 11:36:30.097 CET
+Begin processing the 263rd record. Run 1, Event 44064, LumiSection 441 at 06-Mar-2015 11:36:30.105 CET
+Begin processing the 264th record. Run 1, Event 44065, LumiSection 441 at 06-Mar-2015 11:36:30.142 CET
+Begin processing the 265th record. Run 1, Event 44066, LumiSection 441 at 06-Mar-2015 11:36:30.147 CET
+Begin processing the 266th record. Run 1, Event 44067, LumiSection 441 at 06-Mar-2015 11:36:30.149 CET
+Begin processing the 267th record. Run 1, Event 44068, LumiSection 441 at 06-Mar-2015 11:36:30.153 CET
+Begin processing the 268th record. Run 1, Event 44069, LumiSection 441 at 06-Mar-2015 11:36:30.164 CET
+Begin processing the 269th record. Run 1, Event 44070, LumiSection 441 at 06-Mar-2015 11:36:30.171 CET
+Begin processing the 270th record. Run 1, Event 44071, LumiSection 441 at 06-Mar-2015 11:36:30.175 CET
+Begin processing the 271st record. Run 1, Event 44072, LumiSection 441 at 06-Mar-2015 11:36:30.180 CET
+Begin processing the 272nd record. Run 1, Event 44073, LumiSection 441 at 06-Mar-2015 11:36:30.182 CET
+Begin processing the 273rd record. Run 1, Event 44074, LumiSection 441 at 06-Mar-2015 11:36:30.189 CET
+Begin processing the 274th record. Run 1, Event 44075, LumiSection 441 at 06-Mar-2015 11:36:30.224 CET
+Begin processing the 275th record. Run 1, Event 44076, LumiSection 441 at 06-Mar-2015 11:36:30.231 CET
+Begin processing the 276th record. Run 1, Event 44077, LumiSection 441 at 06-Mar-2015 11:36:30.236 CET
+Begin processing the 277th record. Run 1, Event 44078, LumiSection 441 at 06-Mar-2015 11:36:30.243 CET
+Begin processing the 278th record. Run 1, Event 44079, LumiSection 441 at 06-Mar-2015 11:36:30.249 CET
+Begin processing the 279th record. Run 1, Event 44080, LumiSection 441 at 06-Mar-2015 11:36:30.252 CET
+Begin processing the 280th record. Run 1, Event 44081, LumiSection 441 at 06-Mar-2015 11:36:30.260 CET
+Begin processing the 281st record. Run 1, Event 44082, LumiSection 441 at 06-Mar-2015 11:36:30.269 CET
+Begin processing the 282nd record. Run 1, Event 44083, LumiSection 441 at 06-Mar-2015 11:36:30.273 CET
+Begin processing the 283rd record. Run 1, Event 44084, LumiSection 441 at 06-Mar-2015 11:36:30.276 CET
+Begin processing the 284th record. Run 1, Event 44085, LumiSection 441 at 06-Mar-2015 11:36:30.289 CET
+Begin processing the 285th record. Run 1, Event 44086, LumiSection 441 at 06-Mar-2015 11:36:30.293 CET
+Begin processing the 286th record. Run 1, Event 44087, LumiSection 441 at 06-Mar-2015 11:36:30.522 CET
+Begin processing the 287th record. Run 1, Event 44088, LumiSection 441 at 06-Mar-2015 11:36:30.525 CET
+Begin processing the 288th record. Run 1, Event 44089, LumiSection 441 at 06-Mar-2015 11:36:30.529 CET
+Begin processing the 289th record. Run 1, Event 44090, LumiSection 441 at 06-Mar-2015 11:36:30.537 CET
+Begin processing the 290th record. Run 1, Event 44091, LumiSection 441 at 06-Mar-2015 11:36:30.544 CET
+Begin processing the 291st record. Run 1, Event 44092, LumiSection 441 at 06-Mar-2015 11:36:30.554 CET
+Begin processing the 292nd record. Run 1, Event 44093, LumiSection 441 at 06-Mar-2015 11:36:30.558 CET
+Begin processing the 293rd record. Run 1, Event 44094, LumiSection 441 at 06-Mar-2015 11:36:30.561 CET
+Begin processing the 294th record. Run 1, Event 44095, LumiSection 441 at 06-Mar-2015 11:36:30.569 CET
+Begin processing the 295th record. Run 1, Event 44096, LumiSection 441 at 06-Mar-2015 11:36:30.576 CET
+Begin processing the 296th record. Run 1, Event 44097, LumiSection 441 at 06-Mar-2015 11:36:30.586 CET
+Begin processing the 297th record. Run 1, Event 44098, LumiSection 441 at 06-Mar-2015 11:36:30.621 CET
+Begin processing the 298th record. Run 1, Event 44099, LumiSection 441 at 06-Mar-2015 11:36:30.626 CET
+Begin processing the 299th record. Run 1, Event 44100, LumiSection 441 at 06-Mar-2015 11:36:30.635 CET
+Begin processing the 300th record. Run 1, Event 48601, LumiSection 487 at 06-Mar-2015 11:36:30.642 CET
+Begin processing the 301st record. Run 1, Event 48602, LumiSection 487 at 06-Mar-2015 11:36:30.647 CET
+Begin processing the 302nd record. Run 1, Event 48603, LumiSection 487 at 06-Mar-2015 11:36:30.650 CET
+Begin processing the 303rd record. Run 1, Event 48604, LumiSection 487 at 06-Mar-2015 11:36:30.653 CET
+Begin processing the 304th record. Run 1, Event 48605, LumiSection 487 at 06-Mar-2015 11:36:30.659 CET
+Begin processing the 305th record. Run 1, Event 48606, LumiSection 487 at 06-Mar-2015 11:36:30.667 CET
+Begin processing the 306th record. Run 1, Event 48607, LumiSection 487 at 06-Mar-2015 11:36:30.674 CET
+Begin processing the 307th record. Run 1, Event 48608, LumiSection 487 at 06-Mar-2015 11:36:30.679 CET
+Begin processing the 308th record. Run 1, Event 48609, LumiSection 487 at 06-Mar-2015 11:36:30.683 CET
+Begin processing the 309th record. Run 1, Event 48610, LumiSection 487 at 06-Mar-2015 11:36:30.722 CET
+Begin processing the 310th record. Run 1, Event 48611, LumiSection 487 at 06-Mar-2015 11:36:30.727 CET
+Begin processing the 311th record. Run 1, Event 48612, LumiSection 487 at 06-Mar-2015 11:36:30.731 CET
+Begin processing the 312th record. Run 1, Event 48613, LumiSection 487 at 06-Mar-2015 11:36:30.740 CET
+Begin processing the 313th record. Run 1, Event 48614, LumiSection 487 at 06-Mar-2015 11:36:30.748 CET
+Begin processing the 314th record. Run 1, Event 48615, LumiSection 487 at 06-Mar-2015 11:36:30.753 CET
+Begin processing the 315th record. Run 1, Event 48616, LumiSection 487 at 06-Mar-2015 11:36:30.756 CET
+Begin processing the 316th record. Run 1, Event 48617, LumiSection 487 at 06-Mar-2015 11:36:30.759 CET
+Begin processing the 317th record. Run 1, Event 48618, LumiSection 487 at 06-Mar-2015 11:36:30.777 CET
+Begin processing the 318th record. Run 1, Event 48619, LumiSection 487 at 06-Mar-2015 11:36:30.782 CET
+Begin processing the 319th record. Run 1, Event 48620, LumiSection 487 at 06-Mar-2015 11:36:30.793 CET
+Begin processing the 320th record. Run 1, Event 48621, LumiSection 487 at 06-Mar-2015 11:36:30.795 CET
+Begin processing the 321st record. Run 1, Event 48622, LumiSection 487 at 06-Mar-2015 11:36:30.834 CET
+Begin processing the 322nd record. Run 1, Event 48623, LumiSection 487 at 06-Mar-2015 11:36:30.839 CET
+Begin processing the 323rd record. Run 1, Event 48624, LumiSection 487 at 06-Mar-2015 11:36:30.842 CET
+Begin processing the 324th record. Run 1, Event 48625, LumiSection 487 at 06-Mar-2015 11:36:30.849 CET
+Begin processing the 325th record. Run 1, Event 48626, LumiSection 487 at 06-Mar-2015 11:36:30.853 CET
+Begin processing the 326th record. Run 1, Event 48627, LumiSection 487 at 06-Mar-2015 11:36:30.856 CET
+Begin processing the 327th record. Run 1, Event 48628, LumiSection 487 at 06-Mar-2015 11:36:30.864 CET
+Begin processing the 328th record. Run 1, Event 48629, LumiSection 487 at 06-Mar-2015 11:36:30.874 CET
+Begin processing the 329th record. Run 1, Event 48630, LumiSection 487 at 06-Mar-2015 11:36:30.877 CET
+Begin processing the 330th record. Run 1, Event 48631, LumiSection 487 at 06-Mar-2015 11:36:30.913 CET
+Begin processing the 331st record. Run 1, Event 48632, LumiSection 487 at 06-Mar-2015 11:36:30.915 CET
+Begin processing the 332nd record. Run 1, Event 48633, LumiSection 487 at 06-Mar-2015 11:36:30.918 CET
+Begin processing the 333rd record. Run 1, Event 48634, LumiSection 487 at 06-Mar-2015 11:36:30.925 CET
+Begin processing the 334th record. Run 1, Event 48635, LumiSection 487 at 06-Mar-2015 11:36:30.933 CET
+Begin processing the 335th record. Run 1, Event 48636, LumiSection 487 at 06-Mar-2015 11:36:30.939 CET
+Begin processing the 336th record. Run 1, Event 48637, LumiSection 487 at 06-Mar-2015 11:36:30.944 CET
+Begin processing the 337th record. Run 1, Event 48638, LumiSection 487 at 06-Mar-2015 11:36:30.951 CET
+Begin processing the 338th record. Run 1, Event 48639, LumiSection 487 at 06-Mar-2015 11:36:30.959 CET
+Begin processing the 339th record. Run 1, Event 48640, LumiSection 487 at 06-Mar-2015 11:36:30.965 CET
+Begin processing the 340th record. Run 1, Event 48641, LumiSection 487 at 06-Mar-2015 11:36:31.000 CET
+Begin processing the 341st record. Run 1, Event 48642, LumiSection 487 at 06-Mar-2015 11:36:31.007 CET
+Begin processing the 342nd record. Run 1, Event 48643, LumiSection 487 at 06-Mar-2015 11:36:31.019 CET
+Begin processing the 343rd record. Run 1, Event 48644, LumiSection 487 at 06-Mar-2015 11:36:31.022 CET
+Begin processing the 344th record. Run 1, Event 48645, LumiSection 487 at 06-Mar-2015 11:36:31.029 CET
+Begin processing the 345th record. Run 1, Event 48646, LumiSection 487 at 06-Mar-2015 11:36:31.039 CET
+Begin processing the 346th record. Run 1, Event 48647, LumiSection 487 at 06-Mar-2015 11:36:31.045 CET
+Begin processing the 347th record. Run 1, Event 48648, LumiSection 487 at 06-Mar-2015 11:36:31.049 CET
+Begin processing the 348th record. Run 1, Event 48649, LumiSection 487 at 06-Mar-2015 11:36:31.051 CET
+Begin processing the 349th record. Run 1, Event 48650, LumiSection 487 at 06-Mar-2015 11:36:31.066 CET
+Begin processing the 350th record. Run 1, Event 48651, LumiSection 487 at 06-Mar-2015 11:36:31.090 CET
+Begin processing the 351st record. Run 1, Event 48652, LumiSection 487 at 06-Mar-2015 11:36:31.094 CET
+Begin processing the 352nd record. Run 1, Event 48653, LumiSection 487 at 06-Mar-2015 11:36:31.098 CET
+Begin processing the 353rd record. Run 1, Event 48654, LumiSection 487 at 06-Mar-2015 11:36:31.100 CET
+Begin processing the 354th record. Run 1, Event 48655, LumiSection 487 at 06-Mar-2015 11:36:31.117 CET
+Begin processing the 355th record. Run 1, Event 48656, LumiSection 487 at 06-Mar-2015 11:36:31.120 CET
+Begin processing the 356th record. Run 1, Event 48657, LumiSection 487 at 06-Mar-2015 11:36:31.127 CET
+Begin processing the 357th record. Run 1, Event 48658, LumiSection 487 at 06-Mar-2015 11:36:31.374 CET
+Begin processing the 358th record. Run 1, Event 48659, LumiSection 487 at 06-Mar-2015 11:36:31.382 CET
+Begin processing the 359th record. Run 1, Event 48660, LumiSection 487 at 06-Mar-2015 11:36:31.388 CET
+Begin processing the 360th record. Run 1, Event 48661, LumiSection 487 at 06-Mar-2015 11:36:31.394 CET
+Begin processing the 361st record. Run 1, Event 48662, LumiSection 487 at 06-Mar-2015 11:36:31.402 CET
+Begin processing the 362nd record. Run 1, Event 48663, LumiSection 487 at 06-Mar-2015 11:36:31.408 CET
+Begin processing the 363rd record. Run 1, Event 48664, LumiSection 487 at 06-Mar-2015 11:36:31.419 CET
+Begin processing the 364th record. Run 1, Event 48665, LumiSection 487 at 06-Mar-2015 11:36:31.427 CET
+Begin processing the 365th record. Run 1, Event 48666, LumiSection 487 at 06-Mar-2015 11:36:31.435 CET
+Begin processing the 366th record. Run 1, Event 48667, LumiSection 487 at 06-Mar-2015 11:36:31.445 CET
+Begin processing the 367th record. Run 1, Event 48668, LumiSection 487 at 06-Mar-2015 11:36:31.452 CET
+Begin processing the 368th record. Run 1, Event 48669, LumiSection 487 at 06-Mar-2015 11:36:31.490 CET
+Begin processing the 369th record. Run 1, Event 48670, LumiSection 487 at 06-Mar-2015 11:36:31.497 CET
+Begin processing the 370th record. Run 1, Event 48671, LumiSection 487 at 06-Mar-2015 11:36:31.504 CET
+Begin processing the 371st record. Run 1, Event 48672, LumiSection 487 at 06-Mar-2015 11:36:31.512 CET
+Begin processing the 372nd record. Run 1, Event 48673, LumiSection 487 at 06-Mar-2015 11:36:31.525 CET
+Begin processing the 373rd record. Run 1, Event 48674, LumiSection 487 at 06-Mar-2015 11:36:31.530 CET
+Begin processing the 374th record. Run 1, Event 48675, LumiSection 487 at 06-Mar-2015 11:36:31.533 CET
+Begin processing the 375th record. Run 1, Event 48676, LumiSection 487 at 06-Mar-2015 11:36:31.544 CET
+Begin processing the 376th record. Run 1, Event 48677, LumiSection 487 at 06-Mar-2015 11:36:31.551 CET
+Begin processing the 377th record. Run 1, Event 48678, LumiSection 487 at 06-Mar-2015 11:36:31.553 CET
+Begin processing the 378th record. Run 1, Event 48679, LumiSection 487 at 06-Mar-2015 11:36:31.560 CET
+Begin processing the 379th record. Run 1, Event 48680, LumiSection 487 at 06-Mar-2015 11:36:31.566 CET
+Begin processing the 380th record. Run 1, Event 48681, LumiSection 487 at 06-Mar-2015 11:36:31.607 CET
+Begin processing the 381st record. Run 1, Event 48682, LumiSection 487 at 06-Mar-2015 11:36:31.611 CET
+Begin processing the 382nd record. Run 1, Event 48683, LumiSection 487 at 06-Mar-2015 11:36:31.617 CET
+Begin processing the 383rd record. Run 1, Event 48684, LumiSection 487 at 06-Mar-2015 11:36:31.623 CET
+Begin processing the 384th record. Run 1, Event 48685, LumiSection 487 at 06-Mar-2015 11:36:31.632 CET
+Begin processing the 385th record. Run 1, Event 48686, LumiSection 487 at 06-Mar-2015 11:36:31.637 CET
+Begin processing the 386th record. Run 1, Event 48687, LumiSection 487 at 06-Mar-2015 11:36:31.640 CET
+Begin processing the 387th record. Run 1, Event 48688, LumiSection 487 at 06-Mar-2015 11:36:31.653 CET
+Begin processing the 388th record. Run 1, Event 48689, LumiSection 487 at 06-Mar-2015 11:36:31.659 CET
+Begin processing the 389th record. Run 1, Event 48690, LumiSection 487 at 06-Mar-2015 11:36:31.667 CET
+Begin processing the 390th record. Run 1, Event 48691, LumiSection 487 at 06-Mar-2015 11:36:31.671 CET
+Begin processing the 391st record. Run 1, Event 48692, LumiSection 487 at 06-Mar-2015 11:36:31.711 CET
+Begin processing the 392nd record. Run 1, Event 48693, LumiSection 487 at 06-Mar-2015 11:36:31.723 CET
+Begin processing the 393rd record. Run 1, Event 48694, LumiSection 487 at 06-Mar-2015 11:36:31.729 CET
+Begin processing the 394th record. Run 1, Event 48695, LumiSection 487 at 06-Mar-2015 11:36:31.733 CET
+Begin processing the 395th record. Run 1, Event 48696, LumiSection 487 at 06-Mar-2015 11:36:31.738 CET
+Begin processing the 396th record. Run 1, Event 48697, LumiSection 487 at 06-Mar-2015 11:36:31.754 CET
+Begin processing the 397th record. Run 1, Event 48698, LumiSection 487 at 06-Mar-2015 11:36:31.764 CET
+Begin processing the 398th record. Run 1, Event 48699, LumiSection 487 at 06-Mar-2015 11:36:31.767 CET
+Begin processing the 399th record. Run 1, Event 48700, LumiSection 487 at 06-Mar-2015 11:36:31.769 CET
+Begin processing the 400th record. Run 1, Event 48701, LumiSection 488 at 06-Mar-2015 11:36:31.773 CET
+Begin processing the 401st record. Run 1, Event 48702, LumiSection 488 at 06-Mar-2015 11:36:31.781 CET
+Begin processing the 402nd record. Run 1, Event 48703, LumiSection 488 at 06-Mar-2015 11:36:31.790 CET
+Begin processing the 403rd record. Run 1, Event 48704, LumiSection 488 at 06-Mar-2015 11:36:31.829 CET
+Begin processing the 404th record. Run 1, Event 48705, LumiSection 488 at 06-Mar-2015 11:36:31.837 CET
+Begin processing the 405th record. Run 1, Event 48706, LumiSection 488 at 06-Mar-2015 11:36:31.844 CET
+Begin processing the 406th record. Run 1, Event 48707, LumiSection 488 at 06-Mar-2015 11:36:31.853 CET
+Begin processing the 407th record. Run 1, Event 48708, LumiSection 488 at 06-Mar-2015 11:36:31.858 CET
+Begin processing the 408th record. Run 1, Event 48709, LumiSection 488 at 06-Mar-2015 11:36:31.869 CET
+Begin processing the 409th record. Run 1, Event 48710, LumiSection 488 at 06-Mar-2015 11:36:31.873 CET
+Begin processing the 410th record. Run 1, Event 48711, LumiSection 488 at 06-Mar-2015 11:36:31.877 CET
+Begin processing the 411th record. Run 1, Event 48712, LumiSection 488 at 06-Mar-2015 11:36:31.879 CET
+Begin processing the 412th record. Run 1, Event 48713, LumiSection 488 at 06-Mar-2015 11:36:31.884 CET
+Begin processing the 413th record. Run 1, Event 48714, LumiSection 488 at 06-Mar-2015 11:36:31.895 CET
+Begin processing the 414th record. Run 1, Event 48715, LumiSection 488 at 06-Mar-2015 11:36:31.903 CET
+Begin processing the 415th record. Run 1, Event 48716, LumiSection 488 at 06-Mar-2015 11:36:31.939 CET
+Begin processing the 416th record. Run 1, Event 48717, LumiSection 488 at 06-Mar-2015 11:36:31.945 CET
+Begin processing the 417th record. Run 1, Event 48718, LumiSection 488 at 06-Mar-2015 11:36:31.952 CET
+Begin processing the 418th record. Run 1, Event 48719, LumiSection 488 at 06-Mar-2015 11:36:31.957 CET
+Begin processing the 419th record. Run 1, Event 48720, LumiSection 488 at 06-Mar-2015 11:36:31.962 CET
+Begin processing the 420th record. Run 1, Event 48721, LumiSection 488 at 06-Mar-2015 11:36:31.965 CET
+Begin processing the 421st record. Run 1, Event 48722, LumiSection 488 at 06-Mar-2015 11:36:32.424 CET
+Begin processing the 422nd record. Run 1, Event 48723, LumiSection 488 at 06-Mar-2015 11:36:32.429 CET
+Begin processing the 423rd record. Run 1, Event 48724, LumiSection 488 at 06-Mar-2015 11:36:32.441 CET
+Begin processing the 424th record. Run 1, Event 48725, LumiSection 488 at 06-Mar-2015 11:36:32.456 CET
+Begin processing the 425th record. Run 1, Event 48726, LumiSection 488 at 06-Mar-2015 11:36:32.461 CET
+Begin processing the 426th record. Run 1, Event 48727, LumiSection 488 at 06-Mar-2015 11:36:32.468 CET
+Begin processing the 427th record. Run 1, Event 48728, LumiSection 488 at 06-Mar-2015 11:36:32.471 CET
+Begin processing the 428th record. Run 1, Event 48729, LumiSection 488 at 06-Mar-2015 11:36:32.553 CET
+Begin processing the 429th record. Run 1, Event 48730, LumiSection 488 at 06-Mar-2015 11:36:32.555 CET
+Begin processing the 430th record. Run 1, Event 48731, LumiSection 488 at 06-Mar-2015 11:36:32.703 CET
+Begin processing the 431st record. Run 1, Event 48732, LumiSection 488 at 06-Mar-2015 11:36:32.708 CET
+Begin processing the 432nd record. Run 1, Event 48733, LumiSection 488 at 06-Mar-2015 11:36:32.720 CET
+Begin processing the 433rd record. Run 1, Event 48734, LumiSection 488 at 06-Mar-2015 11:36:32.725 CET
+Begin processing the 434th record. Run 1, Event 48735, LumiSection 488 at 06-Mar-2015 11:36:32.730 CET
+Begin processing the 435th record. Run 1, Event 48736, LumiSection 488 at 06-Mar-2015 11:36:32.738 CET
+Begin processing the 436th record. Run 1, Event 48737, LumiSection 488 at 06-Mar-2015 11:36:32.748 CET
+Begin processing the 437th record. Run 1, Event 48738, LumiSection 488 at 06-Mar-2015 11:36:32.750 CET
+Begin processing the 438th record. Run 1, Event 48739, LumiSection 488 at 06-Mar-2015 11:36:32.754 CET
+Begin processing the 439th record. Run 1, Event 48740, LumiSection 488 at 06-Mar-2015 11:36:32.758 CET
+Begin processing the 440th record. Run 1, Event 48741, LumiSection 488 at 06-Mar-2015 11:36:32.765 CET
+Begin processing the 441st record. Run 1, Event 48742, LumiSection 488 at 06-Mar-2015 11:36:32.808 CET
+Begin processing the 442nd record. Run 1, Event 48743, LumiSection 488 at 06-Mar-2015 11:36:32.817 CET
+Begin processing the 443rd record. Run 1, Event 48744, LumiSection 488 at 06-Mar-2015 11:36:32.821 CET
+Begin processing the 444th record. Run 1, Event 48745, LumiSection 488 at 06-Mar-2015 11:36:32.826 CET
+Begin processing the 445th record. Run 1, Event 48746, LumiSection 488 at 06-Mar-2015 11:36:32.835 CET
+Begin processing the 446th record. Run 1, Event 48747, LumiSection 488 at 06-Mar-2015 11:36:32.838 CET
+Begin processing the 447th record. Run 1, Event 48748, LumiSection 488 at 06-Mar-2015 11:36:32.842 CET
+Begin processing the 448th record. Run 1, Event 48749, LumiSection 488 at 06-Mar-2015 11:36:32.846 CET
+Begin processing the 449th record. Run 1, Event 48750, LumiSection 488 at 06-Mar-2015 11:36:32.857 CET
+Begin processing the 450th record. Run 1, Event 48751, LumiSection 488 at 06-Mar-2015 11:36:32.862 CET
+Begin processing the 451st record. Run 1, Event 48752, LumiSection 488 at 06-Mar-2015 11:36:32.864 CET
+Begin processing the 452nd record. Run 1, Event 48753, LumiSection 488 at 06-Mar-2015 11:36:32.901 CET
+Begin processing the 453rd record. Run 1, Event 48754, LumiSection 488 at 06-Mar-2015 11:36:32.910 CET
+Begin processing the 454th record. Run 1, Event 48755, LumiSection 488 at 06-Mar-2015 11:36:32.918 CET
+Begin processing the 455th record. Run 1, Event 48756, LumiSection 488 at 06-Mar-2015 11:36:32.933 CET
+Begin processing the 456th record. Run 1, Event 48757, LumiSection 488 at 06-Mar-2015 11:36:32.936 CET
+Begin processing the 457th record. Run 1, Event 48758, LumiSection 488 at 06-Mar-2015 11:36:32.942 CET
+Begin processing the 458th record. Run 1, Event 48759, LumiSection 488 at 06-Mar-2015 11:36:32.946 CET
+Begin processing the 459th record. Run 1, Event 48760, LumiSection 488 at 06-Mar-2015 11:36:32.951 CET
+Begin processing the 460th record. Run 1, Event 48761, LumiSection 488 at 06-Mar-2015 11:36:32.958 CET
+Begin processing the 461st record. Run 1, Event 48762, LumiSection 488 at 06-Mar-2015 11:36:32.966 CET
+Begin processing the 462nd record. Run 1, Event 48763, LumiSection 488 at 06-Mar-2015 11:36:33.009 CET
+Begin processing the 463rd record. Run 1, Event 48764, LumiSection 488 at 06-Mar-2015 11:36:33.011 CET
+Begin processing the 464th record. Run 1, Event 48765, LumiSection 488 at 06-Mar-2015 11:36:33.017 CET
+Begin processing the 465th record. Run 1, Event 48766, LumiSection 488 at 06-Mar-2015 11:36:33.019 CET
+Begin processing the 466th record. Run 1, Event 48767, LumiSection 488 at 06-Mar-2015 11:36:33.025 CET
+Begin processing the 467th record. Run 1, Event 48768, LumiSection 488 at 06-Mar-2015 11:36:33.038 CET
+Begin processing the 468th record. Run 1, Event 48769, LumiSection 488 at 06-Mar-2015 11:36:33.042 CET
+Begin processing the 469th record. Run 1, Event 48770, LumiSection 488 at 06-Mar-2015 11:36:33.046 CET
+Begin processing the 470th record. Run 1, Event 48771, LumiSection 488 at 06-Mar-2015 11:36:33.055 CET
+Begin processing the 471st record. Run 1, Event 48772, LumiSection 488 at 06-Mar-2015 11:36:33.089 CET
+Begin processing the 472nd record. Run 1, Event 48773, LumiSection 488 at 06-Mar-2015 11:36:33.094 CET
+Begin processing the 473rd record. Run 1, Event 48774, LumiSection 488 at 06-Mar-2015 11:36:33.102 CET
+Begin processing the 474th record. Run 1, Event 48775, LumiSection 488 at 06-Mar-2015 11:36:33.104 CET
+Begin processing the 475th record. Run 1, Event 48776, LumiSection 488 at 06-Mar-2015 11:36:33.116 CET
+Begin processing the 476th record. Run 1, Event 48777, LumiSection 488 at 06-Mar-2015 11:36:33.123 CET
+Begin processing the 477th record. Run 1, Event 48778, LumiSection 488 at 06-Mar-2015 11:36:33.127 CET
+Begin processing the 478th record. Run 1, Event 48779, LumiSection 488 at 06-Mar-2015 11:36:33.133 CET
+Begin processing the 479th record. Run 1, Event 48780, LumiSection 488 at 06-Mar-2015 11:36:33.135 CET
+Begin processing the 480th record. Run 1, Event 48781, LumiSection 488 at 06-Mar-2015 11:36:33.137 CET
+Begin processing the 481st record. Run 1, Event 48782, LumiSection 488 at 06-Mar-2015 11:36:33.150 CET
+Begin processing the 482nd record. Run 1, Event 48783, LumiSection 488 at 06-Mar-2015 11:36:33.153 CET
+Begin processing the 483rd record. Run 1, Event 48784, LumiSection 488 at 06-Mar-2015 11:36:33.157 CET
+Begin processing the 484th record. Run 1, Event 48785, LumiSection 488 at 06-Mar-2015 11:36:33.192 CET
+Begin processing the 485th record. Run 1, Event 48786, LumiSection 488 at 06-Mar-2015 11:36:33.197 CET
+Begin processing the 486th record. Run 1, Event 48787, LumiSection 488 at 06-Mar-2015 11:36:33.207 CET
+Begin processing the 487th record. Run 1, Event 48788, LumiSection 488 at 06-Mar-2015 11:36:33.216 CET
+Begin processing the 488th record. Run 1, Event 48789, LumiSection 488 at 06-Mar-2015 11:36:33.219 CET
+Begin processing the 489th record. Run 1, Event 48790, LumiSection 488 at 06-Mar-2015 11:36:33.227 CET
+Begin processing the 490th record. Run 1, Event 48791, LumiSection 488 at 06-Mar-2015 11:36:33.230 CET
+Begin processing the 491st record. Run 1, Event 48792, LumiSection 488 at 06-Mar-2015 11:36:33.237 CET
+Begin processing the 492nd record. Run 1, Event 48793, LumiSection 488 at 06-Mar-2015 11:36:33.251 CET
+Begin processing the 493rd record. Run 1, Event 48794, LumiSection 488 at 06-Mar-2015 11:36:33.257 CET
+Begin processing the 494th record. Run 1, Event 48795, LumiSection 488 at 06-Mar-2015 11:36:33.259 CET
+Begin processing the 495th record. Run 1, Event 48796, LumiSection 488 at 06-Mar-2015 11:36:33.276 CET
+Begin processing the 496th record. Run 1, Event 48797, LumiSection 488 at 06-Mar-2015 11:36:33.282 CET
+Begin processing the 497th record. Run 1, Event 48798, LumiSection 488 at 06-Mar-2015 11:36:33.286 CET
+Begin processing the 498th record. Run 1, Event 48799, LumiSection 488 at 06-Mar-2015 11:36:33.301 CET
+Begin processing the 499th record. Run 1, Event 48800, LumiSection 488 at 06-Mar-2015 11:36:33.538 CET
+Begin processing the 500th record. Run 1, Event 48801, LumiSection 489 at 06-Mar-2015 11:36:33.543 CET
+Begin processing the 501st record. Run 1, Event 48802, LumiSection 489 at 06-Mar-2015 11:36:33.548 CET
+Begin processing the 502nd record. Run 1, Event 48803, LumiSection 489 at 06-Mar-2015 11:36:33.553 CET
+Begin processing the 503rd record. Run 1, Event 48804, LumiSection 489 at 06-Mar-2015 11:36:33.564 CET
+Begin processing the 504th record. Run 1, Event 48805, LumiSection 489 at 06-Mar-2015 11:36:33.567 CET
+Begin processing the 505th record. Run 1, Event 48806, LumiSection 489 at 06-Mar-2015 11:36:33.573 CET
+Begin processing the 506th record. Run 1, Event 48807, LumiSection 489 at 06-Mar-2015 11:36:33.586 CET
+Begin processing the 507th record. Run 1, Event 48808, LumiSection 489 at 06-Mar-2015 11:36:33.589 CET
+Begin processing the 508th record. Run 1, Event 48809, LumiSection 489 at 06-Mar-2015 11:36:33.596 CET
+Begin processing the 509th record. Run 1, Event 48810, LumiSection 489 at 06-Mar-2015 11:36:33.644 CET
+Begin processing the 510th record. Run 1, Event 48811, LumiSection 489 at 06-Mar-2015 11:36:33.652 CET
+Begin processing the 511th record. Run 1, Event 48812, LumiSection 489 at 06-Mar-2015 11:36:33.660 CET
+Begin processing the 512th record. Run 1, Event 48813, LumiSection 489 at 06-Mar-2015 11:36:33.665 CET
+Begin processing the 513th record. Run 1, Event 48814, LumiSection 489 at 06-Mar-2015 11:36:33.672 CET
+Begin processing the 514th record. Run 1, Event 48815, LumiSection 489 at 06-Mar-2015 11:36:33.685 CET
+Begin processing the 515th record. Run 1, Event 48816, LumiSection 489 at 06-Mar-2015 11:36:33.690 CET
+Begin processing the 516th record. Run 1, Event 48817, LumiSection 489 at 06-Mar-2015 11:36:33.694 CET
+Begin processing the 517th record. Run 1, Event 48818, LumiSection 489 at 06-Mar-2015 11:36:33.701 CET
+Begin processing the 518th record. Run 1, Event 48819, LumiSection 489 at 06-Mar-2015 11:36:33.718 CET
+Begin processing the 519th record. Run 1, Event 48820, LumiSection 489 at 06-Mar-2015 11:36:33.724 CET
+Begin processing the 520th record. Run 1, Event 48821, LumiSection 489 at 06-Mar-2015 11:36:33.729 CET
+Begin processing the 521st record. Run 1, Event 48822, LumiSection 489 at 06-Mar-2015 11:36:33.767 CET
+Begin processing the 522nd record. Run 1, Event 48823, LumiSection 489 at 06-Mar-2015 11:36:33.777 CET
+Begin processing the 523rd record. Run 1, Event 48824, LumiSection 489 at 06-Mar-2015 11:36:33.782 CET
+Begin processing the 524th record. Run 1, Event 48825, LumiSection 489 at 06-Mar-2015 11:36:33.786 CET
+Begin processing the 525th record. Run 1, Event 48826, LumiSection 489 at 06-Mar-2015 11:36:33.798 CET
+Begin processing the 526th record. Run 1, Event 48827, LumiSection 489 at 06-Mar-2015 11:36:33.803 CET
+Begin processing the 527th record. Run 1, Event 48828, LumiSection 489 at 06-Mar-2015 11:36:33.807 CET
+Begin processing the 528th record. Run 1, Event 48829, LumiSection 489 at 06-Mar-2015 11:36:33.822 CET
+Begin processing the 529th record. Run 1, Event 48830, LumiSection 489 at 06-Mar-2015 11:36:33.829 CET
+Begin processing the 530th record. Run 1, Event 48831, LumiSection 489 at 06-Mar-2015 11:36:33.839 CET
+Begin processing the 531st record. Run 1, Event 48832, LumiSection 489 at 06-Mar-2015 11:36:33.845 CET
+Begin processing the 532nd record. Run 1, Event 48833, LumiSection 489 at 06-Mar-2015 11:36:33.884 CET
+Begin processing the 533rd record. Run 1, Event 48834, LumiSection 489 at 06-Mar-2015 11:36:33.889 CET
+Begin processing the 534th record. Run 1, Event 48835, LumiSection 489 at 06-Mar-2015 11:36:33.895 CET
+Begin processing the 535th record. Run 1, Event 48836, LumiSection 489 at 06-Mar-2015 11:36:33.904 CET
+Begin processing the 536th record. Run 1, Event 48837, LumiSection 489 at 06-Mar-2015 11:36:33.907 CET
+Begin processing the 537th record. Run 1, Event 48838, LumiSection 489 at 06-Mar-2015 11:36:33.912 CET
+Begin processing the 538th record. Run 1, Event 48839, LumiSection 489 at 06-Mar-2015 11:36:33.918 CET
+Begin processing the 539th record. Run 1, Event 48840, LumiSection 489 at 06-Mar-2015 11:36:33.932 CET
+Begin processing the 540th record. Run 1, Event 48841, LumiSection 489 at 06-Mar-2015 11:36:33.937 CET
+Begin processing the 541st record. Run 1, Event 48842, LumiSection 489 at 06-Mar-2015 11:36:33.940 CET
+Begin processing the 542nd record. Run 1, Event 48843, LumiSection 489 at 06-Mar-2015 11:36:33.942 CET
+Begin processing the 543rd record. Run 1, Event 48844, LumiSection 489 at 06-Mar-2015 11:36:33.948 CET
+Begin processing the 544th record. Run 1, Event 48845, LumiSection 489 at 06-Mar-2015 11:36:33.991 CET
+Begin processing the 545th record. Run 1, Event 48846, LumiSection 489 at 06-Mar-2015 11:36:33.997 CET
+Begin processing the 546th record. Run 1, Event 48847, LumiSection 489 at 06-Mar-2015 11:36:34.001 CET
+Begin processing the 547th record. Run 1, Event 48848, LumiSection 489 at 06-Mar-2015 11:36:34.015 CET
+Begin processing the 548th record. Run 1, Event 48849, LumiSection 489 at 06-Mar-2015 11:36:34.018 CET
+Begin processing the 549th record. Run 1, Event 48850, LumiSection 489 at 06-Mar-2015 11:36:34.022 CET
+Begin processing the 550th record. Run 1, Event 48851, LumiSection 489 at 06-Mar-2015 11:36:34.027 CET
+Begin processing the 551st record. Run 1, Event 48852, LumiSection 489 at 06-Mar-2015 11:36:34.037 CET
+Begin processing the 552nd record. Run 1, Event 48853, LumiSection 489 at 06-Mar-2015 11:36:34.044 CET
+Begin processing the 553rd record. Run 1, Event 48854, LumiSection 489 at 06-Mar-2015 11:36:34.049 CET
+Begin processing the 554th record. Run 1, Event 48855, LumiSection 489 at 06-Mar-2015 11:36:34.064 CET
+Begin processing the 555th record. Run 1, Event 48856, LumiSection 489 at 06-Mar-2015 11:36:34.100 CET
+Begin processing the 556th record. Run 1, Event 48857, LumiSection 489 at 06-Mar-2015 11:36:34.109 CET
+Begin processing the 557th record. Run 1, Event 48858, LumiSection 489 at 06-Mar-2015 11:36:34.111 CET
+Begin processing the 558th record. Run 1, Event 48859, LumiSection 489 at 06-Mar-2015 11:36:34.118 CET
+Begin processing the 559th record. Run 1, Event 48860, LumiSection 489 at 06-Mar-2015 11:36:34.124 CET
+Begin processing the 560th record. Run 1, Event 48861, LumiSection 489 at 06-Mar-2015 11:36:34.133 CET
+Begin processing the 561st record. Run 1, Event 48862, LumiSection 489 at 06-Mar-2015 11:36:34.137 CET
+Begin processing the 562nd record. Run 1, Event 48863, LumiSection 489 at 06-Mar-2015 11:36:34.140 CET
+Begin processing the 563rd record. Run 1, Event 48864, LumiSection 489 at 06-Mar-2015 11:36:34.148 CET
+Begin processing the 564th record. Run 1, Event 48865, LumiSection 489 at 06-Mar-2015 11:36:34.155 CET
+Begin processing the 565th record. Run 1, Event 48866, LumiSection 489 at 06-Mar-2015 11:36:34.157 CET
+Begin processing the 566th record. Run 1, Event 48867, LumiSection 489 at 06-Mar-2015 11:36:34.173 CET
+Begin processing the 567th record. Run 1, Event 48868, LumiSection 489 at 06-Mar-2015 11:36:34.177 CET
+Begin processing the 568th record. Run 1, Event 48869, LumiSection 489 at 06-Mar-2015 11:36:34.183 CET
+Begin processing the 569th record. Run 1, Event 48870, LumiSection 489 at 06-Mar-2015 11:36:34.189 CET
+Begin processing the 570th record. Run 1, Event 48871, LumiSection 489 at 06-Mar-2015 11:36:34.422 CET
+Begin processing the 571st record. Run 1, Event 48872, LumiSection 489 at 06-Mar-2015 11:36:34.426 CET
+Begin processing the 572nd record. Run 1, Event 48873, LumiSection 489 at 06-Mar-2015 11:36:34.431 CET
+Begin processing the 573rd record. Run 1, Event 48874, LumiSection 489 at 06-Mar-2015 11:36:34.441 CET
+Begin processing the 574th record. Run 1, Event 48875, LumiSection 489 at 06-Mar-2015 11:36:34.448 CET
+Begin processing the 575th record. Run 1, Event 48876, LumiSection 489 at 06-Mar-2015 11:36:34.453 CET
+Begin processing the 576th record. Run 1, Event 48877, LumiSection 489 at 06-Mar-2015 11:36:34.468 CET
+Begin processing the 577th record. Run 1, Event 48878, LumiSection 489 at 06-Mar-2015 11:36:34.472 CET
+Begin processing the 578th record. Run 1, Event 48879, LumiSection 489 at 06-Mar-2015 11:36:34.478 CET
+Begin processing the 579th record. Run 1, Event 48880, LumiSection 489 at 06-Mar-2015 11:36:34.482 CET
+Begin processing the 580th record. Run 1, Event 48881, LumiSection 489 at 06-Mar-2015 11:36:34.524 CET
+Begin processing the 581st record. Run 1, Event 48882, LumiSection 489 at 06-Mar-2015 11:36:34.529 CET
+Begin processing the 582nd record. Run 1, Event 48883, LumiSection 489 at 06-Mar-2015 11:36:34.538 CET
+Begin processing the 583rd record. Run 1, Event 48884, LumiSection 489 at 06-Mar-2015 11:36:34.543 CET
+Begin processing the 584th record. Run 1, Event 48885, LumiSection 489 at 06-Mar-2015 11:36:34.552 CET
+Begin processing the 585th record. Run 1, Event 48886, LumiSection 489 at 06-Mar-2015 11:36:34.556 CET
+Begin processing the 586th record. Run 1, Event 48887, LumiSection 489 at 06-Mar-2015 11:36:34.560 CET
+Begin processing the 587th record. Run 1, Event 48888, LumiSection 489 at 06-Mar-2015 11:36:34.568 CET
+Begin processing the 588th record. Run 1, Event 48889, LumiSection 489 at 06-Mar-2015 11:36:34.570 CET
+Begin processing the 589th record. Run 1, Event 48890, LumiSection 489 at 06-Mar-2015 11:36:34.578 CET
+Begin processing the 590th record. Run 1, Event 48891, LumiSection 489 at 06-Mar-2015 11:36:34.584 CET
+Begin processing the 591st record. Run 1, Event 48892, LumiSection 489 at 06-Mar-2015 11:36:34.624 CET
+Begin processing the 592nd record. Run 1, Event 48893, LumiSection 489 at 06-Mar-2015 11:36:34.629 CET
+Begin processing the 593rd record. Run 1, Event 48894, LumiSection 489 at 06-Mar-2015 11:36:34.634 CET
+Begin processing the 594th record. Run 1, Event 48895, LumiSection 489 at 06-Mar-2015 11:36:34.639 CET
+Begin processing the 595th record. Run 1, Event 48896, LumiSection 489 at 06-Mar-2015 11:36:34.642 CET
+Begin processing the 596th record. Run 1, Event 48897, LumiSection 489 at 06-Mar-2015 11:36:34.656 CET
+Begin processing the 597th record. Run 1, Event 48898, LumiSection 489 at 06-Mar-2015 11:36:34.659 CET
+Begin processing the 598th record. Run 1, Event 48899, LumiSection 489 at 06-Mar-2015 11:36:34.667 CET
+Begin processing the 599th record. Run 1, Event 48900, LumiSection 489 at 06-Mar-2015 11:36:34.678 CET
+Begin processing the 600th record. Run 1, Event 54301, LumiSection 544 at 06-Mar-2015 11:36:34.683 CET
+Begin processing the 601st record. Run 1, Event 54302, LumiSection 544 at 06-Mar-2015 11:36:34.690 CET
+Begin processing the 602nd record. Run 1, Event 54303, LumiSection 544 at 06-Mar-2015 11:36:34.699 CET
+Begin processing the 603rd record. Run 1, Event 54304, LumiSection 544 at 06-Mar-2015 11:36:34.702 CET
+Begin processing the 604th record. Run 1, Event 54305, LumiSection 544 at 06-Mar-2015 11:36:34.709 CET
+Begin processing the 605th record. Run 1, Event 54306, LumiSection 544 at 06-Mar-2015 11:36:34.745 CET
+Begin processing the 606th record. Run 1, Event 54307, LumiSection 544 at 06-Mar-2015 11:36:34.747 CET
+Begin processing the 607th record. Run 1, Event 54308, LumiSection 544 at 06-Mar-2015 11:36:34.753 CET
+Begin processing the 608th record. Run 1, Event 54309, LumiSection 544 at 06-Mar-2015 11:36:34.760 CET
+Begin processing the 609th record. Run 1, Event 54310, LumiSection 544 at 06-Mar-2015 11:36:34.767 CET
+Begin processing the 610th record. Run 1, Event 54311, LumiSection 544 at 06-Mar-2015 11:36:34.773 CET
+Begin processing the 611th record. Run 1, Event 54312, LumiSection 544 at 06-Mar-2015 11:36:34.779 CET
+Begin processing the 612th record. Run 1, Event 54313, LumiSection 544 at 06-Mar-2015 11:36:34.781 CET
+Begin processing the 613th record. Run 1, Event 54314, LumiSection 544 at 06-Mar-2015 11:36:34.786 CET
+Begin processing the 614th record. Run 1, Event 54315, LumiSection 544 at 06-Mar-2015 11:36:34.826 CET
+Begin processing the 615th record. Run 1, Event 54316, LumiSection 544 at 06-Mar-2015 11:36:34.834 CET
+Begin processing the 616th record. Run 1, Event 54317, LumiSection 544 at 06-Mar-2015 11:36:34.836 CET
+Begin processing the 617th record. Run 1, Event 54318, LumiSection 544 at 06-Mar-2015 11:36:34.839 CET
+Begin processing the 618th record. Run 1, Event 54319, LumiSection 544 at 06-Mar-2015 11:36:34.848 CET
+Begin processing the 619th record. Run 1, Event 54320, LumiSection 544 at 06-Mar-2015 11:36:34.853 CET
+Begin processing the 620th record. Run 1, Event 54321, LumiSection 544 at 06-Mar-2015 11:36:34.857 CET
+Begin processing the 621st record. Run 1, Event 54322, LumiSection 544 at 06-Mar-2015 11:36:34.865 CET
+Begin processing the 622nd record. Run 1, Event 54323, LumiSection 544 at 06-Mar-2015 11:36:34.870 CET
+Begin processing the 623rd record. Run 1, Event 54324, LumiSection 544 at 06-Mar-2015 11:36:34.874 CET
+Begin processing the 624th record. Run 1, Event 54325, LumiSection 544 at 06-Mar-2015 11:36:34.882 CET
+Begin processing the 625th record. Run 1, Event 54326, LumiSection 544 at 06-Mar-2015 11:36:34.916 CET
+Begin processing the 626th record. Run 1, Event 54327, LumiSection 544 at 06-Mar-2015 11:36:34.921 CET
+Begin processing the 627th record. Run 1, Event 54328, LumiSection 544 at 06-Mar-2015 11:36:34.928 CET
+Begin processing the 628th record. Run 1, Event 54329, LumiSection 544 at 06-Mar-2015 11:36:34.938 CET
+Begin processing the 629th record. Run 1, Event 54330, LumiSection 544 at 06-Mar-2015 11:36:34.944 CET
+Begin processing the 630th record. Run 1, Event 54331, LumiSection 544 at 06-Mar-2015 11:36:34.950 CET
+Begin processing the 631st record. Run 1, Event 54332, LumiSection 544 at 06-Mar-2015 11:36:36.362 CET
+Begin processing the 632nd record. Run 1, Event 54333, LumiSection 544 at 06-Mar-2015 11:36:36.373 CET
+Begin processing the 633rd record. Run 1, Event 54334, LumiSection 544 at 06-Mar-2015 11:36:36.390 CET
+Begin processing the 634th record. Run 1, Event 54335, LumiSection 544 at 06-Mar-2015 11:36:36.400 CET
+Begin processing the 635th record. Run 1, Event 54336, LumiSection 544 at 06-Mar-2015 11:36:36.421 CET
+Begin processing the 636th record. Run 1, Event 54337, LumiSection 544 at 06-Mar-2015 11:36:36.430 CET
+Begin processing the 637th record. Run 1, Event 54338, LumiSection 544 at 06-Mar-2015 11:36:36.436 CET
+Begin processing the 638th record. Run 1, Event 54339, LumiSection 544 at 06-Mar-2015 11:36:36.439 CET
+Begin processing the 639th record. Run 1, Event 54340, LumiSection 544 at 06-Mar-2015 11:36:36.445 CET
+Begin processing the 640th record. Run 1, Event 54341, LumiSection 544 at 06-Mar-2015 11:36:36.449 CET
+Begin processing the 641st record. Run 1, Event 54342, LumiSection 544 at 06-Mar-2015 11:36:36.679 CET
+Begin processing the 642nd record. Run 1, Event 54343, LumiSection 544 at 06-Mar-2015 11:36:36.682 CET
+Begin processing the 643rd record. Run 1, Event 54344, LumiSection 544 at 06-Mar-2015 11:36:36.687 CET
+Begin processing the 644th record. Run 1, Event 54345, LumiSection 544 at 06-Mar-2015 11:36:36.698 CET
+Begin processing the 645th record. Run 1, Event 54346, LumiSection 544 at 06-Mar-2015 11:36:36.701 CET
+Begin processing the 646th record. Run 1, Event 54347, LumiSection 544 at 06-Mar-2015 11:36:36.704 CET
+Begin processing the 647th record. Run 1, Event 54348, LumiSection 544 at 06-Mar-2015 11:36:36.707 CET
+Begin processing the 648th record. Run 1, Event 54349, LumiSection 544 at 06-Mar-2015 11:36:36.715 CET
+Begin processing the 649th record. Run 1, Event 54350, LumiSection 544 at 06-Mar-2015 11:36:36.723 CET
+Begin processing the 650th record. Run 1, Event 54351, LumiSection 544 at 06-Mar-2015 11:36:36.757 CET
+Begin processing the 651st record. Run 1, Event 54352, LumiSection 544 at 06-Mar-2015 11:36:36.765 CET
+Begin processing the 652nd record. Run 1, Event 54353, LumiSection 544 at 06-Mar-2015 11:36:36.772 CET
+Begin processing the 653rd record. Run 1, Event 54354, LumiSection 544 at 06-Mar-2015 11:36:36.776 CET
+Begin processing the 654th record. Run 1, Event 54355, LumiSection 544 at 06-Mar-2015 11:36:36.786 CET
+Begin processing the 655th record. Run 1, Event 54356, LumiSection 544 at 06-Mar-2015 11:36:36.790 CET
+Begin processing the 656th record. Run 1, Event 54357, LumiSection 544 at 06-Mar-2015 11:36:36.793 CET
+Begin processing the 657th record. Run 1, Event 54358, LumiSection 544 at 06-Mar-2015 11:36:36.798 CET
+Begin processing the 658th record. Run 1, Event 54359, LumiSection 544 at 06-Mar-2015 11:36:36.806 CET
+Begin processing the 659th record. Run 1, Event 54360, LumiSection 544 at 06-Mar-2015 11:36:36.811 CET
+Begin processing the 660th record. Run 1, Event 54361, LumiSection 544 at 06-Mar-2015 11:36:36.820 CET
+Begin processing the 661st record. Run 1, Event 54362, LumiSection 544 at 06-Mar-2015 11:36:36.858 CET
+Begin processing the 662nd record. Run 1, Event 54363, LumiSection 544 at 06-Mar-2015 11:36:36.865 CET
+Begin processing the 663rd record. Run 1, Event 54364, LumiSection 544 at 06-Mar-2015 11:36:36.871 CET
+Begin processing the 664th record. Run 1, Event 54365, LumiSection 544 at 06-Mar-2015 11:36:36.875 CET
+Begin processing the 665th record. Run 1, Event 54366, LumiSection 544 at 06-Mar-2015 11:36:36.884 CET
+Begin processing the 666th record. Run 1, Event 54367, LumiSection 544 at 06-Mar-2015 11:36:36.894 CET
+Begin processing the 667th record. Run 1, Event 54368, LumiSection 544 at 06-Mar-2015 11:36:36.905 CET
+Begin processing the 668th record. Run 1, Event 54369, LumiSection 544 at 06-Mar-2015 11:36:36.912 CET
+Begin processing the 669th record. Run 1, Event 54370, LumiSection 544 at 06-Mar-2015 11:36:36.916 CET
+Begin processing the 670th record. Run 1, Event 54371, LumiSection 544 at 06-Mar-2015 11:36:36.920 CET
+Begin processing the 671st record. Run 1, Event 54372, LumiSection 544 at 06-Mar-2015 11:36:36.932 CET
+Begin processing the 672nd record. Run 1, Event 54373, LumiSection 544 at 06-Mar-2015 11:36:36.938 CET
+Begin processing the 673rd record. Run 1, Event 54374, LumiSection 544 at 06-Mar-2015 11:36:36.978 CET
+Begin processing the 674th record. Run 1, Event 54375, LumiSection 544 at 06-Mar-2015 11:36:36.982 CET
+Begin processing the 675th record. Run 1, Event 54376, LumiSection 544 at 06-Mar-2015 11:36:36.987 CET
+Begin processing the 676th record. Run 1, Event 54377, LumiSection 544 at 06-Mar-2015 11:36:36.992 CET
+Begin processing the 677th record. Run 1, Event 54378, LumiSection 544 at 06-Mar-2015 11:36:36.995 CET
+Begin processing the 678th record. Run 1, Event 54379, LumiSection 544 at 06-Mar-2015 11:36:36.998 CET
+Begin processing the 679th record. Run 1, Event 54380, LumiSection 544 at 06-Mar-2015 11:36:37.008 CET
+Begin processing the 680th record. Run 1, Event 54381, LumiSection 544 at 06-Mar-2015 11:36:37.015 CET
+Begin processing the 681st record. Run 1, Event 54382, LumiSection 544 at 06-Mar-2015 11:36:37.018 CET
+Begin processing the 682nd record. Run 1, Event 54383, LumiSection 544 at 06-Mar-2015 11:36:37.023 CET
+Begin processing the 683rd record. Run 1, Event 54384, LumiSection 544 at 06-Mar-2015 11:36:37.030 CET
+Begin processing the 684th record. Run 1, Event 54385, LumiSection 544 at 06-Mar-2015 11:36:37.034 CET
+Begin processing the 685th record. Run 1, Event 54386, LumiSection 544 at 06-Mar-2015 11:36:37.070 CET
+Begin processing the 686th record. Run 1, Event 54387, LumiSection 544 at 06-Mar-2015 11:36:37.077 CET
+Begin processing the 687th record. Run 1, Event 54388, LumiSection 544 at 06-Mar-2015 11:36:37.085 CET
+Begin processing the 688th record. Run 1, Event 54389, LumiSection 544 at 06-Mar-2015 11:36:37.087 CET
+Begin processing the 689th record. Run 1, Event 54390, LumiSection 544 at 06-Mar-2015 11:36:37.090 CET
+Begin processing the 690th record. Run 1, Event 54391, LumiSection 544 at 06-Mar-2015 11:36:37.097 CET
+Begin processing the 691st record. Run 1, Event 54392, LumiSection 544 at 06-Mar-2015 11:36:37.106 CET
+Begin processing the 692nd record. Run 1, Event 54393, LumiSection 544 at 06-Mar-2015 11:36:37.114 CET
+Begin processing the 693rd record. Run 1, Event 54394, LumiSection 544 at 06-Mar-2015 11:36:37.119 CET
+Begin processing the 694th record. Run 1, Event 54395, LumiSection 544 at 06-Mar-2015 11:36:37.156 CET
+Begin processing the 695th record. Run 1, Event 54396, LumiSection 544 at 06-Mar-2015 11:36:37.165 CET
+Begin processing the 696th record. Run 1, Event 54397, LumiSection 544 at 06-Mar-2015 11:36:37.168 CET
+Begin processing the 697th record. Run 1, Event 54398, LumiSection 544 at 06-Mar-2015 11:36:37.174 CET
+Begin processing the 698th record. Run 1, Event 54399, LumiSection 544 at 06-Mar-2015 11:36:37.182 CET
+Begin processing the 699th record. Run 1, Event 54400, LumiSection 544 at 06-Mar-2015 11:36:37.191 CET
+Begin processing the 700th record. Run 1, Event 54401, LumiSection 545 at 06-Mar-2015 11:36:37.194 CET
+Begin processing the 701st record. Run 1, Event 54402, LumiSection 545 at 06-Mar-2015 11:36:37.199 CET
+Begin processing the 702nd record. Run 1, Event 54403, LumiSection 545 at 06-Mar-2015 11:36:37.209 CET
+Begin processing the 703rd record. Run 1, Event 54404, LumiSection 545 at 06-Mar-2015 11:36:37.211 CET
+Begin processing the 704th record. Run 1, Event 54405, LumiSection 545 at 06-Mar-2015 11:36:37.213 CET
+Begin processing the 705th record. Run 1, Event 54406, LumiSection 545 at 06-Mar-2015 11:36:37.215 CET
+Begin processing the 706th record. Run 1, Event 54407, LumiSection 545 at 06-Mar-2015 11:36:37.237 CET
+Begin processing the 707th record. Run 1, Event 54408, LumiSection 545 at 06-Mar-2015 11:36:37.244 CET
+Begin processing the 708th record. Run 1, Event 54409, LumiSection 545 at 06-Mar-2015 11:36:37.248 CET
+Begin processing the 709th record. Run 1, Event 54410, LumiSection 545 at 06-Mar-2015 11:36:37.251 CET
+Begin processing the 710th record. Run 1, Event 54411, LumiSection 545 at 06-Mar-2015 11:36:37.257 CET
+Begin processing the 711th record. Run 1, Event 54412, LumiSection 545 at 06-Mar-2015 11:36:37.261 CET
+Begin processing the 712th record. Run 1, Event 54413, LumiSection 545 at 06-Mar-2015 11:36:37.511 CET
+Begin processing the 713th record. Run 1, Event 54414, LumiSection 545 at 06-Mar-2015 11:36:37.516 CET
+Begin processing the 714th record. Run 1, Event 54415, LumiSection 545 at 06-Mar-2015 11:36:37.520 CET
+Begin processing the 715th record. Run 1, Event 54416, LumiSection 545 at 06-Mar-2015 11:36:37.528 CET
+Begin processing the 716th record. Run 1, Event 54417, LumiSection 545 at 06-Mar-2015 11:36:37.532 CET
+Begin processing the 717th record. Run 1, Event 54418, LumiSection 545 at 06-Mar-2015 11:36:37.536 CET
+Begin processing the 718th record. Run 1, Event 54419, LumiSection 545 at 06-Mar-2015 11:36:37.547 CET
+Begin processing the 719th record. Run 1, Event 54420, LumiSection 545 at 06-Mar-2015 11:36:37.552 CET
+Begin processing the 720th record. Run 1, Event 54421, LumiSection 545 at 06-Mar-2015 11:36:37.560 CET
+Begin processing the 721st record. Run 1, Event 54422, LumiSection 545 at 06-Mar-2015 11:36:37.564 CET
+Begin processing the 722nd record. Run 1, Event 54423, LumiSection 545 at 06-Mar-2015 11:36:37.600 CET
+Begin processing the 723rd record. Run 1, Event 54424, LumiSection 545 at 06-Mar-2015 11:36:37.605 CET
+Begin processing the 724th record. Run 1, Event 54425, LumiSection 545 at 06-Mar-2015 11:36:37.613 CET
+Begin processing the 725th record. Run 1, Event 54426, LumiSection 545 at 06-Mar-2015 11:36:37.622 CET
+Begin processing the 726th record. Run 1, Event 54427, LumiSection 545 at 06-Mar-2015 11:36:37.625 CET
+Begin processing the 727th record. Run 1, Event 54428, LumiSection 545 at 06-Mar-2015 11:36:37.633 CET
+Begin processing the 728th record. Run 1, Event 54429, LumiSection 545 at 06-Mar-2015 11:36:37.636 CET
+Begin processing the 729th record. Run 1, Event 54430, LumiSection 545 at 06-Mar-2015 11:36:37.646 CET
+Begin processing the 730th record. Run 1, Event 54431, LumiSection 545 at 06-Mar-2015 11:36:37.649 CET
+Begin processing the 731st record. Run 1, Event 54432, LumiSection 545 at 06-Mar-2015 11:36:37.652 CET
+Begin processing the 732nd record. Run 1, Event 54433, LumiSection 545 at 06-Mar-2015 11:36:37.658 CET
+Begin processing the 733rd record. Run 1, Event 54434, LumiSection 545 at 06-Mar-2015 11:36:37.666 CET
+Begin processing the 734th record. Run 1, Event 54435, LumiSection 545 at 06-Mar-2015 11:36:37.701 CET
+Begin processing the 735th record. Run 1, Event 54436, LumiSection 545 at 06-Mar-2015 11:36:37.710 CET
+Begin processing the 736th record. Run 1, Event 54437, LumiSection 545 at 06-Mar-2015 11:36:37.713 CET
+Begin processing the 737th record. Run 1, Event 54438, LumiSection 545 at 06-Mar-2015 11:36:37.717 CET
+Begin processing the 738th record. Run 1, Event 54439, LumiSection 545 at 06-Mar-2015 11:36:37.729 CET
+Begin processing the 739th record. Run 1, Event 54440, LumiSection 545 at 06-Mar-2015 11:36:37.733 CET
+Begin processing the 740th record. Run 1, Event 54441, LumiSection 545 at 06-Mar-2015 11:36:37.739 CET
+Begin processing the 741st record. Run 1, Event 54442, LumiSection 545 at 06-Mar-2015 11:36:37.746 CET
+Begin processing the 742nd record. Run 1, Event 54443, LumiSection 545 at 06-Mar-2015 11:36:37.751 CET
+Begin processing the 743rd record. Run 1, Event 54444, LumiSection 545 at 06-Mar-2015 11:36:37.761 CET
+Begin processing the 744th record. Run 1, Event 54445, LumiSection 545 at 06-Mar-2015 11:36:37.769 CET
+Begin processing the 745th record. Run 1, Event 54446, LumiSection 545 at 06-Mar-2015 11:36:37.805 CET
+Begin processing the 746th record. Run 1, Event 54447, LumiSection 545 at 06-Mar-2015 11:36:37.810 CET
+Begin processing the 747th record. Run 1, Event 54448, LumiSection 545 at 06-Mar-2015 11:36:37.814 CET
+Begin processing the 748th record. Run 1, Event 54449, LumiSection 545 at 06-Mar-2015 11:36:37.826 CET
+Begin processing the 749th record. Run 1, Event 54450, LumiSection 545 at 06-Mar-2015 11:36:37.833 CET
+Begin processing the 750th record. Run 1, Event 54451, LumiSection 545 at 06-Mar-2015 11:36:37.843 CET
+Begin processing the 751st record. Run 1, Event 54452, LumiSection 545 at 06-Mar-2015 11:36:37.846 CET
+Begin processing the 752nd record. Run 1, Event 54453, LumiSection 545 at 06-Mar-2015 11:36:37.851 CET
+Begin processing the 753rd record. Run 1, Event 54454, LumiSection 545 at 06-Mar-2015 11:36:37.860 CET
+Begin processing the 754th record. Run 1, Event 54455, LumiSection 545 at 06-Mar-2015 11:36:37.863 CET
+Begin processing the 755th record. Run 1, Event 54456, LumiSection 545 at 06-Mar-2015 11:36:37.909 CET
+Begin processing the 756th record. Run 1, Event 54457, LumiSection 545 at 06-Mar-2015 11:36:37.914 CET
+Begin processing the 757th record. Run 1, Event 54458, LumiSection 545 at 06-Mar-2015 11:36:37.923 CET
+Begin processing the 758th record. Run 1, Event 54459, LumiSection 545 at 06-Mar-2015 11:36:37.929 CET
+Begin processing the 759th record. Run 1, Event 54460, LumiSection 545 at 06-Mar-2015 11:36:37.933 CET
+Begin processing the 760th record. Run 1, Event 54461, LumiSection 545 at 06-Mar-2015 11:36:37.938 CET
+Begin processing the 761st record. Run 1, Event 54462, LumiSection 545 at 06-Mar-2015 11:36:37.942 CET
+Begin processing the 762nd record. Run 1, Event 54463, LumiSection 545 at 06-Mar-2015 11:36:37.950 CET
+Begin processing the 763rd record. Run 1, Event 54464, LumiSection 545 at 06-Mar-2015 11:36:37.957 CET
+Begin processing the 764th record. Run 1, Event 54465, LumiSection 545 at 06-Mar-2015 11:36:37.963 CET
+Begin processing the 765th record. Run 1, Event 54466, LumiSection 545 at 06-Mar-2015 11:36:37.968 CET
+Begin processing the 766th record. Run 1, Event 54467, LumiSection 545 at 06-Mar-2015 11:36:37.974 CET
+Begin processing the 767th record. Run 1, Event 54468, LumiSection 545 at 06-Mar-2015 11:36:38.015 CET
+Begin processing the 768th record. Run 1, Event 54469, LumiSection 545 at 06-Mar-2015 11:36:38.023 CET
+Begin processing the 769th record. Run 1, Event 54470, LumiSection 545 at 06-Mar-2015 11:36:38.029 CET
+Begin processing the 770th record. Run 1, Event 54471, LumiSection 545 at 06-Mar-2015 11:36:38.036 CET
+Begin processing the 771st record. Run 1, Event 54472, LumiSection 545 at 06-Mar-2015 11:36:38.042 CET
+Begin processing the 772nd record. Run 1, Event 54473, LumiSection 545 at 06-Mar-2015 11:36:38.047 CET
+Begin processing the 773rd record. Run 1, Event 54474, LumiSection 545 at 06-Mar-2015 11:36:38.110 CET
+Begin processing the 774th record. Run 1, Event 54475, LumiSection 545 at 06-Mar-2015 11:36:38.129 CET
+Begin processing the 775th record. Run 1, Event 54476, LumiSection 545 at 06-Mar-2015 11:36:38.135 CET
+Begin processing the 776th record. Run 1, Event 54477, LumiSection 545 at 06-Mar-2015 11:36:38.145 CET
+Begin processing the 777th record. Run 1, Event 54478, LumiSection 545 at 06-Mar-2015 11:36:38.167 CET
+Begin processing the 778th record. Run 1, Event 54479, LumiSection 545 at 06-Mar-2015 11:36:38.173 CET
+Begin processing the 779th record. Run 1, Event 54480, LumiSection 545 at 06-Mar-2015 11:36:38.184 CET
+Begin processing the 780th record. Run 1, Event 54481, LumiSection 545 at 06-Mar-2015 11:36:38.191 CET
+Begin processing the 781st record. Run 1, Event 54482, LumiSection 545 at 06-Mar-2015 11:36:40.405 CET
+Begin processing the 782nd record. Run 1, Event 54483, LumiSection 545 at 06-Mar-2015 11:36:40.417 CET
+Begin processing the 783rd record. Run 1, Event 54484, LumiSection 545 at 06-Mar-2015 11:36:40.515 CET
+Begin processing the 784th record. Run 1, Event 54485, LumiSection 545 at 06-Mar-2015 11:36:40.521 CET
+Begin processing the 785th record. Run 1, Event 54486, LumiSection 545 at 06-Mar-2015 11:36:40.527 CET
+Begin processing the 786th record. Run 1, Event 54487, LumiSection 545 at 06-Mar-2015 11:36:40.530 CET
+Begin processing the 787th record. Run 1, Event 54488, LumiSection 545 at 06-Mar-2015 11:36:40.535 CET
+Begin processing the 788th record. Run 1, Event 54489, LumiSection 545 at 06-Mar-2015 11:36:40.547 CET
+Begin processing the 789th record. Run 1, Event 54490, LumiSection 545 at 06-Mar-2015 11:36:40.552 CET
+Begin processing the 790th record. Run 1, Event 54491, LumiSection 545 at 06-Mar-2015 11:36:40.554 CET
+Begin processing the 791st record. Run 1, Event 54492, LumiSection 545 at 06-Mar-2015 11:36:40.570 CET
+Begin processing the 792nd record. Run 1, Event 54493, LumiSection 545 at 06-Mar-2015 11:36:40.574 CET
+Begin processing the 793rd record. Run 1, Event 54494, LumiSection 545 at 06-Mar-2015 11:36:40.584 CET
+Begin processing the 794th record. Run 1, Event 54495, LumiSection 545 at 06-Mar-2015 11:36:40.591 CET
+Begin processing the 795th record. Run 1, Event 54496, LumiSection 545 at 06-Mar-2015 11:36:40.612 CET
+Begin processing the 796th record. Run 1, Event 54497, LumiSection 545 at 06-Mar-2015 11:36:40.619 CET
+Begin processing the 797th record. Run 1, Event 54498, LumiSection 545 at 06-Mar-2015 11:36:40.622 CET
+Begin processing the 798th record. Run 1, Event 54499, LumiSection 545 at 06-Mar-2015 11:36:40.628 CET
+Begin processing the 799th record. Run 1, Event 54500, LumiSection 545 at 06-Mar-2015 11:36:40.633 CET
+Begin processing the 800th record. Run 1, Event 124201, LumiSection 1243 at 06-Mar-2015 11:36:40.643 CET
+Begin processing the 801st record. Run 1, Event 124202, LumiSection 1243 at 06-Mar-2015 11:36:40.706 CET
+Begin processing the 802nd record. Run 1, Event 124203, LumiSection 1243 at 06-Mar-2015 11:36:40.715 CET
+Begin processing the 803rd record. Run 1, Event 124204, LumiSection 1243 at 06-Mar-2015 11:36:40.719 CET
+Begin processing the 804th record. Run 1, Event 124205, LumiSection 1243 at 06-Mar-2015 11:36:40.727 CET
+Begin processing the 805th record. Run 1, Event 124206, LumiSection 1243 at 06-Mar-2015 11:36:40.738 CET
+Begin processing the 806th record. Run 1, Event 124207, LumiSection 1243 at 06-Mar-2015 11:36:40.750 CET
+Begin processing the 807th record. Run 1, Event 124208, LumiSection 1243 at 06-Mar-2015 11:36:40.762 CET
+Begin processing the 808th record. Run 1, Event 124209, LumiSection 1243 at 06-Mar-2015 11:36:40.779 CET
+Begin processing the 809th record. Run 1, Event 124210, LumiSection 1243 at 06-Mar-2015 11:36:40.785 CET
+Begin processing the 810th record. Run 1, Event 124211, LumiSection 1243 at 06-Mar-2015 11:36:40.792 CET
+Begin processing the 811th record. Run 1, Event 124212, LumiSection 1243 at 06-Mar-2015 11:36:40.800 CET
+Begin processing the 812th record. Run 1, Event 124213, LumiSection 1243 at 06-Mar-2015 11:36:40.803 CET
+Begin processing the 813th record. Run 1, Event 124214, LumiSection 1243 at 06-Mar-2015 11:36:40.815 CET
+Begin processing the 814th record. Run 1, Event 124215, LumiSection 1243 at 06-Mar-2015 11:36:40.827 CET
+Begin processing the 815th record. Run 1, Event 124216, LumiSection 1243 at 06-Mar-2015 11:36:40.837 CET
+Begin processing the 816th record. Run 1, Event 124217, LumiSection 1243 at 06-Mar-2015 11:36:40.841 CET
+Begin processing the 817th record. Run 1, Event 124218, LumiSection 1243 at 06-Mar-2015 11:36:40.846 CET
+Begin processing the 818th record. Run 1, Event 124219, LumiSection 1243 at 06-Mar-2015 11:36:40.864 CET
+Begin processing the 819th record. Run 1, Event 124220, LumiSection 1243 at 06-Mar-2015 11:36:40.869 CET
+Begin processing the 820th record. Run 1, Event 124221, LumiSection 1243 at 06-Mar-2015 11:36:40.877 CET
+Begin processing the 821st record. Run 1, Event 124222, LumiSection 1243 at 06-Mar-2015 11:36:40.880 CET
+Begin processing the 822nd record. Run 1, Event 124223, LumiSection 1243 at 06-Mar-2015 11:36:40.890 CET
+Begin processing the 823rd record. Run 1, Event 124224, LumiSection 1243 at 06-Mar-2015 11:36:40.899 CET
+Begin processing the 824th record. Run 1, Event 124225, LumiSection 1243 at 06-Mar-2015 11:36:40.905 CET
+Begin processing the 825th record. Run 1, Event 124226, LumiSection 1243 at 06-Mar-2015 11:36:40.923 CET
+Begin processing the 826th record. Run 1, Event 124227, LumiSection 1243 at 06-Mar-2015 11:36:40.934 CET
+Begin processing the 827th record. Run 1, Event 124228, LumiSection 1243 at 06-Mar-2015 11:36:40.945 CET
+Begin processing the 828th record. Run 1, Event 124229, LumiSection 1243 at 06-Mar-2015 11:36:40.953 CET
+Begin processing the 829th record. Run 1, Event 124230, LumiSection 1243 at 06-Mar-2015 11:36:40.965 CET
+Begin processing the 830th record. Run 1, Event 124231, LumiSection 1243 at 06-Mar-2015 11:36:40.978 CET
+Begin processing the 831st record. Run 1, Event 124232, LumiSection 1243 at 06-Mar-2015 11:36:40.987 CET
+Begin processing the 832nd record. Run 1, Event 124233, LumiSection 1243 at 06-Mar-2015 11:36:41.010 CET
+Begin processing the 833rd record. Run 1, Event 124234, LumiSection 1243 at 06-Mar-2015 11:36:41.020 CET
+Begin processing the 834th record. Run 1, Event 124235, LumiSection 1243 at 06-Mar-2015 11:36:41.023 CET
+Begin processing the 835th record. Run 1, Event 124236, LumiSection 1243 at 06-Mar-2015 11:36:41.042 CET
+Begin processing the 836th record. Run 1, Event 124237, LumiSection 1243 at 06-Mar-2015 11:36:41.060 CET
+Begin processing the 837th record. Run 1, Event 124238, LumiSection 1243 at 06-Mar-2015 11:36:41.062 CET
+Begin processing the 838th record. Run 1, Event 124239, LumiSection 1243 at 06-Mar-2015 11:36:41.075 CET
+Begin processing the 839th record. Run 1, Event 124240, LumiSection 1243 at 06-Mar-2015 11:36:41.086 CET
+Begin processing the 840th record. Run 1, Event 124241, LumiSection 1243 at 06-Mar-2015 11:36:41.095 CET
+Begin processing the 841st record. Run 1, Event 124242, LumiSection 1243 at 06-Mar-2015 11:36:41.098 CET
+Begin processing the 842nd record. Run 1, Event 124243, LumiSection 1243 at 06-Mar-2015 11:36:41.102 CET
+Begin processing the 843rd record. Run 1, Event 124244, LumiSection 1243 at 06-Mar-2015 11:36:41.122 CET
+Begin processing the 844th record. Run 1, Event 124245, LumiSection 1243 at 06-Mar-2015 11:36:41.136 CET
+Begin processing the 845th record. Run 1, Event 124246, LumiSection 1243 at 06-Mar-2015 11:36:41.143 CET
+Begin processing the 846th record. Run 1, Event 124247, LumiSection 1243 at 06-Mar-2015 11:36:41.147 CET
+Begin processing the 847th record. Run 1, Event 124248, LumiSection 1243 at 06-Mar-2015 11:36:41.151 CET
+Begin processing the 848th record. Run 1, Event 124249, LumiSection 1243 at 06-Mar-2015 11:36:41.157 CET
+Begin processing the 849th record. Run 1, Event 124250, LumiSection 1243 at 06-Mar-2015 11:36:41.171 CET
+Begin processing the 850th record. Run 1, Event 124251, LumiSection 1243 at 06-Mar-2015 11:36:41.177 CET
+Begin processing the 851st record. Run 1, Event 124252, LumiSection 1243 at 06-Mar-2015 11:36:41.185 CET
+Begin processing the 852nd record. Run 1, Event 124253, LumiSection 1243 at 06-Mar-2015 11:36:41.196 CET
+Begin processing the 853rd record. Run 1, Event 124254, LumiSection 1243 at 06-Mar-2015 11:36:41.202 CET
+Begin processing the 854th record. Run 1, Event 124255, LumiSection 1243 at 06-Mar-2015 11:36:41.218 CET
+Begin processing the 855th record. Run 1, Event 124256, LumiSection 1243 at 06-Mar-2015 11:36:41.236 CET
+Begin processing the 856th record. Run 1, Event 124257, LumiSection 1243 at 06-Mar-2015 11:36:41.247 CET
+Begin processing the 857th record. Run 1, Event 124258, LumiSection 1243 at 06-Mar-2015 11:36:41.258 CET
+Begin processing the 858th record. Run 1, Event 124259, LumiSection 1243 at 06-Mar-2015 11:36:41.276 CET
+Begin processing the 859th record. Run 1, Event 124260, LumiSection 1243 at 06-Mar-2015 11:36:41.288 CET
+Begin processing the 860th record. Run 1, Event 124261, LumiSection 1243 at 06-Mar-2015 11:36:41.292 CET
+Begin processing the 861st record. Run 1, Event 124262, LumiSection 1243 at 06-Mar-2015 11:36:41.301 CET
+Begin processing the 862nd record. Run 1, Event 124263, LumiSection 1243 at 06-Mar-2015 11:36:41.323 CET
+Begin processing the 863rd record. Run 1, Event 124264, LumiSection 1243 at 06-Mar-2015 11:36:41.326 CET
+Begin processing the 864th record. Run 1, Event 124265, LumiSection 1243 at 06-Mar-2015 11:36:41.334 CET
+Begin processing the 865th record. Run 1, Event 124266, LumiSection 1243 at 06-Mar-2015 11:36:41.342 CET
+Begin processing the 866th record. Run 1, Event 124267, LumiSection 1243 at 06-Mar-2015 11:36:41.350 CET
+Begin processing the 867th record. Run 1, Event 124268, LumiSection 1243 at 06-Mar-2015 11:36:41.358 CET
+Begin processing the 868th record. Run 1, Event 124269, LumiSection 1243 at 06-Mar-2015 11:36:41.363 CET
+Begin processing the 869th record. Run 1, Event 124270, LumiSection 1243 at 06-Mar-2015 11:36:41.371 CET
+Begin processing the 870th record. Run 1, Event 124271, LumiSection 1243 at 06-Mar-2015 11:36:41.390 CET
+Begin processing the 871st record. Run 1, Event 124272, LumiSection 1243 at 06-Mar-2015 11:36:41.394 CET
+Begin processing the 872nd record. Run 1, Event 124273, LumiSection 1243 at 06-Mar-2015 11:36:41.412 CET
+Begin processing the 873rd record. Run 1, Event 124274, LumiSection 1243 at 06-Mar-2015 11:36:41.416 CET
+Begin processing the 874th record. Run 1, Event 124275, LumiSection 1243 at 06-Mar-2015 11:36:41.427 CET
+Begin processing the 875th record. Run 1, Event 124276, LumiSection 1243 at 06-Mar-2015 11:36:41.437 CET
+Begin processing the 876th record. Run 1, Event 124277, LumiSection 1243 at 06-Mar-2015 11:36:41.680 CET
+Begin processing the 877th record. Run 1, Event 124278, LumiSection 1243 at 06-Mar-2015 11:36:41.684 CET
+Begin processing the 878th record. Run 1, Event 124279, LumiSection 1243 at 06-Mar-2015 11:36:41.690 CET
+Begin processing the 879th record. Run 1, Event 124280, LumiSection 1243 at 06-Mar-2015 11:36:41.699 CET
+Begin processing the 880th record. Run 1, Event 124281, LumiSection 1243 at 06-Mar-2015 11:36:41.705 CET
+Begin processing the 881st record. Run 1, Event 124282, LumiSection 1243 at 06-Mar-2015 11:36:41.712 CET
+Begin processing the 882nd record. Run 1, Event 124283, LumiSection 1243 at 06-Mar-2015 11:36:41.720 CET
+Begin processing the 883rd record. Run 1, Event 124284, LumiSection 1243 at 06-Mar-2015 11:36:41.722 CET
+Begin processing the 884th record. Run 1, Event 124285, LumiSection 1243 at 06-Mar-2015 11:36:41.727 CET
+Begin processing the 885th record. Run 1, Event 124286, LumiSection 1243 at 06-Mar-2015 11:36:41.731 CET
+Begin processing the 886th record. Run 1, Event 124287, LumiSection 1243 at 06-Mar-2015 11:36:41.770 CET
+Begin processing the 887th record. Run 1, Event 124288, LumiSection 1243 at 06-Mar-2015 11:36:41.777 CET
+Begin processing the 888th record. Run 1, Event 124289, LumiSection 1243 at 06-Mar-2015 11:36:41.784 CET
+Begin processing the 889th record. Run 1, Event 124290, LumiSection 1243 at 06-Mar-2015 11:36:41.794 CET
+Begin processing the 890th record. Run 1, Event 124291, LumiSection 1243 at 06-Mar-2015 11:36:41.800 CET
+Begin processing the 891st record. Run 1, Event 124292, LumiSection 1243 at 06-Mar-2015 11:36:41.806 CET
+Begin processing the 892nd record. Run 1, Event 124293, LumiSection 1243 at 06-Mar-2015 11:36:41.813 CET
+Begin processing the 893rd record. Run 1, Event 124294, LumiSection 1243 at 06-Mar-2015 11:36:41.817 CET
+Begin processing the 894th record. Run 1, Event 124295, LumiSection 1243 at 06-Mar-2015 11:36:41.821 CET
+Begin processing the 895th record. Run 1, Event 124296, LumiSection 1243 at 06-Mar-2015 11:36:41.828 CET
+Begin processing the 896th record. Run 1, Event 124297, LumiSection 1243 at 06-Mar-2015 11:36:41.838 CET
+Begin processing the 897th record. Run 1, Event 124298, LumiSection 1243 at 06-Mar-2015 11:36:41.881 CET
+Begin processing the 898th record. Run 1, Event 124299, LumiSection 1243 at 06-Mar-2015 11:36:41.884 CET
+Begin processing the 899th record. Run 1, Event 124300, LumiSection 1243 at 06-Mar-2015 11:36:41.887 CET
+Begin processing the 900th record. Run 1, Event 124301, LumiSection 1244 at 06-Mar-2015 11:36:41.897 CET
+Begin processing the 901st record. Run 1, Event 124302, LumiSection 1244 at 06-Mar-2015 11:36:41.901 CET
+Begin processing the 902nd record. Run 1, Event 124303, LumiSection 1244 at 06-Mar-2015 11:36:41.907 CET
+Begin processing the 903rd record. Run 1, Event 124304, LumiSection 1244 at 06-Mar-2015 11:36:41.916 CET
+Begin processing the 904th record. Run 1, Event 124305, LumiSection 1244 at 06-Mar-2015 11:36:41.927 CET
+Begin processing the 905th record. Run 1, Event 124306, LumiSection 1244 at 06-Mar-2015 11:36:41.931 CET
+Begin processing the 906th record. Run 1, Event 124307, LumiSection 1244 at 06-Mar-2015 11:36:41.934 CET
+Begin processing the 907th record. Run 1, Event 124308, LumiSection 1244 at 06-Mar-2015 11:36:41.947 CET
+Begin processing the 908th record. Run 1, Event 124309, LumiSection 1244 at 06-Mar-2015 11:36:41.990 CET
+Begin processing the 909th record. Run 1, Event 124310, LumiSection 1244 at 06-Mar-2015 11:36:41.996 CET
+Begin processing the 910th record. Run 1, Event 124311, LumiSection 1244 at 06-Mar-2015 11:36:42.000 CET
+Begin processing the 911th record. Run 1, Event 124312, LumiSection 1244 at 06-Mar-2015 11:36:42.005 CET
+Begin processing the 912th record. Run 1, Event 124313, LumiSection 1244 at 06-Mar-2015 11:36:42.015 CET
+Begin processing the 913th record. Run 1, Event 124314, LumiSection 1244 at 06-Mar-2015 11:36:42.019 CET
+Begin processing the 914th record. Run 1, Event 124315, LumiSection 1244 at 06-Mar-2015 11:36:42.026 CET
+Begin processing the 915th record. Run 1, Event 124316, LumiSection 1244 at 06-Mar-2015 11:36:42.033 CET
+Begin processing the 916th record. Run 1, Event 124317, LumiSection 1244 at 06-Mar-2015 11:36:42.042 CET
+Begin processing the 917th record. Run 1, Event 124318, LumiSection 1244 at 06-Mar-2015 11:36:42.047 CET
+Begin processing the 918th record. Run 1, Event 124319, LumiSection 1244 at 06-Mar-2015 11:36:42.057 CET
+Begin processing the 919th record. Run 1, Event 124320, LumiSection 1244 at 06-Mar-2015 11:36:42.061 CET
+Begin processing the 920th record. Run 1, Event 124321, LumiSection 1244 at 06-Mar-2015 11:36:42.064 CET
+Begin processing the 921st record. Run 1, Event 124322, LumiSection 1244 at 06-Mar-2015 11:36:42.101 CET
+Begin processing the 922nd record. Run 1, Event 124323, LumiSection 1244 at 06-Mar-2015 11:36:42.103 CET
+Begin processing the 923rd record. Run 1, Event 124324, LumiSection 1244 at 06-Mar-2015 11:36:42.109 CET
+Begin processing the 924th record. Run 1, Event 124325, LumiSection 1244 at 06-Mar-2015 11:36:42.114 CET
+Begin processing the 925th record. Run 1, Event 124326, LumiSection 1244 at 06-Mar-2015 11:36:42.120 CET
+Begin processing the 926th record. Run 1, Event 124327, LumiSection 1244 at 06-Mar-2015 11:36:42.123 CET
+Begin processing the 927th record. Run 1, Event 124328, LumiSection 1244 at 06-Mar-2015 11:36:42.133 CET
+Begin processing the 928th record. Run 1, Event 124329, LumiSection 1244 at 06-Mar-2015 11:36:42.136 CET
+Begin processing the 929th record. Run 1, Event 124330, LumiSection 1244 at 06-Mar-2015 11:36:42.138 CET
+Begin processing the 930th record. Run 1, Event 124331, LumiSection 1244 at 06-Mar-2015 11:36:42.176 CET
+Begin processing the 931st record. Run 1, Event 124332, LumiSection 1244 at 06-Mar-2015 11:36:42.188 CET
+Begin processing the 932nd record. Run 1, Event 124333, LumiSection 1244 at 06-Mar-2015 11:36:42.193 CET
+Begin processing the 933rd record. Run 1, Event 124334, LumiSection 1244 at 06-Mar-2015 11:36:42.198 CET
+Begin processing the 934th record. Run 1, Event 124335, LumiSection 1244 at 06-Mar-2015 11:36:42.205 CET
+Begin processing the 935th record. Run 1, Event 124336, LumiSection 1244 at 06-Mar-2015 11:36:42.216 CET
+Begin processing the 936th record. Run 1, Event 124337, LumiSection 1244 at 06-Mar-2015 11:36:42.218 CET
+Begin processing the 937th record. Run 1, Event 124338, LumiSection 1244 at 06-Mar-2015 11:36:42.222 CET
+Begin processing the 938th record. Run 1, Event 124339, LumiSection 1244 at 06-Mar-2015 11:36:42.227 CET
+Begin processing the 939th record. Run 1, Event 124340, LumiSection 1244 at 06-Mar-2015 11:36:42.232 CET
+Begin processing the 940th record. Run 1, Event 124341, LumiSection 1244 at 06-Mar-2015 11:36:42.242 CET
+Begin processing the 941st record. Run 1, Event 124342, LumiSection 1244 at 06-Mar-2015 11:36:42.250 CET
+Begin processing the 942nd record. Run 1, Event 124343, LumiSection 1244 at 06-Mar-2015 11:36:42.283 CET
+Begin processing the 943rd record. Run 1, Event 124344, LumiSection 1244 at 06-Mar-2015 11:36:42.286 CET
+Begin processing the 944th record. Run 1, Event 124345, LumiSection 1244 at 06-Mar-2015 11:36:42.290 CET
+Begin processing the 945th record. Run 1, Event 124346, LumiSection 1244 at 06-Mar-2015 11:36:42.316 CET
+Begin processing the 946th record. Run 1, Event 124347, LumiSection 1244 at 06-Mar-2015 11:36:42.319 CET
+Begin processing the 947th record. Run 1, Event 124348, LumiSection 1244 at 06-Mar-2015 11:36:42.327 CET
+Begin processing the 948th record. Run 1, Event 124349, LumiSection 1244 at 06-Mar-2015 11:36:42.331 CET
+Begin processing the 949th record. Run 1, Event 124350, LumiSection 1244 at 06-Mar-2015 11:36:42.356 CET
+Begin processing the 950th record. Run 1, Event 124351, LumiSection 1244 at 06-Mar-2015 11:36:42.361 CET
+Begin processing the 951st record. Run 1, Event 124352, LumiSection 1244 at 06-Mar-2015 11:36:42.605 CET
+Begin processing the 952nd record. Run 1, Event 124353, LumiSection 1244 at 06-Mar-2015 11:36:42.612 CET
+Begin processing the 953rd record. Run 1, Event 124354, LumiSection 1244 at 06-Mar-2015 11:36:42.615 CET
+Begin processing the 954th record. Run 1, Event 124355, LumiSection 1244 at 06-Mar-2015 11:36:42.620 CET
+Begin processing the 955th record. Run 1, Event 124356, LumiSection 1244 at 06-Mar-2015 11:36:42.632 CET
+Begin processing the 956th record. Run 1, Event 124357, LumiSection 1244 at 06-Mar-2015 11:36:42.634 CET
+Begin processing the 957th record. Run 1, Event 124358, LumiSection 1244 at 06-Mar-2015 11:36:42.643 CET
+Begin processing the 958th record. Run 1, Event 124359, LumiSection 1244 at 06-Mar-2015 11:36:42.650 CET
+Begin processing the 959th record. Run 1, Event 124360, LumiSection 1244 at 06-Mar-2015 11:36:42.660 CET
+Begin processing the 960th record. Run 1, Event 124361, LumiSection 1244 at 06-Mar-2015 11:36:42.663 CET
+Begin processing the 961st record. Run 1, Event 124362, LumiSection 1244 at 06-Mar-2015 11:36:42.704 CET
+Begin processing the 962nd record. Run 1, Event 124363, LumiSection 1244 at 06-Mar-2015 11:36:42.713 CET
+Begin processing the 963rd record. Run 1, Event 124364, LumiSection 1244 at 06-Mar-2015 11:36:42.716 CET
+Begin processing the 964th record. Run 1, Event 124365, LumiSection 1244 at 06-Mar-2015 11:36:42.719 CET
+Begin processing the 965th record. Run 1, Event 124366, LumiSection 1244 at 06-Mar-2015 11:36:42.721 CET
+Begin processing the 966th record. Run 1, Event 124367, LumiSection 1244 at 06-Mar-2015 11:36:42.724 CET
+Begin processing the 967th record. Run 1, Event 124368, LumiSection 1244 at 06-Mar-2015 11:36:42.737 CET
+Begin processing the 968th record. Run 1, Event 124369, LumiSection 1244 at 06-Mar-2015 11:36:42.739 CET
+Begin processing the 969th record. Run 1, Event 124370, LumiSection 1244 at 06-Mar-2015 11:36:42.745 CET
+Begin processing the 970th record. Run 1, Event 124371, LumiSection 1244 at 06-Mar-2015 11:36:42.755 CET
+Begin processing the 971st record. Run 1, Event 124372, LumiSection 1244 at 06-Mar-2015 11:36:42.763 CET
+Begin processing the 972nd record. Run 1, Event 124373, LumiSection 1244 at 06-Mar-2015 11:36:42.766 CET
+Begin processing the 973rd record. Run 1, Event 124374, LumiSection 1244 at 06-Mar-2015 11:36:42.778 CET
+Begin processing the 974th record. Run 1, Event 124375, LumiSection 1244 at 06-Mar-2015 11:36:42.814 CET
+Begin processing the 975th record. Run 1, Event 124376, LumiSection 1244 at 06-Mar-2015 11:36:42.819 CET
+Begin processing the 976th record. Run 1, Event 124377, LumiSection 1244 at 06-Mar-2015 11:36:42.822 CET
+Begin processing the 977th record. Run 1, Event 124378, LumiSection 1244 at 06-Mar-2015 11:36:42.830 CET
+Begin processing the 978th record. Run 1, Event 124379, LumiSection 1244 at 06-Mar-2015 11:36:42.840 CET
+Begin processing the 979th record. Run 1, Event 124380, LumiSection 1244 at 06-Mar-2015 11:36:42.848 CET
+Begin processing the 980th record. Run 1, Event 124381, LumiSection 1244 at 06-Mar-2015 11:36:42.858 CET
+Begin processing the 981st record. Run 1, Event 124382, LumiSection 1244 at 06-Mar-2015 11:36:42.860 CET
+Begin processing the 982nd record. Run 1, Event 124383, LumiSection 1244 at 06-Mar-2015 11:36:42.863 CET
+Begin processing the 983rd record. Run 1, Event 124384, LumiSection 1244 at 06-Mar-2015 11:36:42.868 CET
+Begin processing the 984th record. Run 1, Event 124385, LumiSection 1244 at 06-Mar-2015 11:36:42.875 CET
+Begin processing the 985th record. Run 1, Event 124386, LumiSection 1244 at 06-Mar-2015 11:36:42.886 CET
+Begin processing the 986th record. Run 1, Event 124387, LumiSection 1244 at 06-Mar-2015 11:36:42.889 CET
+Begin processing the 987th record. Run 1, Event 124388, LumiSection 1244 at 06-Mar-2015 11:36:42.930 CET
+Begin processing the 988th record. Run 1, Event 124389, LumiSection 1244 at 06-Mar-2015 11:36:42.932 CET
+Begin processing the 989th record. Run 1, Event 124390, LumiSection 1244 at 06-Mar-2015 11:36:42.934 CET
+Begin processing the 990th record. Run 1, Event 124391, LumiSection 1244 at 06-Mar-2015 11:36:42.939 CET
+Begin processing the 991st record. Run 1, Event 124392, LumiSection 1244 at 06-Mar-2015 11:36:42.950 CET
+Begin processing the 992nd record. Run 1, Event 124393, LumiSection 1244 at 06-Mar-2015 11:36:42.955 CET
+Begin processing the 993rd record. Run 1, Event 124394, LumiSection 1244 at 06-Mar-2015 11:36:42.965 CET
+Begin processing the 994th record. Run 1, Event 124395, LumiSection 1244 at 06-Mar-2015 11:36:42.973 CET
+Begin processing the 995th record. Run 1, Event 124396, LumiSection 1244 at 06-Mar-2015 11:36:42.977 CET
+Begin processing the 996th record. Run 1, Event 124397, LumiSection 1244 at 06-Mar-2015 11:36:42.982 CET
+Begin processing the 997th record. Run 1, Event 124398, LumiSection 1244 at 06-Mar-2015 11:36:42.987 CET
+Begin processing the 998th record. Run 1, Event 124399, LumiSection 1244 at 06-Mar-2015 11:36:43.030 CET
+Begin processing the 999th record. Run 1, Event 124400, LumiSection 1244 at 06-Mar-2015 11:36:43.032 CET
+Begin processing the 1000th record. Run 1, Event 124401, LumiSection 1245 at 06-Mar-2015 11:36:43.041 CET
+06-Mar-2015 11:36:43 CET  Closed file file:/data_CMS/cms/ochando/1AD11194-BA6E-E411-A8A9-7845C4FC39E3.root
+
+=============================================
+
+MessageLogger Summary
+
+ type     category        sev    module        subroutine        count    total
+ ---- -------------------- -- ---------------- ----------------  -----    -----
+    1 IdInformation        -w VersionedGsfElec                       1        1
+    2 fileAction           -s file_close                             1        1
+    3 fileAction           -s file_open                              2        2
+
+ type    category    Examples: run/evt        run/evt          run/evt
+ ---- -------------------- ---------------- ---------------- ----------------
+    1 IdInformation        pre-events                        
+    2 fileAction           PostEndRun                        
+    3 fileAction           pre-events       pre-events       
+
+Severity    # Occurrences   Total Occurrences
+--------    -------------   -----------------
+Warning                 1                   1
+System                  3                   3
