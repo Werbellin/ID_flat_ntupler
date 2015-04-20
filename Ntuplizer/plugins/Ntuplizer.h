@@ -109,9 +109,17 @@ class Ntuplizer : public edm::EDAnalyzer {
       int ele_N;
       TClonesArray * m_electrons;
 
+      vector<bool>  ele_foundGSFTraj;
       vector<float> ele_signedEstimateSumPred;
       float ele_signedEstimateSumPred_A[50];
       vector<float> ele_propagatorSignedEstimateSumPred;
+      vector<float> ele_signSumPredNormVH;
+
+      vector<bool>  ele_foundCKFTraj;
+      vector<float> ele_signedEstimateSumPredCKF;
+      vector<float> ele_reducedChi2CKF;
+     
+
 
 
       int ele_echarge[50];
@@ -210,5 +218,9 @@ class Ntuplizer : public edm::EDAnalyzer {
 	
       bool runGsfRefitter;
       std::string GSFTrajColl;
+
+      bool runKfWithGsfRefitter;
+      std::string CKFTrajColl;
+
 };
 #endif

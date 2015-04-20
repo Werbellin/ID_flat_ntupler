@@ -106,7 +106,10 @@ ispythia6_ (iConfig.getParameter<bool>("ispythia6")),
 PileupSrc_ ("addPileupInfo"),
 MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId")),
 runGsfRefitter (iConfig.getParameter<bool>("runGsfRefitter")),
-GSFTrajColl (iConfig.getParameter<std::string>("GSFTrajectoryInput"))
+GSFTrajColl (iConfig.getParameter<std::string>("GSFTrajectoryInput")),
+runKfWithGsfRefitter (iConfig.getParameter<bool>("runKfWithGsfRefitter")),
+CKFTrajColl (iConfig.getParameter<std::string>("CKFTrajectoryInput"))
+
 
 // std::vector<edm::InputTag> MVAidCollection_;
 {
@@ -175,13 +178,16 @@ void Ntuplizer::beginJob()
   _mytree->Branch ("electrons", "TClonesArray", &m_electrons, 256000,0);
 
 
- 
+  _mytree->Branch("ele_foundGSFTraj", &ele_foundGSFTraj);
+  _mytree->Branch("ele_foundCKFTraj", &ele_foundCKFTraj);
+
   _mytree->Branch("ele_signedEstimateSumPred", &ele_signedEstimateSumPred);//;&ele_signedEstimateSumPred,"ele_signedEstimateSumPred[50]/D");
   _mytree->Branch("ele_signedEstimateSumPred_A", &ele_signedEstimateSumPred_A,"ele_signedEstimateSumPred_A[50]/F");
   _mytree->Branch("ele_propagatorSignedEstimateSumPred", &ele_propagatorSignedEstimateSumPred);
+  _mytree->Branch("ele_signSumPredNormVH", &ele_signSumPredNormVH);
 
-
-
+  _mytree->Branch("ele_signedEstimateSumPredCKF", &ele_signedEstimateSumPredCKF);
+  _mytree->Branch("ele_reducedChi2CKF", &ele_reducedChi2CKF);
  
   _mytree->Branch("ele_echarge",&ele_echarge,"ele_echarge[50]/I");
   //
@@ -562,36 +568,72 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   //cout << "ele N = " << ele_N << endl;
   ele_signedEstimateSumPred.clear();
   ele_propagatorSignedEstimateSumPred.clear();
+  ele_signSumPredNormVH.clear();
+
+  ele_signedEstimateSumPredCKF.clear();
+  ele_reducedChi2CKF.clear();
+  ele_foundGSFTraj.clear();
+  ele_foundCKFTraj.clear();
+
   for (reco::GsfElectronCollection::const_iterator ielectrons=electronsCol->begin(); ielectrons!=electronsCol->end();++ielectrons) {
     if(counter>49) continue;
 
+    const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
 
-
+    // variables that rely on GsfRefit
     float tmp_ele_signedEstimateSumPred = -200.;
     float tmp_ele_propagatorSignedEstimateSumPred = -200.;
+    float tmp_ele_signSumPredNormVH = -200.;
+    bool foundGSFTraj = false;
     const Trajectory* theGSFTraj = nullptr;
     if(runGsfRefitter) {
         edm::LogInfo("Test") << "GSF refit was run";
         edm::Handle<std::vector<Trajectory> > GSFTrajCollectionHandle;
         iEvent.getByLabel(GSFTrajColl, GSFTrajCollectionHandle);
         theGSFTraj = GetTrajectoryFromTrack(GSFTrajCollectionHandle.product(), ielectrons->gsfTrack().get()); 
-
-edm::LogInfo("test") << "test";
     }
 
     if(theGSFTraj == nullptr) {
         edm::LogWarning("No GSF Traj") << " Did not find the GSF Trajectory for track";
     } else {
+        foundGSFTraj = true;
         edm::LogInfo("Ntup") << "Found Trajectory with hits " << theGSFTraj->foundHits();
 
         tmp_ele_signedEstimateSumPred = ReducedChi2AsymmetryNormalizedNValidHits(theGSFTraj, ielectrons->gsfTrack().get());
-
+        tmp_ele_signSumPredNormVH = SignAsymmetryNormalizedNValidHits(theGSFTraj, gsfTrack);
         tmp_ele_propagatorSignedEstimateSumPred = GetSignedChiPropagator(theGSFTraj, *ielectrons, iEvent, iSetup);    
     }
+    ele_foundGSFTraj.push_back(foundGSFTraj);
     ele_signedEstimateSumPred.push_back(tmp_ele_signedEstimateSumPred);
     ele_signedEstimateSumPred_A[counter] = tmp_ele_signedEstimateSumPred;
     ele_propagatorSignedEstimateSumPred.push_back(tmp_ele_propagatorSignedEstimateSumPred);
+    ele_signSumPredNormVH.push_back(tmp_ele_signSumPredNormVH);
 
+    // variables that rely on KfTrack from GsfTrack fit
+
+    float tmp_ele_signedEstimateSumPredCKF = -200.;
+    float tmp_ele_reducedChi2CKF = -200.;
+    bool foundCKFTraj = false;
+   
+    if(runKfWithGsfRefitter) {
+        edm::Handle<std::vector<Trajectory> > KfWithGsfTrajCollectionHandle;
+        iEvent.getByLabel(CKFTrajColl, KfWithGsfTrajCollectionHandle);
+        edm::LogInfo("Demo") << "Size of trajectory collection " << KfWithGsfTrajCollectionHandle.product()->size(); 
+        //h_NumberKfWithGsfTracks->Fill(KfWithGsfTrajCollectionHandle->size());
+         
+        const Trajectory* theCKFTraj  = GetTrajectoryFromTrack(KfWithGsfTrajCollectionHandle.product(), gsfTrack);
+        if(theCKFTraj == nullptr) {
+            edm::LogWarning("No CKF Traj") << " Did not find the CKF Trajectory for track";
+        } else {
+            foundCKFTraj = true;
+            tmp_ele_reducedChi2CKF = theCKFTraj->chiSquared() / theCKFTraj->ndof();
+            tmp_ele_signedEstimateSumPredCKF = ReducedChi2AsymmetryNormalizedNValidHits(theCKFTraj, gsfTrack);
+        }
+    }
+
+    ele_foundCKFTraj.push_back(foundCKFTraj);
+    ele_signedEstimateSumPredCKF.push_back(tmp_ele_signedEstimateSumPredCKF);
+    ele_reducedChi2CKF.push_back(tmp_ele_reducedChi2CKF);
 
     setMomentum(myvector, ielectrons->p4());
     new (electrons[counter]) TLorentzVector(myvector);
