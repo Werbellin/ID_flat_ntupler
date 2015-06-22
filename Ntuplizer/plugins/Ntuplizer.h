@@ -2,8 +2,8 @@
 #define Ntuplizer_H
 
 // Own
-#include "fBremTest/DemoAnalyzer/interface/TrajectoryAnalysisHelper.h"
-#include "fBremTest/DemoAnalyzer/interface/RecSimHitMatcher.h"
+//#include "fBremTest/DemoAnalyzer/interface/TrajectoryAnalysisHelper.h"
+//#include "fBremTest/DemoAnalyzer/interface/RecSimHitMatcher.h"
 
 
 // CMSSW
@@ -112,20 +112,20 @@ class Ntuplizer : public edm::EDAnalyzer {
       TClonesArray * m_electrons;
 
 
-      vector < vector<int> > trackHitPDGID;
-      vector <float> lastHitPt;
+      //vector < vector<int> > trackHitPDGID;
+      //vector <float> lastHitPt;
 
 
-      vector<bool>  ele_foundGSFTraj;
-      vector<float> ele_signedEstimateSumPred;
+      //vector<bool>  ele_foundGSFTraj;
+      //vector<float> ele_signedEstimateSumPred;
       //float ele_signedEstimateSumPred_A[50];
-      vector<float> ele_propagatorSignedEstimateSumPred;
-      vector<float> ele_signSumPredNormVH;
+      //vector<float> ele_propagatorSignedEstimateSumPred;
+      //vector<float> ele_signSumPredNormVH;
 
-      vector<bool>  ele_foundCKFTraj;
-      vector<float> ele_signedEstimateSumPredCKF;
-      vector<float> ele_reducedChi2CKF;
-      vector<float> ele_conversionVertexFitProbability;
+      //vector<bool>  ele_foundCKFTraj;
+      //vector<float> ele_signedEstimateSumPredCKF;
+      //vector<float> ele_reducedChi2CKF;
+      //vector<float> ele_conversionVertexFitProbability;
     
 
 
