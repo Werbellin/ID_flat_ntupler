@@ -24,6 +24,8 @@
 #include <memory>
 
 // CMSSW include
+#include "FWCore/Framework/interface/MakerMacros.h"
+
 #include "FWCore/Framework/interface/ESHandle.h"
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -98,6 +100,8 @@ using namespace edm;
 // constructor
 Ntuplizer::Ntuplizer(const edm::ParameterSet& iConfig) :
 // ==============================================================================================
+
+conf(iConfig),
 EleTag_ (iConfig.getParameter<edm::InputTag> ("EleTag")),
 VerticesTag_(iConfig.getParameter<edm::InputTag> ("VerticesTag")),
 HLTTag_(iConfig.getParameter<edm::InputTag> ("HLTTag")),
@@ -178,17 +182,22 @@ void Ntuplizer::beginJob()
   _mytree->Branch ("electrons", "TClonesArray", &m_electrons, 256000,0);
 
 
+
+  _mytree->Branch("ele_trackHitPDGID",&trackHitPDGID);
+  _mytree->Branch("ele_lastHitPt",&lastHitPt);
+
   _mytree->Branch("ele_foundGSFTraj", &ele_foundGSFTraj);
   _mytree->Branch("ele_foundCKFTraj", &ele_foundCKFTraj);
 
   _mytree->Branch("ele_signedEstimateSumPred", &ele_signedEstimateSumPred);//;&ele_signedEstimateSumPred,"ele_signedEstimateSumPred[50]/D");
-  _mytree->Branch("ele_signedEstimateSumPred_A", &ele_signedEstimateSumPred_A,"ele_signedEstimateSumPred_A[50]/F");
+  //_mytree->Branch("ele_signedEstimateSumPred_A", &ele_signedEstimateSumPred_A,"ele_signedEstimateSumPred_A[50]/F");
   _mytree->Branch("ele_propagatorSignedEstimateSumPred", &ele_propagatorSignedEstimateSumPred);
   _mytree->Branch("ele_signSumPredNormVH", &ele_signSumPredNormVH);
 
   _mytree->Branch("ele_signedEstimateSumPredCKF", &ele_signedEstimateSumPredCKF);
   _mytree->Branch("ele_reducedChi2CKF", &ele_reducedChi2CKF);
- 
+  _mytree->Branch("ele_conversionVertexFitProbability", &ele_conversionVertexFitProbability);
+
   _mytree->Branch("ele_echarge",&ele_echarge,"ele_echarge[50]/I");
   //
   _mytree->Branch("ele_he",&ele_he,"ele_he[50]/D");
@@ -518,7 +527,7 @@ void Ntuplizer::FillVertices(const edm::Event& iEvent, const edm::EventSetup& iS
 void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 //=============================================================================================
 {
-  
+  LogVerbatim("") << "Running FillElectrons";
   edm::Handle<reco::GsfElectronCollection> electronsCol;
   iEvent.getByLabel(EleTag_, electronsCol);
   
@@ -574,11 +583,37 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_reducedChi2CKF.clear();
   ele_foundGSFTraj.clear();
   ele_foundCKFTraj.clear();
+ 
+  trackHitPDGID.clear();
+  lastHitPt.clear();
+  ele_conversionVertexFitProbability.clear();
+
 
   for (reco::GsfElectronCollection::const_iterator ielectrons=electronsCol->begin(); ielectrons!=electronsCol->end();++ielectrons) {
-    if(counter>49) continue;
+    if(counter>49) { continue; } 
+        edm::LogVerbatim("") << "Processing new electron";
+        const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
+        edm::LogVerbatim("") << "Processinf track with Pt=" << gsfTrack->pt() << " and eta=" << gsfTrack->eta();
+        RecSimHitMatcher* theRecSimHitMatcher = nullptr;
+        theRecSimHitMatcher = new RecSimHitMatcher(iEvent, iSetup, conf, gsfTrack);
+        theRecSimHitMatcher->InitializeSimTrackRecHitAssociations(true);
+        edm::LogInfo("test") << "After InitializeSimTrackRecHitAssociations";
+        if(!theRecSimHitMatcher->AssociationSucceeded()) {
+            edm::LogWarning("Association failed") << "The Association RecHit<>SimTrack failed";
+            theRecSimHitMatcher = nullptr;
+        }
 
-    const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
+        std::vector<int> pdgId(gsfTrack->found(), 0);
+        float _lastHitPt = -1.;
+        if(theRecSimHitMatcher != nullptr) {
+            _lastHitPt = theRecSimHitMatcher->GetSimTrackToLastRecHit()->momentum().Pt();            
+            pdgId = theRecSimHitMatcher->GetVectorOfHitPDGID();
+            edm::LogVerbatim("") <<"PDGID list";
+            for(const auto& id :pdgId) edm::LogVerbatim("") <<"PDG ID = " << id; 
+
+        }
+    trackHitPDGID.push_back(pdgId);
+    lastHitPt.push_back(_lastHitPt);
 
     // variables that rely on GsfRefit
     float tmp_ele_signedEstimateSumPred = -200.;
@@ -605,7 +640,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     }
     ele_foundGSFTraj.push_back(foundGSFTraj);
     ele_signedEstimateSumPred.push_back(tmp_ele_signedEstimateSumPred);
-    ele_signedEstimateSumPred_A[counter] = tmp_ele_signedEstimateSumPred;
+    //ele_signedEstimateSumPred_A[counter] = tmp_ele_signedEstimateSumPred;
     ele_propagatorSignedEstimateSumPred.push_back(tmp_ele_propagatorSignedEstimateSumPred);
     ele_signSumPredNormVH.push_back(tmp_ele_signSumPredNormVH);
 
@@ -797,10 +832,26 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_expected_inner_hits[counter] = ielectrons->gsfTrack()->hitPattern().numberOfHits(reco::HitPattern::MISSING_INNER_HITS);
     //ielectrons->gsfTrack()->trackerExpectedHitsInner().numberOfHits();
     
-    
+   
+
+    reco::ConversionRef conv_ref = ConversionTools::matchedConversion(*ielectrons, conversions_h, beamSpot.position()); 
     bool vtxFitConversion = ConversionTools::hasMatchedConversion(*ielectrons, conversions_h, beamSpot.position());
     ele_vtxconv[counter] = vtxFitConversion;
-    
+
+    double vertexFitProbability = -1.;;
+    if(!conv_ref.isNull()) {
+        const reco::Vertex &vtx = conv_ref.get()->conversionVertex();
+   
+        //vertex validity
+        if (vtx.isValid()) {
+   
+            //fit probability
+            vertexFitProbability = TMath::Prob( vtx.chi2(),  vtx.ndof());
+            
+        }
+    }
+    ele_conversionVertexFitProbability.push_back(vertexFitProbability);
+    LogVerbatim("") << "Vertex fit probability: " << vertexFitProbability;
     // 
     
     // -----------------------------------------------------------------
