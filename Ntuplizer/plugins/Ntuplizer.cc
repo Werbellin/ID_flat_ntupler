@@ -44,7 +44,6 @@
 //#include <DataFormats/MuonReco/interface/MuonFwd.h>
 //
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
-#include "DataFormats/EgammaCandidates/interface/Conversion.h"
 //
 #include "RecoEcal/EgammaCoreTools/interface/EcalClusterTools.h"
 #include "RecoEcal/EgammaCoreTools/interface/EcalClusterLazyTools.h"
@@ -56,7 +55,6 @@
 //#include "DataFormats/PatCandidates/interface/Jet.h"
 //#include "DataFormats/PatCandidates/interface/Photon.h"
 #include "DataFormats/GsfTrackReco/interface/GsfTrack.h"
-#include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
 //"
 // MET
@@ -68,8 +66,6 @@
 //#include "DataFormats/Math/interface/LorentzVector.h"
 //#include "DataFormats/MuonReco/interface/MuonSelectors.h"
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
-#include "DataFormats/VertexReco/interface/Vertex.h"
-#include "DataFormats/VertexReco/interface/VertexFwd.h"
 #include "RecoVertex/PrimaryVertexProducer/interface/PrimaryVertexSorter.h"
 
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
@@ -102,21 +98,74 @@ Ntuplizer::Ntuplizer(const edm::ParameterSet& iConfig) :
 // ==============================================================================================
 
 conf(iConfig),
-EleTag_ (iConfig.getParameter<edm::InputTag> ("EleTag")),
-VerticesTag_(iConfig.getParameter<edm::InputTag> ("VerticesTag")),
+inFileType(inputFileTypes::UNDEF),
 HLTTag_(iConfig.getParameter<edm::InputTag> ("HLTTag")),
 isMC_ (iConfig.getParameter<bool>("isMC")),
 ispythia6_ (iConfig.getParameter<bool>("ispythia6")),
 PileupSrc_ ("addPileupInfo"),
-MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId")),
-runGsfRefitter (iConfig.getParameter<bool>("runGsfRefitter")),
-GSFTrajColl (iConfig.getParameter<std::string>("GSFTrajectoryInput")),
-runKfWithGsfRefitter (iConfig.getParameter<bool>("runKfWithGsfRefitter")),
-CKFTrajColl (iConfig.getParameter<std::string>("CKFTrajectoryInput"))
+MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId"))
+//runGsfRefitter (iConfig.getParameter<bool>("runGsfRefitter")),
+//GSFTrajColl (iConfig.getParameter<std::string>("GSFTrajectoryInput")),
+//runKfWithGsfRefitter (iConfig.getParameter<bool>("runKfWithGsfRefitter")),
+//CKFTrajColl (iConfig.getParameter<std::string>("CKFTrajectoryInput"))
 
 
 // std::vector<edm::InputTag> MVAidCollection_;
 {
+
+  std::string inFileType_s = iConfig.getUntrackedParameter<std::string>("inputFileFormat");
+
+  if(inFileType_s == "AOD")     inFileType = inputFileTypes::AOD; 
+  if(inFileType_s == "MiniAOD") inFileType = inputFileTypes::MINIAOD; 
+
+  if(inFileType == inputFileTypes::UNDEF) LogError("") << "Did not recognize input file format!";
+
+  beamSpotToken_    = consumes<reco::BeamSpot> 
+                        (iConfig.getParameter <edm::InputTag>
+                        ("beamSpot"));
+
+  
+
+  if(inFileType == inputFileTypes::AOD) {
+    electronsToken_ = mayConsume<edm::View<reco::GsfElectron> >
+                        (iConfig.getParameter<edm::InputTag>
+                        ("electronsAOD"));
+    conversionsToken_ = mayConsume< reco::ConversionCollection >
+                        (iConfig.getParameter<edm::InputTag>
+                        ("conversionsAOD"));
+    vertexToken_ = mayConsume<reco::VertexCollection>
+                        (iConfig.getParameter<edm::InputTag>
+                        ("verticesAOD"));
+
+    pfMETToken_ = mayConsume<reco::PFMETCollection>
+                        (iConfig.getParameter<edm::InputTag>
+                        ("PFMETAOD"));
+    genParticleToken_ = mayConsume<vector<reco::GenParticle> >
+                        (iConfig.getParameter<edm::InputTag>
+                        ("genParticlesAOD"));
+
+  }
+
+  if(inFileType == inputFileTypes::MINIAOD) {
+    electronsToken_ = mayConsume<edm::View<reco::GsfElectron> >
+                        (iConfig.getParameter<edm::InputTag>
+                        ("electronsMiniAOD"));
+    conversionsToken_ = mayConsume< reco::ConversionCollection >
+                        (iConfig.getParameter<edm::InputTag>
+                        ("conversionsMiniAOD"));
+    vertexToken_ = mayConsume<reco::VertexCollection>
+                        (iConfig.getParameter<edm::InputTag>
+                        ("verticesMiniAOD"));
+
+    pfMETToken_ = mayConsume<edm::View<reco::MET> >
+                        (iConfig.getParameter<edm::InputTag>
+                        ("PFMETMiniAOD"));
+    genParticleToken_ = mayConsume<vector<reco::GenParticle> >
+                        (iConfig.getParameter<edm::InputTag>
+                        ("genParticlesMiniAOD"));
+
+  }
+
 
 
 }
@@ -182,7 +231,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch ("electrons", "TClonesArray", &m_electrons, 256000,0);
 
 
-
+/*
   _mytree->Branch("ele_trackHitPDGID",&trackHitPDGID);
   _mytree->Branch("ele_lastHitPt",&lastHitPt);
 
@@ -196,6 +245,7 @@ void Ntuplizer::beginJob()
 
   _mytree->Branch("ele_signedEstimateSumPredCKF", &ele_signedEstimateSumPredCKF);
   _mytree->Branch("ele_reducedChi2CKF", &ele_reducedChi2CKF);
+*/
   _mytree->Branch("ele_conversionVertexFitProbability", &ele_conversionVertexFitProbability);
 
   _mytree->Branch("ele_echarge",&ele_echarge,"ele_echarge[50]/I");
@@ -402,7 +452,8 @@ void Ntuplizer::beginJob()
   //_mytree->Branch ("MC_gen_photons", "TClonesArray", &_m_MC_gen_photons, 256000,0);
   //_mytree->Branch ("MC_gen_photons_isFSR",&_MC_gen_photons_isFSR,"MC_gen_photons_isFSR[5000]/I");
   
- 
+  _mytree->Branch ("MC_TrueNumInteractions",&_MC_TrueNumInteractions,"MC_TrueNumInteractions/I");
+
 }
 
 
@@ -421,16 +472,19 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    //cout << "salut" << endl;
 
    FillEvent(iEvent, iSetup);
-   
+   LogDebug("") << "After FillEvent"; 
    FillVertices(iEvent, iSetup);
-
+   LogDebug("") << "After FillVertices";
    m_electrons -> Clear();
    FillElectrons(iEvent, iSetup);
+   LogDebug("") << "After FillElectrons";
    
    FillMET (iEvent, iSetup);
+   LogDebug("") << "After FillMET";
 
 
    if(isMC_ ) {
+     _MC_TrueNumInteractions = 0;
      //	cout << "truth2" << endl;
      _m_MC_gen_V->Clear();
      _m_MC_gen_Higgs->Clear();
@@ -440,6 +494,7 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      _m_MC_gen_leptons_status2->Clear();
      //cout << "truth" << endl;
      FillTruth(iEvent, iSetup);
+     LogDebug("") << "After FillTruth";
    }
 
    _mytree->Fill();
@@ -507,18 +562,9 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
 void Ntuplizer::FillVertices(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 //=============================================================================================
 {
-  
   Handle<vector<reco::Vertex> >  recoPrimaryVertexCollection;
-  //   //iEvent.getByLabel("goodPrimaryVertices",recoPrimaryVertexCollection);
-  iEvent.getByLabel(VerticesTag_, recoPrimaryVertexCollection);
+  iEvent.getByToken(vertexToken_, recoPrimaryVertexCollection);
 
-  //const reco::VertexCollection & vertices = *recoPrimaryVertexCollection.product();
-  
-//   // 	edm::Handle<reco::BeamSpot> recoBeamSpotHandle;
-//   // 	iEvent.getByType(recoBeamSpotHandle);
-//   // 	const reco::BeamSpot bs = *recoBeamSpotHandle;
-  
-  //int vtx_counter=0;
   _vtx_N = recoPrimaryVertexCollection->size();
   
 } // end of FillVertices
@@ -528,17 +574,29 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 //=============================================================================================
 {
   LogVerbatim("") << "Running FillElectrons";
-  edm::Handle<reco::GsfElectronCollection> electronsCol;
-  iEvent.getByLabel(EleTag_, electronsCol);
-  
-  InputTag  vertexLabel(string("offlinePrimaryVertices"));
-  Handle<reco::VertexCollection> thePrimaryVertexColl;
-  iEvent.getByLabel(VerticesTag_ ,thePrimaryVertexColl);
+  LogDebug("") << "Ntuplizer::FillElectrons";
+
+  edm::ESHandle<TransientTrackBuilder> builder;
+  iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder", builder);
+  TransientTrackBuilder thebuilder = *(builder.product());
+
+  //load the conversion collection
+
+      edm::Handle<edm::View<reco::GsfElectron>> electronsColl_h;
+      edm::Handle<reco::VertexCollection> primaryVertexColl_h;
+      edm::Handle<reco::ConversionCollection> conversions_h;
+      edm::Handle<reco::BeamSpot> beamspot_h;
+
+
+  iEvent.getByToken(electronsToken_, electronsColl_h);
+  iEvent.getByToken(vertexToken_, primaryVertexColl_h);
+  iEvent.getByToken(conversionsToken_, conversions_h);
+  iEvent.getByToken(beamSpotToken_, beamspot_h);
 
   Vertex dummy;
   const Vertex *pv = &dummy;
-  if (thePrimaryVertexColl->size() != 0) {
-    pv = &*thePrimaryVertexColl->begin();
+  if (primaryVertexColl_h->size() != 0) {
+    pv = &*primaryVertexColl_h->begin();
   } else { // create a dummy PV                                                                                                                                                                                             
     Vertex::Error e;
     e(0, 0) = 0.0015 * 0.0015;
@@ -548,17 +606,11 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     dummy = Vertex(p, e, 0, 0, 0);
   }
 
-  edm::ESHandle<TransientTrackBuilder> builder;
-  iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder", builder);
-  TransientTrackBuilder thebuilder = *(builder.product());
 
-  //load the conversion collection
-  edm::Handle<reco::ConversionCollection> conversions_h;
-  iEvent.getByLabel("allConversions", conversions_h);
+
+
   
   // get the beam spot
-  edm::Handle<reco::BeamSpot> beamspot_h;
-  iEvent.getByLabel("offlineBeamSpot", beamspot_h);
   const reco::BeamSpot &beamSpot = *(beamspot_h.product());
 
   // get the value map for eiD
@@ -572,9 +624,10 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   
   TClonesArray & electrons = *m_electrons;
   int counter = 0;
-  ele_N = electronsCol->size();
+  ele_N = electronsColl_h->size();
 
   //cout << "ele N = " << ele_N << endl;
+  /*
   ele_signedEstimateSumPred.clear();
   ele_propagatorSignedEstimateSumPred.clear();
   ele_signSumPredNormVH.clear();
@@ -586,12 +639,14 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
  
   trackHitPDGID.clear();
   lastHitPt.clear();
+  */
   ele_conversionVertexFitProbability.clear();
 
 
-  for (reco::GsfElectronCollection::const_iterator ielectrons=electronsCol->begin(); ielectrons!=electronsCol->end();++ielectrons) {
+  for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
     if(counter>49) { continue; } 
         edm::LogVerbatim("") << "Processing new electron";
+/*
         const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
         edm::LogVerbatim("") << "Processinf track with Pt=" << gsfTrack->pt() << " and eta=" << gsfTrack->eta();
         RecSimHitMatcher* theRecSimHitMatcher = nullptr;
@@ -669,7 +724,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_foundCKFTraj.push_back(foundCKFTraj);
     ele_signedEstimateSumPredCKF.push_back(tmp_ele_signedEstimateSumPredCKF);
     ele_reducedChi2CKF.push_back(tmp_ele_reducedChi2CKF);
-
+*/
     setMomentum(myvector, ielectrons->p4());
     new (electrons[counter]) TLorentzVector(myvector);
 
@@ -772,19 +827,30 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     // -----------------------------------------------------------------
     // Tracking Variables
     // -----------------------------------------------------------------
+    LogDebug("") << "Start looking at track vars";
     ele_lost_hits[counter]   = ielectrons->gsfTrack()->lost(); //numberOfLostHits();
     ele_valid_hits[counter] = ielectrons->gsfTrack()->found(); //numberOfValidHits() ;
     ele_gsfchi2[counter]    = ielectrons->gsfTrack()->normalizedChi2() ;
-    
+    LogDebug("") << "After gsfTrack";
+   
     //double hits = ielectrons->gsfTrack()->hitPattern().trackerLayersWithMeasurement();
     //cout << "hits = " << hits << " valid = " << ele_valid_hits[counter] << endl;
     ele_gsfhits[counter] = ielectrons->gsfTrack()->hitPattern().trackerLayersWithMeasurement();
 
     bool validKF=false;
     reco::TrackRef myTrackRef = ielectrons->closestCtfTrackRef();
-    validKF = myTrackRef.isNonnull();
+    LogDebug("") << "After clostste ctdf";
+
+    validKF = myTrackRef.isAvailable();
+    LogDebug("") << "isAvailable : " << validKF;
+
+    validKF &= myTrackRef.isNonnull();
+    LogDebug("") << "isNonnull&isAvailable : " << validKF;
+  
     ele_kfchi2[counter] = validKF ? myTrackRef->normalizedChi2() : 0 ; //ielectrons->track()->normalizedChi2() : 0 ;
     ele_kfhits[counter] = validKF ? myTrackRef->hitPattern().trackerLayersWithMeasurement() : -1. ; //ielectrons->track()->hitPattern().trackerLayersWithMeasurement() : 0 ;
+
+    LogDebug("") << "After ctfTrack";
     //
     // 		ele_dxyB[counter] = ielectrons->gsfTrack()->dxy(bs.position()) ;
     ele_dxy[counter]  = ielectrons->gsfTrack()->dxy() ;
@@ -936,27 +1002,33 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_sclphiwidth[counter] = sclRef->phiWidth();
     ele_scletawidth[counter] = sclRef->etaWidth();
 
+    LogDebug("") << "After access to SC ref";
     // --------------
     // Sub-Clusters
     // --------------
     int countersub = 0;
     //eSubClusters_ = 0.;
     // Store subclusters
-    reco::CaloCluster_iterator itscl  = sclRef->clustersBegin();
-    reco::CaloCluster_iterator itsclE = sclRef->clustersEnd();
-    
-    for(; itscl < itsclE ; ++itscl) {
-      bool isseed = false;
-      if((*itscl)==ielectrons->superCluster()->seed()) isseed=true; // continue; // skip seed cluster
-      //theBasicClusters_.push_back(&(**itscl));  
-      //eSubClusters_ += (*itscl)->energy();
-      ele_sclsubE[counter][countersub]      = (*itscl)->energy();
-      ele_sclsubEta[counter][countersub]    = (*itscl)->eta();
-      ele_sclsubPhi[counter][countersub]    = (*itscl)->phi();
-      ele_sclsubisseed[counter][countersub] = isseed;
-      //N subclusters?->sclNclus... to be checked
-      countersub++;
+   
+    if(inFileType == inputFileTypes::AOD) { 
+      reco::CaloCluster_iterator itscl  = sclRef->clustersBegin();
+      reco::CaloCluster_iterator itsclE = sclRef->clustersEnd();
+      LogDebug("") << "After reco::CaloCluster_iterator itsclE = sclRef->clustersEnd();"; 
+      for(; itscl < itsclE ; ++itscl) {
+        bool isseed = false;
+        if((*itscl)==ielectrons->superCluster()->seed()) isseed=true; // continue; // skip seed cluster
+        LogDebug("") << "After if((*itscl)==ielectrons->superCluster()->seed())";
+        //theBasicClusters_.push_back(&(**itscl));  
+        //eSubClusters_ += (*itscl)->energy();
+        ele_sclsubE[counter][countersub]      = (*itscl)->energy();
+        ele_sclsubEta[counter][countersub]    = (*itscl)->eta();
+        ele_sclsubPhi[counter][countersub]    = (*itscl)->phi();
+        ele_sclsubisseed[counter][countersub] = isseed;
+        //N subclusters?->sclNclus... to be checked
+        countersub++;
+      }
     }
+    LogDebug("") << "After SubClusters";
     // sort subclusters
 
     //	} // if ECAL driven
@@ -976,7 +1048,8 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_fbrem[counter]      = ielectrons->fbrem();
     ele_trackfbrem[counter] = ielectrons->trackFbrem();
     ele_SCfbrem[counter]    = ielectrons->superClusterFbrem();
-    ele_pfSCfbrem[counter]  = ielectrons->pfSuperClusterFbrem(); // Should be identical to the previous one...
+    // GsfElectron definition changed in 7X, 
+    ele_pfSCfbrem[counter]  = 0.;//ielectrons->pfSuperClusterFbrem(); // Should be identical to the previous one...
     ele_eClass[counter]     = ielectrons->classification() ;
     ele_nbrem[counter]      = ielectrons->numberOfBrems();
     
@@ -1002,12 +1075,11 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     // -----------------------------------------------------------------
     // Electron ID electronsCol
     // -----------------------------------------------------------------
-    edm::Ref<reco::GsfElectronCollection> electronRef(electronsCol, counter); //electronsCollection,i); i++; //reference to the electron
-    //cout << "MVA = " << mapMVA[electronRef] << endl;
-//    ele_mvaphys14[counter] = mapMVA_phys14[electronRef] ;
-//    ele_mvaphys14fix[counter] = mapMVA_phys14fix[electronRef] ;
+    
 
-    //T_Elec_MVAoutput->push_back(mapMVA[electronRef]);
+    // Does this do anything - doesnt look like it
+    //edm::Ref<reco::GsfElectronCollection> electronRef(electronsColl_h, counter); //electronsCollection,i); i++; //reference to the electron
+
 
     ++counter;
   } // for loop on gsfelectrons
@@ -1038,8 +1110,8 @@ void Ntuplizer::FillMET (const edm::Event& iEvent, const edm::EventSetup& iSetup
   // 	iEvent.getByLabel("patMETs", pfMEThandle);
   
   //edm::Handle< edm::View<cmg::BaseMET> > pfMEThandle;
-  edm::Handle< edm::View<reco::PFMET> > pfMEThandle;
-  iEvent.getByLabel("pfMet", pfMEThandle);
+  edm::Handle< edm::View<reco::MET> > pfMEThandle;
+  iEvent.getByToken(pfMETToken_, pfMEThandle);
   
   
   // PFMET
@@ -1058,15 +1130,33 @@ void Ntuplizer::FillMET (const edm::Event& iEvent, const edm::EventSetup& iSetup
 void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 // ====================================================================================
 {
+  LogDebug("") << "Ntuplizer::FillTruth"; 
+
+  Handle<std::vector< PileupSummaryInfo > >  PupInfo;
+  iEvent.getByLabel(edm::InputTag("addPileupInfo"), PupInfo);
   
+  std::vector<PileupSummaryInfo>::const_iterator PVI;
+  
+  int Tnpv = -1;
+  for(PVI = PupInfo->begin(); PVI != PupInfo->end(); ++PVI) {
+  
+     int BX = PVI->getBunchCrossing();
+  
+     if(BX == 0) { 
+       Tnpv = PVI->getTrueNumInteractions();
+       continue;
+     }
+  
+  }
+  _MC_TrueNumInteractions = Tnpv; 
   //edm::Handle< GenEventInfoProduct > HepMCEvt;
   //iEvent.getByLabel(MCTag_, HepMCEvt);
   //if(HepMCEvt->hasBinningValues()) _MC_pthat = (HepMCEvt->binningValues())[0];
   //else  _MC_pthat = 0.0;
   
-  edm::Handle<View<Candidate> > genCandidatesCollection;
+  edm::Handle<vector<reco::GenParticle> > genCandidatesCollection;
   //iEvent.getByLabel("prunedGen", genCandidatesCollection);
-  iEvent.getByLabel("genParticles", genCandidatesCollection); //genParticlesPruned
+  iEvent.getByToken(genParticleToken_, genCandidatesCollection); //genParticlesPruned
   
   TClonesArray &MC_gen_V               = *_m_MC_gen_V;
   TClonesArray &MC_gen_Higgs           = *_m_MC_gen_Higgs;
@@ -1086,7 +1176,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   // ----------------------------
   //      Loop on particles
   // ----------------------------
-  for( View<Candidate>::const_iterator p = genCandidatesCollection->begin();p != genCandidatesCollection->end(); ++ p ) {
+  for( auto p = genCandidatesCollection->begin();p != genCandidatesCollection->end(); ++ p ) {
     
     // %%%%%%%%%%%%%%%%%%
     // If Higgs

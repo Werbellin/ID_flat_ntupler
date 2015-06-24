@@ -12,7 +12,16 @@
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
-#include <DataFormats/HepMCCandidate/interface/GenParticleFwd.h>
+#include <DataFormats/HepMCCandidate/interface/GenParticle.h>
+#include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
+
+#include "DataFormats/EgammaCandidates/interface/Conversion.h"
+#include "DataFormats/VertexReco/interface/Vertex.h"
+#include "DataFormats/VertexReco/interface/VertexFwd.h"
+#include "DataFormats/METReco/interface/PFMETCollection.h"
+
+
+#include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 #include "DataFormats/Math/interface/LorentzVector.h"
 #include <FWCore/Framework/interface/ESHandle.h>
 
@@ -32,6 +41,9 @@
 
 using namespace std;
 using std::vector;
+
+
+enum class inputFileTypes {AOD, MINIAOD, UNDEF};
 
 class Ntuplizer : public edm::EDAnalyzer {
    public:
@@ -65,12 +77,21 @@ class Ntuplizer : public edm::EDAnalyzer {
 
       // ----------member data ---------------------------
       const edm::ParameterSet&  conf;
+        
+      inputFileTypes inFileType;   
+      
+      edm::EDGetToken electronsToken_;
+      edm::EDGetTokenT<edm::View<reco::GenParticle> > genParticlesToken_;
+      edm::EDGetTokenT<reco::VertexCollection> vertexToken_;
+      edm::EDGetTokenT<reco::ConversionCollection> conversionsToken_;
+      edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
+      edm::EDGetToken pfMETToken_;
+      edm::EDGetTokenT<vector<reco::GenParticle> > genParticleToken_;
+
       //inputTag
-      edm::InputTag EleTag_;
       //edm::InputTag MuonTag_;
       //edm::InputTag JetTag_;
       //edm::InputTag PhotonTag_;
-      edm::InputTag VerticesTag_;
       // Trigger Stuff
       edm::InputTag HLTTag_; 
       //edm::InputTag triggerEventTag_;
@@ -125,7 +146,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       //vector<bool>  ele_foundCKFTraj;
       //vector<float> ele_signedEstimateSumPredCKF;
       //vector<float> ele_reducedChi2CKF;
-      //vector<float> ele_conversionVertexFitProbability;
+      vector<float> ele_conversionVertexFitProbability;
     
 
 
@@ -222,6 +243,7 @@ class Ntuplizer : public edm::EDAnalyzer {
 	//double _MC_pthat;
 	int _MC_flavor[2];
 
+    int _MC_TrueNumInteractions;
 	//int _MC_gen_photons_isFSR[5000];
 	
       bool runGsfRefitter;
