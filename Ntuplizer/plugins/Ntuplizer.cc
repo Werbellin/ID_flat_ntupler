@@ -137,7 +137,7 @@ MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId"))
                         (iConfig.getParameter<edm::InputTag>
                         ("verticesAOD"));
 
-    pfMETToken_ = mayConsume<reco::PFMETCollection>
+    pfMETToken_ = mayConsume<edm::View<reco::MET> >
                         (iConfig.getParameter<edm::InputTag>
                         ("PFMETAOD"));
     genParticleToken_ = mayConsume<vector<reco::GenParticle> >
