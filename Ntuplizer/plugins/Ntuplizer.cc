@@ -36,24 +36,12 @@
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
-//#include <DataFormats/Common/interface/MergeableCounter.h>
-//#include <DataFormats/Common/interface/View.h>
-//#include <DataFormats/Candidate/interface/Candidate.h>
-//#include <DataFormats/PatCandidates/interface/CompositeCandidate.h>
-//#include <DataFormats/MuonReco/interface/Muon.h>
-//#include <DataFormats/MuonReco/interface/MuonFwd.h>
 //
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 //
 #include "RecoEcal/EgammaCoreTools/interface/EcalClusterTools.h"
 #include "RecoEcal/EgammaCoreTools/interface/EcalClusterLazyTools.h"
-//CMSSW/ RecoEcal/ EgammaCoreTools/ interface/ EcalClusterLazyTools.h
 #include "FWCore/Utilities/interface/isFinite.h"
-//#include "DataFormats/PatCandidates/interface/Muon.h"
-//#include "DataFormats/PatCandidates/interface/MET.h"
-//#include "DataFormats/PatCandidates/interface/Electron.h"
-//#include "DataFormats/PatCandidates/interface/Jet.h"
-//#include "DataFormats/PatCandidates/interface/Photon.h"
 #include "DataFormats/GsfTrackReco/interface/GsfTrack.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
 //"
@@ -63,8 +51,6 @@
 #include "DataFormats/METReco/interface/PFMET.h"
 #include "DataFormats/METReco/interface/PFMETFwd.h"
 //
-//#include "DataFormats/Math/interface/LorentzVector.h"
-//#include "DataFormats/MuonReco/interface/MuonSelectors.h"
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
 #include "RecoVertex/PrimaryVertexProducer/interface/PrimaryVertexSorter.h"
 
@@ -178,17 +164,9 @@ Ntuplizer::~Ntuplizer()
   // do anything here that needs to be done at desctruction time
   // (e.g. close files, deallocate resources etc.)
   delete m_electrons ;
-//   if (fill_L1trigger) {
-//     delete m_L1emIso;
-//     delete m_L1emNonIso;
-//   }
-//   delete m_muons;
-//   delete _m_jets_pf;
-//   delete m_photons;
-  
+ 
   if(isMC_ ) {
     delete _m_MC_gen_V;
-    //delete _m_MC_gen_photons;
     delete _m_MC_gen_leptons;
     delete _m_MC_gen_Higgs;
     delete _m_MC_gen_leptons_status1;
@@ -208,8 +186,6 @@ void Ntuplizer::beginJob()
   _mytree  = fs->make <TTree>("simpleRootTree","simpleRootTree"); 
   
   //// Counters
-  //_mytree->Branch("Nevt_Gen",&Nevt_Gen,"Nevt_Gen/I");
-  //_mytree->Branch("Nevt_Skim",&Nevt_afterSkim,"Nevt_Skim/I");
   
   // Global
   _mytree->Branch("nEvent",&_nEvent,"nEvent/I");
@@ -278,7 +254,6 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_e15",&ele_e15,"ele_e15[50]/D");
   _mytree->Branch("ele_e25max",&ele_e25max,"ele_e25max[50]/D");
   _mytree->Branch("ele_e55",&ele_e55,"ele_e55[50]/D");
-  //_mytree->Branch("ele_e1",&ele_e1,"ele_e1[50]/D");
   _mytree->Branch("ele_r9",&ele_r9,"ele_r9[50]/D");
   //
   _mytree->Branch("ele_oldsigmaietaieta",&ele_oldsigmaietaieta,"ele_oldsigmaietaieta[50]/D");
@@ -288,11 +263,8 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_olde15",&ele_olde15,"ele_olde15[50]/D");
   _mytree->Branch("ele_olde25max",&ele_olde25max,"ele_olde25max[50]/D");
   _mytree->Branch("ele_olde55",&ele_olde55,"ele_olde55[50]/D");
-  //_mytree->Branch("ele_olde1",&ele_olde1,"ele_olde1[50]/D");
   _mytree->Branch("ele_oldr9",&ele_oldr9,"ele_oldr9[50]/D");
   //
-  //_mytree->Branch("ele_e33",&ele_e33,"ele_e33[50]/D");  ---> No ECAL Reduced Collection
-  //_mytree->Branch("ele_e2overe9",&ele_e2overe9,"ele_e2overe9[50]/D");  ---> No ECAL Reduced Collection
   // 
   _mytree->Branch("ele_fbrem",&ele_fbrem,"ele_fbrem[50]/D");
   _mytree->Branch("ele_trackfbrem",&ele_trackfbrem,"ele_trackfbrem[50]/D");
@@ -330,15 +302,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_IP",&ele_IP,"ele_IP[50]/D");
   _mytree->Branch("ele_IPError",&ele_IPError,"ele_IPError[50]/D");	
   _mytree->Branch("ele_SIP",&ele_SIP,"ele_SIP[50]/D");
-  //  _mytree->Branch("ele_tkSumPt_dr03",&ele_tkSumPt_dr03,"ele_tkSumPt_dr03[50]/D"); 
-  //   _mytree->Branch("ele_ecalRecHitSumEt_dr03",&ele_ecalRecHitSumEt_dr03,"ele_ecalRecHitSumEt_dr03[50]/D"); 
-  //   _mytree->Branch("ele_hcalDepth1TowerSumEt_dr03",&ele_hcalDepth1TowerSumEt_dr03,"ele_hcalDepth1TowerSumEt_dr03[50]/D"); 
-  //   _mytree->Branch("ele_hcalDepth2TowerSumEt_dr03",&ele_hcalDepth2TowerSumEt_dr03,"ele_hcalDepth2TowerSumEt_dr03[50]/D"); 
-  //   _mytree->Branch("ele_tkSumPt_dr04",&ele_tkSumPt_dr04,"ele_tkSumPt_dr04[50]/D"); 
-  //   _mytree->Branch("ele_ecalRecHitSumEt_dr04",&ele_ecalRecHitSumEt_dr04,"ele_ecalRecHitSumEt_dr04[50]/D"); 
-  //   _mytree->Branch("ele_hcalDepth1TowerSumEt_dr04",&ele_hcalDepth1TowerSumEt_dr04,"ele_hcalDepth1TowerSumEt_dr04[50]/D"); 
-  //   _mytree->Branch("ele_hcalDepth2TowerSumEt_dr04",&ele_hcalDepth2TowerSumEt_dr04,"ele_hcalDepth2TowerSumEt_dr04[50]/D"); 
-  //
+ //
   _mytree->Branch("ele_conv_dist",&ele_conv_dist,"ele_conv_dist[50]/D");
   _mytree->Branch("ele_conv_dcot",&ele_conv_dcot,"ele_conv_dcot[50]/D");
   _mytree->Branch("ele_conv_radius",&ele_conv_radius,"ele_conv_radius[50]/D");
@@ -351,10 +315,7 @@ void Ntuplizer::beginJob()
 
   _mytree->Branch("ele_pfChargedIso", &ele_pfChargedIso, "ele_pfChargedIso[50]/D");
   _mytree->Branch("ele_pfSumPUIso", &ele_pfSumPUIso, "ele_pfSumPUIso[50]/D");
-  //  _mytree->Branch("ele_pfChargedHadPUIso",&ele_pfChargedHadPUIso,"ele_pfChargedHadPUIso[50]/D");
-  //   _mytree->Branch("ele_pfCombRelIso",&ele_pfCombRelIso,"ele_pfCombRelIso[50]/D");
   // 
- 
   //
   _mytree->Branch("ele_sclRawE", &ele_sclRawE, "ele_sclRawE[50]/D");
   _mytree->Branch("ele_sclE",    &ele_sclE,    "ele_sclE[50]/D");
@@ -382,38 +343,11 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_mvaphys14",   &ele_mvaphys14,   "ele_mvaphys14[50]/D");
   _mytree->Branch("ele_mvaphys14fix",   &ele_mvaphys14fix,   "ele_mvaphys14fix[50]/D");
     
-
-  //  _mytree->Branch("ele_ecalRegressionEnergy",   ele_ecalRegressionEnergy,   "ele_ecalRegressionEnergy[50]/D");
-  //   _mytree->Branch("ele_ecalRegressionError", ele_ecalRegressionError, "ele_ecalRegressionError[50]/D");
-  //   _mytree->Branch("ele_ecalTrackRegressionEnergy",&ele_ecalTrackRegressionEnergy,"ele_ecalTrackRegressionEnergy[50]/D");
-  //   _mytree->Branch("ele_ecalTrackRegressionError",&ele_ecalTrackRegressionError,"ele_ecalTrackRegressionError[50]/D");
-  //   _mytree->Branch("ele_ecalScale",ele_ecalScale,"ele_ecalScale[50]/D");
-  //   _mytree->Branch("ele_ecalSmear",ele_ecalSmear,"ele_ecalSmear[50]/D");
-  //   _mytree->Branch("ele_ecalRegressionScale",ele_ecalRegressionScale,"ele_ecalRegressionScale[50]/D");
-  //   _mytree->Branch("ele_ecalRegressionSmear",ele_ecalRegressionSmear,"ele_ecalRegressionSmear[50]/D");
-  //   _mytree->Branch("ele_ecalTrackRegressionScale",ele_ecalTrackRegressionScale,"ele_ecalTrackRegressionScale[50]/D");
-  //   _mytree->Branch("ele_ecalTrackRegressionSmear",ele_ecalTrackRegressionSmear,"ele_ecalTrackRegressionSmear[50]/D");
- 	
-  // Variables for the mva. Most of them are duplicated, but since they are corrected at analysis level, it could be dangerous
-  //  _mytree->Branch("ele_mvafbrem", ele_mvafbrem,"ele_mvafbrem[50]/D");
-  //   _mytree->Branch("ele_mvadetain", ele_mvadetain,"ele_mvadetain[50]/D");
-  //   _mytree->Branch("ele_mvadphiin", ele_mvadphiin,"ele_mvadphiin[50]/D");
-  //   _mytree->Branch("ele_mvasieie", ele_mvasieie,"ele_mvasiesie[50]/D");
-  //   _mytree->Branch("ele_mvahoe", ele_mvahoe,"ele_mvahoe[50]/D");
-  //   _mytree->Branch("ele_mvaeop", ele_mvaeop,"ele_mvaeop[50]/D");
-  //   _mytree->Branch("ele_mvae1x5e5x5", ele_mvae1x5e5x5,"ele_mvae1x5e5x5[50]/D");
-  //   _mytree->Branch("ele_mvaeleopout", ele_mvaeleopout,"ele_mvaeleopout[50]/D");
   _mytree->Branch("ele_kfchi2",&ele_kfchi2,"ele_kfchi2[50]/D");
   _mytree->Branch("ele_kfhits",&ele_kfhits,"ele_kfhits[50]/I");
   _mytree->Branch("ele_gsfhits",&ele_gsfhits,"ele_gsfhits[50]/I");
    
-  //   _mytree->Branch("ele_mvamishits", ele_mvamishits,"ele_mvamisthits[50]/I");
-  //   _mytree->Branch("ele_mvadist", ele_mvadist,"ele_mvadist[50]/D");
-  //   _mytree->Branch("ele_mvadcot", ele_mvadcot,"ele_mvadcot[50]/D");
-  //   _mytree->Branch("ele_mvaeta", ele_mvaeta,"ele_mvaeta[50]/D");
-  //   _mytree->Branch("ele_mvapt", ele_mvapt,"ele_mvapt[50]/D");
-  //   _mytree->Branch("ele_mvaecalseed", ele_mvaecalseed,"ele_mvaecalseed[50]/I");
- 
+
   
   // PFMET
   _mytree->Branch("met_pf_et",&_met_pf_et,"met_pf_et/D");
@@ -424,14 +358,12 @@ void Ntuplizer::beginJob()
   _mytree->Branch("met_pf_sig",&_met_pf_sig,"met_pf_sig/D");
 
   // Truth Leptons
-  //cout << "truth leptons" << endl;
   _m_MC_gen_V = new TClonesArray ("TLorentzVector");
   _mytree->Branch ("MC_gen_V", "TClonesArray", &_m_MC_gen_V, 256000,0);
   _mytree->Branch ("MC_gen_V_pdgid",&_MC_gen_V_pdgid, "MC_gen_V_pdgid[10]/D");
   //
   _m_MC_gen_Higgs = new TClonesArray ("TLorentzVector");
   _mytree->Branch ("MC_gen_Higgs", "TClonesArray", &_m_MC_gen_Higgs, 256000,0);
-  //_mytree->Branch ("MC_gen_Higgs_pdgid",&_MC_gen_Higgs_pdgid, "MC_gen_Higgs_pdgid[10]/D");
   //
   _m_MC_gen_leptons         = new TClonesArray ("TLorentzVector");
   _m_MC_gen_leptons_status1 = new TClonesArray ("TLorentzVector");
@@ -446,11 +378,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch ("MC_gen_leptons_status1_FromNonPrompt",&_MC_gen_leptons_status1_FromNonPrompt, "MC_gen_leptons_status1_FromNonPrompt[30]/I");
   _mytree->Branch ("MC_gen_leptons_status1_FromBC",&_MC_gen_leptons_status1_FromBC, "MC_gen_leptons_status1_FromBC[30]/I");
   _mytree->Branch ("MC_gen_leptons_status2_pdgid",&_MC_gen_leptons_status2_pdgid, "MC_gen_leptons_status2_pdgid[30]/D");
-  //_mytree->Branch ("MC_pthat",&_MC_pthat,"MC_pthat/D");
   _mytree->Branch ("MC_flavor",&_MC_flavor,"MC_flavor[2]/I");
-  //_m_MC_gen_photons         = new TClonesArray ("TLorentzVector");
-  //_mytree->Branch ("MC_gen_photons", "TClonesArray", &_m_MC_gen_photons, 256000,0);
-  //_mytree->Branch ("MC_gen_photons_isFSR",&_MC_gen_photons_isFSR,"MC_gen_photons_isFSR[5000]/I");
   
   _mytree->Branch ("MC_TrueNumInteractions",&_MC_TrueNumInteractions,"MC_TrueNumInteractions/I");
 
@@ -485,29 +413,17 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    if(isMC_ ) {
      _MC_TrueNumInteractions = 0;
-     //	cout << "truth2" << endl;
      _m_MC_gen_V->Clear();
      _m_MC_gen_Higgs->Clear();
-     //_m_MC_gen_photons->Clear();
      _m_MC_gen_leptons->Clear();
      _m_MC_gen_leptons_status1->Clear();
      _m_MC_gen_leptons_status2->Clear();
-     //cout << "truth" << endl;
      FillTruth(iEvent, iSetup);
      LogDebug("") << "After FillTruth";
    }
 
    _mytree->Fill();
 
-// #ifdef THIS_IS_AN_EVENT_EXAMPLE
-//    Handle<ExampleData> pIn;
-//    iEvent.getByLabel("example",pIn);
-// #endif
-   
-// #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
-//    ESHandle<SetupData> pSetup;
-//    iSetup.get<SetupRecord>().get(pSetup);
-// #endif
 }
 
 // =============================================================================================
@@ -552,8 +468,6 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
   }
   strcpy(trig_fired_names,trig_fired_names_local);
   
-  //cout << "trig = " << trig_fired_names << endl;
-  //cout << "" << endl;
 
 } // end of FillEvent
 
@@ -618,8 +532,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   edm::Handle<edm::ValueMap<float> >  mapMVAcollection_phys14fix;
   if (MVAidCollection_.size()>0 ) iEvent.getByLabel(MVAidCollection_[0] , mapMVAcollection_phys14);
   if (MVAidCollection_.size()>1 ) iEvent.getByLabel(MVAidCollection_[1], mapMVAcollection_phys14fix);
-//  const edm::ValueMap<float> & mapMVA_phys14    = *mapMVAcollection_phys14;
-//  const edm::ValueMap<float> & mapMVA_phys14fix = *mapMVAcollection_phys14fix;
   
   
   TClonesArray & electrons = *m_electrons;
@@ -765,26 +677,16 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     // Old-Style ShowerShape
     edm::InputTag  reducedBarrelRecHitCollection("reducedEcalRecHitsEB");
     edm::InputTag  reducedEndcapRecHitCollection("reducedEcalRecHitsEE");
-    //noZS::
-    // noZS::EcalClusterLazyTools lazyToolsNoZS(iEvent, iSetup, reducedBarrelRecHitCollection, reducedEndcapRecHitCollection);
-
-    // const auto & seedCluster = ielectrons->superCluster()->seed();
-    // std::vector<float> vCov = lazyToolsNoZS.localCovariances(*seedCluster);
-    // std::vector<float> Cov  = lazyToolsNoZS.covariances(*seedCluster);
-    
+   
     ele_oldsigmaetaeta[counter]   =  ielectrons->full5x5_sigmaEtaEta();    //( !edm::isNotFinite(Cov[0]) ) ? sqrt(Cov[0]) : 0;
     ele_oldsigmaietaieta[counter] =  ielectrons->full5x5_sigmaIetaIeta();   //( !edm::isNotFinite(vCov[0]) ) ? sqrt(vCov[0]) : 0;
     ele_oldsigmaiphiiphi[counter] =  ielectrons->full5x5_sigmaIphiIphi();   //( !edm::isNotFinite(vCov[2]) ) ? sqrt(vCov[2]) : 0;
-    //ele_oldsigmaietaiphi[counter] = vCov[1]; // this is missing in the struct
     ele_oldr9[counter]              =  ielectrons->full5x5_r9();  //lazyToolsNoZS.e3x3(*seedCluster) / ielectrons->superCluster()->rawEnergy() ;
     ele_olde15[counter]           =  ielectrons->full5x5_e1x5(); //lazyToolsNoZS.e1x5(*seedCluster);
     ele_olde25max[counter]   =  ielectrons->full5x5_e2x5Max(); //lazyToolsNoZS.e2x5Max(*seedCluster);
     ele_olde55[counter]           =  ielectrons->full5x5_e5x5();       // lazyToolsNoZS.e5x5(*seedCluster);
     ele_oldhe[counter]             =  ielectrons->full5x5_hcalOverEcal();
     ele_oldhebc[counter]        =  ielectrons->full5x5_hcalOverEcalBc();
-            // hcal stuff is not filled
-    //electron.full5x5_setShowerShape(ss);
-    //electron.full5x5_setSigmaIetaIphi(sigmaIetaIphi);
 
 
     // E/P combination
@@ -793,23 +695,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_trackErr[counter]  = ielectrons->trackMomentumError();
     ele_combErr[counter]   = ielectrons->p4Error(GsfElectron::P4_COMBINATION);
     ele_PFcombErr[counter] = ielectrons->p4Error(GsfElectron::P4_PFLOW_COMBINATION);
-    //cout << "Errors (ecal/track/p4comb/PFprcomb) :" <<ele_ecalErr[counter] <<" " << ele_trackErr[counter]<<" "<< ele_combErr[counter]<<" "<< ele_PFcombErr[counter] <<endl;
-    
-    //regression
-    //ele_ecalRegressionEnergy[counter]  = ielectrons->ecalRegressionEnergy();
-    //ele_ecalRegressionError[counter] = ielectrons->ecalRegressionError();
-    // ele_ecalTrackRegressionEnergy[counter] = ielectrons->ecalTrackRegressionEnergy();
-    //     ele_ecalTrackRegressionError[counter] = ielectrons->ecalTrackRegressionError();
-    //     ele_ecalScale[counter] = ielectrons->ecalScale();               
-    //     ele_ecalSmear[counter] = ielectrons->ecalSmear();                
-    //     ele_ecalRegressionScale[counter] = ielectrons->ecalRegressionScale();     
-    //     ele_ecalRegressionSmear[counter] = ielectrons->ecalRegressionSmear();     
-    //     ele_ecalTrackRegressionScale[counter] = ielectrons->ecalTrackRegressionScale();
-    //     ele_ecalTrackRegressionSmear[counter] = ielectrons->ecalTrackRegressionSmear();
-    
-    
-    // 		cout << "REGRESSION " << ele_ecalRegressionEnergy[counter]<< " " << ele_ecalRegressionError[counter] << endl;
-    //
+   //
     ele_mva[counter]   = 0; //ielectrons->mva() ;
     //
     if (ielectrons->isEB()) ele_isbarrel[counter] = 1 ; 
@@ -833,8 +719,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_gsfchi2[counter]    = ielectrons->gsfTrack()->normalizedChi2() ;
     LogDebug("") << "After gsfTrack";
    
-    //double hits = ielectrons->gsfTrack()->hitPattern().trackerLayersWithMeasurement();
-    //cout << "hits = " << hits << " valid = " << ele_valid_hits[counter] << endl;
     ele_gsfhits[counter] = ielectrons->gsfTrack()->hitPattern().trackerLayersWithMeasurement();
 
     bool validKF=false;
@@ -860,43 +744,14 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_dsz[counter]  = ielectrons->gsfTrack()->dsz() ;
     ele_dzPV[counter] = ielectrons->gsfTrack()->dz(pv->position());
     //
-    // Isolation variables
-    // ele_tkSumPt_dr03[counter]              = ielectrons->dr03TkSumPt() ;
-    //     ele_ecalRecHitSumEt_dr03[counter]      = ielectrons->dr03EcalRecHitSumEt() ;
-    //     ele_hcalDepth1TowerSumEt_dr03[counter] = ielectrons->dr03HcalDepth1TowerSumEt() ;
-    //     ele_hcalDepth2TowerSumEt_dr03[counter] = ielectrons->dr03HcalDepth2TowerSumEt() ;
-    //     ele_tkSumPt_dr04[counter]              = ielectrons->dr04TkSumPt() ;
-    //     ele_ecalRecHitSumEt_dr04[counter]      = ielectrons->dr04EcalRecHitSumEt() ;
-    //     ele_hcalDepth1TowerSumEt_dr04[counter] = ielectrons->dr04HcalDepth1TowerSumEt() ;
-    //     ele_hcalDepth2TowerSumEt_dr04[counter] = ielectrons->dr04HcalDepth2TowerSumEt() ;
-    //
-    // Custom HCAL
-    //  m_calotowers = new edm::Handle<CaloTowerCollection>() ;
-    //     if (!iEvent.getByLabel("towerMaker",*m_calotowers)) //hcalTowers_
-    //       { edm::LogError("ElectronHcalHelper::readEvent")<<"failed to get the hcal towers of label "<<hcalTowers_ ; }
-    
-    //     edm::Ref<pat::ElectronCollection> electronEdmRef(electronsCol, counter);
-    //     double egHcalIsoConeSizeOutSmall = 0.3;
-    //     double egHcalIsoConeSizeIn       = 0.0, egHcalIsoPtMin=0.0;
-    //     int egHcalDepth1 = 1; 
-    //     int egHcalDepth2 = 2;
-    //hadDepth1Isolation03_  = new EgammaTowerIsolation(egHcalIsoConeSizeOutSmall,egHcalIsoConeSizeIn,egHcalIsoPtMin,egHcalDepth1,m_calotowers->product()) ;
-    //hadDepth2Isolation03_  = new EgammaTowerIsolation(egHcalIsoConeSizeOutSmall,egHcalIsoConeSizeIn,egHcalIsoPtMin,egHcalDepth2,m_calotowers->product()) ;
-    //double hcalDepth1TowerSumEt03 = hadDepth1Isolation03_->getTowerEtSum(&(*electronEdmRef)); //ielectrons)); //electronRef));
-    //double hcalDepth2TowerSumEt03 = hadDepth2Isolation03_->getTowerEtSum(&(*electronEdmRef)); // electronEdmRefielectrons)); //electronRef));
-    //ele_HCALFullConeSum[counter]  = hcalDepth1TowerSumEt03+hcalDepth2TowerSumEt03;
-    //&((*EleHandle)[i])
-    //
+
     // Conversion Rejection
     ele_conv_dcot[counter]   = ielectrons->convDist(); //userFloat("dcot");
     ele_conv_dist[counter]   = ielectrons->convDcot(); //ielectrons->userFloat("dist");
     ele_conv_radius[counter] = ielectrons->convRadius();
     
-    // FIXME: Always returns 0 :(
-    //cout << " dcot = " << ielectrons->userFloat("dcot") << " dist = " << ielectrons->userFloat("dist") << endl;
     
     ele_expected_inner_hits[counter] = ielectrons->gsfTrack()->hitPattern().numberOfHits(reco::HitPattern::MISSING_INNER_HITS);
-    //ielectrons->gsfTrack()->trackerExpectedHitsInner().numberOfHits();
     
    
 
@@ -929,11 +784,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     //
     ele_pfChargedIso[counter]      = (ielectrons->pfIsolationVariables()).sumChargedParticlePt;
     ele_pfSumPUIso[counter]        = (ielectrons->pfIsolationVariables()).sumPUPt;
-    //ele_pfCombRelIso[counter]      = LeptonIsoHelper::combRelIsoPF(lepton_setup, lepton_setup, _PU_Elerho, *ielectrons);
-    //FIXME these two for applying the beta corrections
-    //ele_pfChargedHadPUIso[counter]  = ielectrons->chargedAllIso();
-    //ele_pfChargedHadPUIso[counter]  = ielectrons->puChargedHadronIso();
-    
+   
     // -----------------------------------------------------------------
     // SIP3D
     // -----------------------------------------------------------------
@@ -956,7 +807,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 	
 	ele_ip3D     = ip3d; 
 	ele_ip3D_err = ip3derr;
-	// fMVAVar_ip3dSig = ip3d/ip3derr;
       } // if ip3dpv.first
 
       if(result.first) {
@@ -979,25 +829,17 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     //cout << " SuperCluster "<< endl;
     //	if(ielectrons->ecalDrivenSeed()) {
     reco::SuperClusterRef sclRef = ielectrons->superCluster();
-    //cout << " SuperClusterRef" << endl;
-    ////math::XYZPoint sclPos        = ielectrons->superClusterPosition();
-    //      cout << " pflow" << endl;
-    
-    //if (!ielectrons->ecalDrivenSeed() && ielectrons->trackerDrivenSeed()) 
-    //sclRef = ielectrons->pflowSuperCluster();
-    
+   
     double R  = TMath::Sqrt(sclRef->x()*sclRef->x() + sclRef->y()*sclRef->y() +sclRef->z()*sclRef->z());
     double Rt = TMath::Sqrt(sclRef->x()*sclRef->x() + sclRef->y()*sclRef->y());
     ele_sclRawE[counter]  = sclRef->rawEnergy() ;
     
     ele_sclE[counter]     = sclRef->energy() ;
-    // 		ele_sclE[counter]     = ielectrons->correctedEcalEnergy();  //for 5XY
     ele_sclEt[counter]    = sclRef->energy()*(Rt/R) ;
     ele_sclEta[counter]   = sclRef->eta() ;
     ele_sclPhi[counter]   = sclRef->phi() ;
     ele_sclNclus[counter] = sclRef->clustersSize();
     
-    //cout << " etawidth = " << sclRef->etaWidth() << endl;
 
     ele_sclphiwidth[counter] = sclRef->phiWidth();
     ele_scletawidth[counter] = sclRef->etaWidth();
@@ -1007,8 +849,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     // Sub-Clusters
     // --------------
     int countersub = 0;
-    //eSubClusters_ = 0.;
-    // Store subclusters
    
     if(inFileType == inputFileTypes::AOD) { 
       reco::CaloCluster_iterator itscl  = sclRef->clustersBegin();
@@ -1018,29 +858,19 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
         bool isseed = false;
         if((*itscl)==ielectrons->superCluster()->seed()) isseed=true; // continue; // skip seed cluster
         LogDebug("") << "After if((*itscl)==ielectrons->superCluster()->seed())";
-        //theBasicClusters_.push_back(&(**itscl));  
-        //eSubClusters_ += (*itscl)->energy();
         ele_sclsubE[counter][countersub]      = (*itscl)->energy();
         ele_sclsubEta[counter][countersub]    = (*itscl)->eta();
         ele_sclsubPhi[counter][countersub]    = (*itscl)->phi();
         ele_sclsubisseed[counter][countersub] = isseed;
-        //N subclusters?->sclNclus... to be checked
         countersub++;
       }
     }
     LogDebug("") << "After SubClusters";
-    // sort subclusters
 
-    //	} // if ECAL driven
-    
-    //cout << " Etawidth = " <<  ele_scletawidth[counter] << endl;
-    //cout << "" << endl;
-    
     // -----------------------------------------------------------------
     // Get PreShower Informations
     // -----------------------------------------------------------------
     ele_psE[counter] = sclRef->preshowerEnergy();
-    //T_Elec_PreShowerOverRaw->push_back((eleIt->superCluster()->rawEnergy()>0) ? eleIt->superCluster()->preshowerEnergy() / eleIt->superCluster()->rawEnergy() : -1)
 
     // -----------------------------------------------------------------
     //fbrem
@@ -1053,25 +883,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_eClass[counter]     = ielectrons->classification() ;
     ele_nbrem[counter]      = ielectrons->numberOfBrems();
     
-    // FOR MVA...
-    //  ele_mvafbrem[counter] = ielectrons->fbrem();
-    //     ele_mvadetain[counter] = ielectrons->deltaEtaSuperClusterTrackAtVtx();
-    //     ele_mvadphiin[counter] = ielectrons->deltaPhiSuperClusterTrackAtVtx();
-    //     ele_mvasieie[counter] = ielectrons->sigmaIetaIeta();
-    //     ele_mvahoe[counter] = ielectrons->hcalOverEcal();
-    //     ele_mvaeop[counter] = ielectrons->eSuperClusterOverP();
-    //     ele_mvae1x5e5x5[counter] = (ielectrons->e5x5()) !=0. ? ielectrons->e1x5()/ielectrons->e5x5() : -1. ;
-    //     ele_mvaeleopout[counter] = ielectrons->eEleClusterOverPout();
-    //     bool validKF= (ielectrons->track().isNonnull());
-    //     ele_mvakfchi2[counter] = validKF ? ielectrons->track()->normalizedChi2() : 0 ;
-    //     ele_mvakfhits[counter] = validKF ? ielectrons->track()->hitPattern().trackerLayersWithMeasurement() : 0 ;
-    //     ele_mvamishits[counter] = ielectrons->gsfTrack()->trackerExpectedHitsInner().numberOfLostHits();
-    //     ele_mvadist[counter] = ielectrons->convDist();
-    //     ele_mvadcot[counter] = ielectrons->convDcot();
-    //     ele_mvaeta[counter] = ielectrons->eta();
-    //     ele_mvapt[counter] = ielectrons->pt();
-    //     ele_mvaecalseed[counter] = ielectrons->ecalDrivenSeed();
-
     // -----------------------------------------------------------------
     // Electron ID electronsCol
     // -----------------------------------------------------------------
@@ -1093,23 +904,7 @@ void Ntuplizer::FillMET (const edm::Event& iEvent, const edm::EventSetup& iSetup
 // ====================================================================================
 {
 	
-  // caloMET object (negative vector sum of calorimeter towers)
-  //edm::Handle< edm::View<reco::CaloMET> > caloMEThandle;
-  //iEvent.getByLabel("met", caloMEThandle);
-  
-  // MET object that corrects the basic calorimeter MET for muons
-  // edm::Handle< edm::View<reco::CaloMET> > muCorrMEThandle;
-  //   iEvent.getByLabel("corMetGlobalMuons", muCorrMEThandle);
-  
-  // MET object that corrects the basic calorimeter MET for muons and tracks
-  //edm::Handle< edm::View<reco::MET> > tcMEThandle;
-  //iEvent.getByLabel("tcMet", tcMEThandle);
-  
-  // MET object built as the (negative) vector sum of all particles (PFCandidates) reconstructed in the event
-  // 	edm::Handle< edm::View<pat::MET> > pfMEThandle;
-  // 	iEvent.getByLabel("patMETs", pfMEThandle);
-  
-  //edm::Handle< edm::View<cmg::BaseMET> > pfMEThandle;
+
   edm::Handle< edm::View<reco::MET> > pfMEThandle;
   iEvent.getByToken(pfMETToken_, pfMEThandle);
   
@@ -1149,19 +944,12 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   
   }
   _MC_TrueNumInteractions = Tnpv; 
-  //edm::Handle< GenEventInfoProduct > HepMCEvt;
-  //iEvent.getByLabel(MCTag_, HepMCEvt);
-  //if(HepMCEvt->hasBinningValues()) _MC_pthat = (HepMCEvt->binningValues())[0];
-  //else  _MC_pthat = 0.0;
-  
+ 
   edm::Handle<vector<reco::GenParticle> > genCandidatesCollection;
-  //iEvent.getByLabel("prunedGen", genCandidatesCollection);
   iEvent.getByToken(genParticleToken_, genCandidatesCollection); //genParticlesPruned
   
   TClonesArray &MC_gen_V               = *_m_MC_gen_V;
   TClonesArray &MC_gen_Higgs           = *_m_MC_gen_Higgs;
-  //cout << " photon" << endl;
-  //TClonesArray &MC_gen_photons         = *_m_MC_gen_photons;
   TClonesArray &MC_gen_leptons         = *_m_MC_gen_leptons;
   TClonesArray &MC_gen_leptons_status2 = *_m_MC_gen_leptons_status2;
   TClonesArray &MC_gen_leptons_status1 = *_m_MC_gen_leptons_status1;
@@ -1171,7 +959,6 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   int counter_daughters   = 0;
   int counter_lep_status2 = 0;
   int counter_lep_status1 = 0;
-  //int counter_photon      = 0;
   
   // ----------------------------
   //      Loop on particles
@@ -1193,342 +980,105 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
     // %%%%%%%%%%%%%%%%%%
     if(fabs(p->pdgId())==11) { // || fabs(p->pdgId())==13 ||  fabs(p->pdgId())==15) {
       
-      // cout << "Status pdgid = " << fabs(p->pdgId()) << " status = "<< p->status()  << " Pt = "<< p->pt() << " Eta = " << p->eta() <<  endl;
-      
-      //       if(p->status()==1) {
-      // 	cout << "Status1 pdgid = " << fabs(p->pdgId()) << " status = "<< p->status()  << " Pt = "<< p->pt() << " Eta = " << p->eta() <<  endl;
-      // 	cout << " Nmother = " << p->numberOfMothers() << endl;
-      // 	for(unsigned int i=0;i<p->numberOfMothers();i++) {
-      // 	  cout << " mother pdgid = " << fabs(p->mother(i)->pdgId()) << " status = " << p->mother(i)->status() << endl;
-      
-      // 	  for(unsigned int j=0;j<p->mother(i)->numberOfMothers();j++) {
-      // 	    cout << " Grandmother pdgid = " << fabs(p->mother(i)->mother(j)->pdgId()) << " status = " << p->mother(i)->mother(j)->status() << endl;
-      // 	  }
-      // 	} // for loop on mothers
-      // 	//cout << "" << endl;
-      //       } // if status==1
-      
-      if(p->status()==1) {
-	//if(p->numberOfMothers()>0) { // Need a mother...
+     
+        if(p->status()==1) {
 	
-	setMomentum(myvector, p->p4());
-	new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
-	_MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->pdgId();
+	    setMomentum(myvector, p->p4());
+	    new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
+	    _MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->pdgId();
 	
 	
-	// Let's look at the mothers ... [works really only for electrons...=>eid studies]
-	if(p->numberOfMothers()>0) {
-	  //bool foundW = false;
-	  //if (p.numberOfMothers()==0) return foundW;
-	  //const reco::Candidate *mother= p->moter();
-	  
-	  const reco::Candidate  *Mom = p->mother();
-	  while(Mom!=0) {
-	    if(fabs(Mom->pdgId()) == 23 || fabs(Mom->pdgId()) == 24) { 
-	      //cout << "W or Z !" << endl; 
-	      _MC_gen_leptons_status1_FromWZ[counter_lep_status1] = 1;
-	      break;}
-	    else if(fabs(Mom->pdgId()) == 15) { 
-	      //cout << " Taus  !" << endl; 
-	      _MC_gen_leptons_status1_FromTaus[counter_lep_status1] = 1;
-	      break;}
-	    else if(fabs(Mom->pdgId()) > 50 ) { 
-	      //cout << " Non Prompt  ! pdgID = " << fabs(Mom->pdgId()) << " Nmother = " <<  Mom->numberOfMothers() << endl; 
-	      _MC_gen_leptons_status1_FromNonPrompt[counter_lep_status1] = 1;
+	    // Let's look at the mothers ... [works really only for electrons...=>eid studies]
+	    if(p->numberOfMothers()>0) {
+	        const reco::Candidate  *Mom = p->mother();
+	        while(Mom!=0) {
+	            if(fabs(Mom->pdgId()) == 23 || fabs(Mom->pdgId()) == 24) { 
+	                _MC_gen_leptons_status1_FromWZ[counter_lep_status1] = 1;
+	                break;
+                }
+	            else if(fabs(Mom->pdgId()) == 15) { 
+	                _MC_gen_leptons_status1_FromTaus[counter_lep_status1] = 1;
+	                break;
+                }
+	            else if(fabs(Mom->pdgId()) > 50 ) { 
+	                _MC_gen_leptons_status1_FromNonPrompt[counter_lep_status1] = 1;
 
-	      const reco::Candidate  *GrandMom = Mom; //->mother();
-	      while(GrandMom!=0) {
-		for(int unsigned jj=0;jj<GrandMom->numberOfMothers();jj++) {
-		  if(fabs(GrandMom->mother(jj)->pdgId()) == 4 || fabs(GrandMom->mother(jj)->pdgId()) == 5) { 
-		    //cout << " B or C (loop)  !" << endl; 
-		    _MC_gen_leptons_status1_FromBC[counter_lep_status1] = 1;
-		    break;}
-		} // for loop on grand-mothers, when they are more than 1...
-		//cout << " Non Prompt GM = " << fabs(GrandMom->pdgId()) << endl;
-		if(fabs(GrandMom->pdgId()) == 4 || fabs(GrandMom->pdgId()) == 5) { 
-		  //cout << " B or C  !" << endl; 
-		  _MC_gen_leptons_status1_FromBC[counter_lep_status1] = 1;
-		  break;}
-		GrandMom = GrandMom ->mother();
-	      } // while loop on grand mom
-	      
-	      break;} // if pdgid>50
-	    
-	    Mom = Mom ->mother();
-	  } // while loop on mothers
-	  
-	  
-	  // 	  while (p->numberOfMothers()>0) {
-	  // 	    const reco::Candidate  *Mom = ->mother();
-	  // 	    if ((fabs(MomPart->pdgId())>=22)&&(fabs(MomPart->pdgId())<=24)){
-	  // 	  }// while loop on mother
-	  
-	  // 	  const reco::Candidate  *part = (p.mother());
-	  // 	  // loop on the mother particles to check if is has a W has mother
-	  // 	  while ((part->numberOfMothers()>0)) {
-	  // 	    const reco::Candidate  *MomPart =part->mother();
-	  // 	    if ((fabs(MomPart->pdgId())>=22)&&(fabs(MomPart->pdgId())<=24)){
-	  // 	      foundW = true;
-	  //             break;
-	  //         }
-	  //         part = MomPart;
-	  
-	  
-	  
-	  //if(p->mother(0)->pdgId()== p->pdgId()) {
-	  
-	  //}// if pdgid
-	  
-	} // if mother
+	                const reco::Candidate  *GrandMom = Mom; //->mother();
+	                while(GrandMom!=0) {
+	                    for(int unsigned jj=0;jj<GrandMom->numberOfMothers();jj++) {
+	                            if(fabs(GrandMom->mother(jj)->pdgId()) == 4 || fabs(GrandMom->mother(jj)->pdgId()) == 5) { 
+	                                _MC_gen_leptons_status1_FromBC[counter_lep_status1] = 1;
+	                                break;
+                                }
+	                    } // for loop on grand-mothers, when they are more than 1...
+	                    if(fabs(GrandMom->pdgId()) == 4 || fabs(GrandMom->pdgId()) == 5) { 
+	                        _MC_gen_leptons_status1_FromBC[counter_lep_status1] = 1;
+	                        break;
+                        }
+	                    GrandMom = GrandMom ->mother();
+	                } // while loop on grand mom
+	                break;
+                } // if pdgid>50
+	        
+	            Mom = Mom ->mother();
+	        } // while loop on mothers
+	    } // if mother
 	
-	counter_lep_status1++;
-      } // if status 1
-      //cout << "" << endl;
+	    counter_lep_status1++;
+    } // if status 1
 
-      if(p->status()==3) {
-	if(p->numberOfMothers()>0) { // Need a mother...
-	  if(p->mother(0)->pdgId()==23) {  // If Mother is a Z 
-	    
-	    //cout << "number of daughters = " << p->numberOfDaughters() << " mother id = " << p->pdgId() << endl;
-	    
-	    if(p->numberOfDaughters()>0) { // Need a daughter...
-	      
-	      //cout << " status of daughter = " << p->daughter(0)->status() << " pdgid = " << p->daughter(0)->pdgId() << endl;
+    if(p->status()==3) {
+	    if(p->numberOfMothers()>0) { // Need a mother...
+	        if(p->mother(0)->pdgId()==23) {  // If Mother is a Z 
+	            if(p->numberOfDaughters()>0) { // Need a daughter...
 	      
 	      // Status 2 Leptons
-	      if(p->daughter(0)->pdgId()==p->pdgId() && p->daughter(0)->status()==2) { // if daughter is lepton & status 2
-		setMomentum(myvector, p->daughter(0)->p4());
-		new (MC_gen_leptons_status2[counter_lep_status2]) TLorentzVector(myvector);
-		_MC_gen_leptons_status2_pdgid[counter_lep_status2] = p->daughter(0)->pdgId();
-		counter_lep_status2++;
+	                if(p->daughter(0)->pdgId()==p->pdgId() && p->daughter(0)->status()==2) { // if daughter is lepton & status 2
+		                setMomentum(myvector, p->daughter(0)->p4());
+		                new (MC_gen_leptons_status2[counter_lep_status2]) TLorentzVector(myvector);
+		                _MC_gen_leptons_status2_pdgid[counter_lep_status2] = p->daughter(0)->pdgId();
+		                counter_lep_status2++;
 		
-		//cout << "dod = " << p->daughter(0)->daughter(0)->pdgId() << " status = " << p->daughter(0)->daughter(0)->status() << endl;
-		
-		// 		if(p->daughter(0)->daughter(0)->status()==2) {
-		// 		  //cout << "Ndodod = " << p->daughter(0)->daughter(0)->numberOfDaughters() << endl;
-		// 		  for(unsigned int i=0;i<p->numberOfDaughters();i++) {
-		// 		    cout << " Dodod pdgid = " << 
-		// 		  }
-		// 		}
-		
-		// 	// Status 1 Leptons, from Status 2
-		// 		if(p->daughter(0)->daughter(0)->pdgId()==p->pdgId() && p->daughter(0)->daughter(0)->status()==1) {
-		// 		  setMomentum(myvector, p->daughter(0)->daughter(0)->p4());
-		// 		  new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
-		// 		  _MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->daughter(0)->daughter(0)->pdgId();
-		// 		  counter_lep_status1++;
-		// 		} // if status 1 from status 2 from status 3
-		// 		else {
-		// 		  if(fabs(p->pdgId())==11)
-		// 		    //cout << "(status2) mother   id ? " << p->daughter(0)->pdgId() << " status ? " << p->daughter(0)->status() << endl;
-		// 		    //cout << "(status2) daughter id ? " << p->daughter(0)->daughter(0)->pdgId() << " status ? " << p->daughter(0)->daughter(0)->status() << endl;
-		// 		}
-		
-	      } // if Daughter Status = 2
-	      
-	      //  // Status 1 Leptons, from Status 3
-	      // 	      if(p->daughter(0)->pdgId()==p->pdgId() && p->daughter(0)->status()==1) {
-	      // 		setMomentum(myvector, p->daughter(0)->p4());
-	      // 		new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
-	      // 		_MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->daughter(0)->pdgId();
-	      // 		counter_lep_status1++;
-	      // 	      } // if Daughters Status =1 (from status 3)
-	      // 	      else {
-	      // 		if(fabs(p->pdgId())==11)
-	      // 		  //cout << "(status3) daughter id ? " << p->daughter(0)->pdgId() << " status ? " << p->daughter(0)->status() << endl;
-	      // 	      }
-	      
-	      
-	    } // Need a daughter
-	  } // if MOther = Z
-	} // if Nmother (status3) >0
-      } // if hard scatter electron (status3)
-    } // if leptons
-    
-    //  if(p->status()==2 && p->mother(i)->pdgId() ==  p->pdgId() && p->mother(i)->status()==3 
-    // 	 &&  p->mother(i)->mother(0)==23) { 
-    
-    //       } // status 2 && mother, same pdgid and status 3
-    
-    
-    //       if(p->status()==1 && p->mother(i)->pdgId() == p->pdgId() 
-    // 	 && (p->mother(i)->status()==2 && p->mother(i)->mother(0)->pdgId()== p->pdgId())
-    // || p->mother(i)->status()==3) {
-    
-    //       } // if 
-    
-    //     } // if leptons
-    
-    
-    //       if(p->status()==1) { 
-    // 	cout << "Ele Status 1, Nmother =  " << p->numberOfMothers() << " Pt = " << p->p4().Pt() << endl;
-    // 	for(unsigned int i=0;i<p->numberOfMothers();i++) {
-    // 	  cout << " Mother1 pdgid = " << p->mother(i)->pdgId() << " status = " << p->mother(i)->status() << endl;
-    // 	} //mother
-    //        } // status
-    
-    //       if(p->status()==2) { 
-    // 	cout << "Ele Status 2, Nmother =  " << p->numberOfMothers() << " Pt = " << p->p4().Pt() << endl;
-    // 	for(unsigned int i=0;i<p->numberOfMothers();i++) {
-    // 	  cout << " Mother2 pdgid = " << p->mother(i)->pdgId() << " status = " << p->mother(i)->status() << endl;
-    // 	} //mother
-    //       } // status
-    
-    //       if(p->status()==3) { 
-    // 	cout << "Ele Status 3, Nmother =  " << p->numberOfMothers() << " Pt = " << p->p4().Pt() << endl;
-    // 	for(unsigned int i=0;i<p->numberOfMothers();i++) {
-    // 	  cout << " Mother3 pdgid = " << p->mother(i)->pdgId() << " status = " << p->mother(i)->status() << endl;
-    // 	} //mother
-    //       } // status
-    
-    //     } // if electron
-    
+	                } // if Daughter Status = 2
+	            } // Need a daughter
+	        } // if MOther = Z
+	    } // if Nmother (status3) >0
+    } // if hard scatter electron (status3)
+} // if leptons
+   
     // %%%%%%%%%%%%%%%%%%
     //     If W or Z
     // %%%%%%%%%%%%%%%%%%
     if (p->pdgId() == 23 || fabs(p->pdgId())==24) {
+     
+        bool pass_status=false;
+        if(p->status()==3 && ispythia6_==true) pass_status=true; //{ // if PYTHIA6
+        if(p->status() && p->numberOfDaughters()==2 && ispythia6_==false) pass_status=true; //{ // if PYTHIA 8
       
-      //cout << "Z status= " << p->status() << " mass = " << p->mass() << endl;
-      
-      //  if(p->status()==2) {
-      // 	//cout << "status2,NB daugthers ? " << p->numberOfDaughters() << endl;
-      // 	for(unsigned int i=0;i<p->numberOfDaughters();i++) {
-      // 	  //cout << "Status2 id daughters = " << p->daughter(i)->pdgId() << " Status = " << p->daughter(i)->status()  << " Pt = " << p->daughter(i)->p4().Pt() << endl;
-      // 	} // loop on daughters
-      //       }
-      
-      bool pass_status=false;
-      if(p->status()==3 && ispythia6_==true) pass_status=true; //{ // if PYTHIA6
-      if(p->status() && p->numberOfDaughters()==2 && ispythia6_==false) pass_status=true; //{ // if PYTHIA 8
-      // UGLY !!!! To uniformize at some point...
-      
-      if(pass_status) {
-	// Fill truth W,Z
-	setMomentum (myvector,p->p4());
-	new (MC_gen_V[counter]) TLorentzVector(myvector);
-	_MC_gen_V_pdgid[counter] = p->pdgId();
-	
-	//size_t nfirstdau = p->numberOfDaughters();
-	
-	//cout << "Z status= " << p->status() << " mass = " << p->mass() << " n filles = " <<  p->numberOfDaughters() << endl;
-
-	// Loop on daughters
-	for(unsigned int i=0;i<p->numberOfDaughters();i++) {
-	  //cout << "fille " << i << " id = " << fabs(p->daughter(i)->pdgId()) << endl;
-	  bool islep = false;
-	  if(fabs(p->daughter(i)->pdgId())==11) { _MC_flavor[counter] = 0; islep=true;} // electron
-	  if(fabs(p->daughter(i)->pdgId())==13) { _MC_flavor[counter] = 1; islep=true;} // muon
-	  if(fabs(p->daughter(i)->pdgId())==15) { _MC_flavor[counter] = 2; islep=true;} // taus
-	  
-	  //cout << "Status3 id daughters = " << p->daughter(i)->pdgId() << " Status = " << p->daughter(i)->status()  << " Pt = " << p->daughter(i)->p4().Pt() << endl;
-	  
-	  
-	  //  for(unsigned int j=0;j<p->daughter(i)->numberOfDaughters();j++) {
-	  // 	    //cout << "DoD status = " <<  p->daughter(i)->daughter(j)->status() << " Pt = " << p->daughter(i)->daughter(j)->p4().Pt() << endl;
-	  
-	  // 	    for(unsigned int k=0;k<p->daughter(i)->daughter(j)->numberOfDaughters();k++) {
-	  // 	      //cout << "DoDoD status = " <<  p->daughter(i)->daughter(j)->daughter(k)->status() << " Pt = " << p->daughter(i)->daughter(j)->daughter(k)->p4().Pt() << endl;
-	  // 	    } // loop on k
-	  
-	  // 	  } //
-	  
-	  if(islep) { // p->daughter(i)->status()==1) { ?!
-	    setMomentum(myvector, p->daughter(i)->p4());
-	    new (MC_gen_leptons[counter_daughters]) TLorentzVector(myvector);
-	    _MC_gen_leptons_pdgid[counter_daughters] = p->daughter(i)->pdgId();
-	    
-	    counter_daughters++;
-	  } // if is lepton
-	} // for loop on daughters
-	counter++;
-      } // if status stable
+        if(pass_status) {
+	        // Fill truth W,Z
+	        setMomentum (myvector,p->p4());
+	        new (MC_gen_V[counter]) TLorentzVector(myvector);
+	        _MC_gen_V_pdgid[counter] = p->pdgId();
+	        
+	        // Loop on daughters
+	        for(unsigned int i=0;i<p->numberOfDaughters();i++) {
+	            bool islep = false;
+	            if(fabs(p->daughter(i)->pdgId())==11) { _MC_flavor[counter] = 0; islep=true;} // electron
+	            if(fabs(p->daughter(i)->pdgId())==13) { _MC_flavor[counter] = 1; islep=true;} // muon
+	            if(fabs(p->daughter(i)->pdgId())==15) { _MC_flavor[counter] = 2; islep=true;} // taus
+  
+	            if(islep) { // p->daughter(i)->status()==1) { ?!
+	                setMomentum(myvector, p->daughter(i)->p4());
+	                new (MC_gen_leptons[counter_daughters]) TLorentzVector(myvector);
+	                _MC_gen_leptons_pdgid[counter_daughters] = p->daughter(i)->pdgId();
+	                counter_daughters++;
+	            } // if is lepton
+	        } // for loop on daughters
+	        counter++;
+        } // if status stable
     } // if W or Z
-    
-    // // -------------
-    // 		//   Photons
-    // 		// -------------
-    
-    // 		if(fabs(p->pdgId())==22) { 
-    // 			if(p->status()==1) {
-    
-    // 				//cout << " if photon" << endl;
-    
-    // 				setMomentum(myvector, p->p4());
-    // 				new (MC_gen_photons[counter_photon]) TLorentzVector(myvector);
-    
-    // 				const Candidate * gen_photon = 0; 
-    // 				//const GenParticle * gen_photon2 = 0; 
-    // 				gen_photon  = &*p;
-    // 				//gen_photon2 =  &*p;
-    // 				//cout << "is fsr ?" << endl;
-    // 				//const reco::GenParticle* photon = getParent(gen_photon);
-    // 				bool fsr = isFSR(gen_photon); //const reco::GenParticle* genLep)
-    
-    // 				//cout << "fsr = " << fsr << endl;
-    // 				_MC_gen_photons_isFSR[counter_photon] = fsr;
-    // 				//" pT = " <<p->p4().Pt()  << endl;
-    
-    // 				//_MC_photon_isFSR[counter_photon] = isFSR(p, 
-    
-    // 				counter_photon++;
-    // 			} // if status 1
-    // 		} // if photon
-    
-    
-  } // for loop on particles
-  
-  
-  
-  
-  
-  // 	// -------------------------
-  // 	// Only 4e events
-  // 	// -------------------------
-  // 	if(_MC_flavor[0]==0 && _MC_flavor[1]==0) {
-// 		// ----------------------------
-// 		//      Loop on particles
-// 		// ----------------------------
-// 		for( View<Candidate>::const_iterator p = genCandidatesCollection->begin();p != genCandidatesCollection->end(); ++ p ) {
-			
-// 			if(fabs(p->pdgId())==11) { 
-				
-// 				if(p->status()==1) {
-					
-// 					//cout << "N mother = " << p->numberOfMothers() << endl;
-// 					for(unsigned int i=0;i<p->numberOfMothers();i++) {
-// 						//cout << " mother pdgid = " << p->mother(i)->pdgId() << " status = " << p->mother(i)->status() << endl;
-// 					} // for loop on mothers
-// 				} // if status 1
-				
-// 				if(p->status()==2) {
-					
-// 					//cout << "N daughters (status2) = " << p->numberOfDaughters() << endl;
-// 					for(unsigned int i=0;i<p->numberOfDaughters();i++) {
-// 						//cout << " daughter pdgid = " << p->daughter(i)->pdgId() << " status = " << p->daughter(i)->status() << endl;
-// 					} // for loop on mothers
-// 				} // if status 2
-				
-// 				if(p->status()==3) {
-					
-// 					//cout << "N daughters (status3) = " << p->numberOfDaughters() << endl;
-// 					for(unsigned int i=0;i<p->numberOfDaughters();i++) {
-// 						//cout << " daughter pdgid = " << p->daughter(i)->pdgId() << " status = " << p->daughter(i)->status() << endl;
-// 					} // for loop on mothers
-// 				} // if status 3
-				
-				
-				
-// 			} // if electron
-// 		} // for loop on gen particles
-		
-// 	} // if 4e event
-	
-	
-	
-	
-	
-	
-	
+} // for loop on particles
 	
 } // end of FillTruth
 
@@ -1640,8 +1190,6 @@ void Ntuplizer::Init()
     ele_olde25max[i]        = 0; 
     ele_olde55[i]           = 0; 
     //
-    //ele_e33[i] = 0 ;  
-    //ele_e2overe9[i] = 0 ; 
     ele_pin_mode[i] = 0 ;  
     ele_pout_mode[i] = 0 ;  
     ele_pTin_mode[i] = 0 ;  
@@ -1672,14 +1220,7 @@ void Ntuplizer::Init()
     ele_dz[i] = 0 ; 
     ele_dszB[i] = 0 ; 
     ele_dsz[i] = 0 ;              
-    //  ele_tkSumPt_dr03[i] = 0 ;  
-    //     ele_ecalRecHitSumEt_dr03[i] = 0 ;  
-    //     ele_hcalDepth1TowerSumEt_dr03[i] = 0 ;  
-    //     ele_hcalDepth2TowerSumEt_dr03[i] = 0 ; 
-    //     ele_tkSumPt_dr04[i] = 0 ;  
-    //     ele_ecalRecHitSumEt_dr04[i] = 0 ;  
-    //     ele_hcalDepth1TowerSumEt_dr04[i] = 0 ;  
-    //     ele_hcalDepth2TowerSumEt_dr04[i] = 0 ; 
+
     ele_conv_dcot[i] = 0 ;
     ele_conv_dist[i] = 0 ;
     ele_conv_radius[i] = 0;
@@ -1692,8 +1233,6 @@ void Ntuplizer::Init()
 
     ele_pfChargedIso[i] = 0;
     ele_pfSumPUIso[i]   = 0;
-    //ele_pfChargedHadPUIso[i] = 0;
-    //ele_pfCombRelIso[i] = 0;
     
     ele_IP[i] = 0 ; 
     ele_IPError[i] = 0 ; 
@@ -1737,26 +1276,10 @@ void Ntuplizer::Init()
     ele_ecalTrackRegressionScale[i]  = 0;
     ele_ecalTrackRegressionSmear[i]  = 0;
     
-    //  ele_mvafbrem[i]=0;
-    //     ele_mvadetain[i]=0;
-    //     ele_mvadphiin[i]=0;
-    //     ele_mvasieie[i]=0;
-    //     ele_mvahoe[i]=0;
-    //     ele_mvaeop[i]=0;
-    //     ele_mvae1x5e5x5[i]=0;
-    //     ele_mvaeleopout[i]=0;
+
     ele_kfchi2[i]=0;
     ele_kfhits[i]=-1;
     ele_gsfhits[i] = -1;
-    //     ele_mvamishits[i]=0;
-    //     ele_mvadist[i]=0;
-    //     ele_mvadcot[i]=0;
-    //     ele_mvaeta[i]=0;
-    //     ele_mvapt[i]=0;
-    //     ele_mvaecalseed[i]=0;
-    
-    //ele_sclphiwidth[i]= 0;
-    //ele_scletawidth[i]= 0;	
     ele_psE[i] = 0.;
 
     ele_mvaphys14[i] = 0.;
