@@ -1,4 +1,4 @@
-import FWCore.ParameterSet.Config as cms
+mport FWCore.ParameterSet.Config as cms
 
 #process.load("RecoTracker.Configuration.python.RecoTracker_cff")
 process = cms.Process("Demo")
@@ -90,7 +90,7 @@ fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/CMSSW_7_4_1_patch1/
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 
 #process.GlobalTag.globaltag = 'PHYS14_25_V1::All'
-process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9', '') # MCRUN2_74_V8
+process.GlobalTag = GlobalTag(process.GlobalTag, 'PHYS14_25_V1::All', '') # MCRUN2_74_V8
 
 process.TFileService = cms.Service("TFileService", fileName = cms.string(fileNameForSample + '.root') )
 

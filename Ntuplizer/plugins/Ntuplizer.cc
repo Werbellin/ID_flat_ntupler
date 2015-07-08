@@ -381,6 +381,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch ("MC_flavor",&_MC_flavor,"MC_flavor[2]/I");
   
   _mytree->Branch ("MC_TrueNumInteractions",&_MC_TrueNumInteractions,"MC_TrueNumInteractions/I");
+  _mytree->Branch ("MC_gen_lepton_mother_pdgid",&_MC_gen_lepton_mother_pdgid, "MC_gen_lepton_mother_pdgid[30]/D");
 
 }
 
@@ -992,6 +993,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
 	    if(p->numberOfMothers()>0) {
 	        const reco::Candidate  *Mom = p->mother();
 	        while(Mom!=0) {
+                _MC_gen_lepton_mother_pdgid[counter_lep_status1] = Mom->pdgId();
 	            if(fabs(Mom->pdgId()) == 23 || fabs(Mom->pdgId()) == 24) { 
 	                _MC_gen_leptons_status1_FromWZ[counter_lep_status1] = 1;
 	                break;
@@ -1295,6 +1297,8 @@ void Ntuplizer::Init()
 
   for(int ii=0;ii<30;ii++) {
     _MC_gen_leptons_pdgid[ii]         = 0;
+    _MC_gen_lepton_mother_pdgid[ii]   = 0;
+
     _MC_gen_leptons_status1_pdgid[ii] = 0;
     _MC_gen_leptons_status2_pdgid[ii] = 0;
     

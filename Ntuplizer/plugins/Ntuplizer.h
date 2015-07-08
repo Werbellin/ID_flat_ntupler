@@ -217,12 +217,6 @@ class Ntuplizer : public edm::EDAnalyzer {
 
       double ele_mvaphys14[50];
       double ele_mvaphys14fix[50];
-      /* double ele_mvafbrem[50], ele_mvadetain[50], ele_mvadphiin[50], ele_mvasieie[50], ele_mvahoe[50], ele_mvaeop[50],  */
-      /* 	ele_mvae1x5e5x5[50], ele_mvaeleopout[50], ele_mvakfchi2[50], ele_mvadist[50],  ele_mvadcot[50], ele_mvaeta[50], */
-      /* 	ele_mvapt[50]; */
-      /*       int ele_mvakfhits[50], ele_mvamishits[50], ele_mvaecalseed	[50]; */
-      
-      // MC
       	//MC
 	TClonesArray * _m_MC_gen_V;
 	TClonesArray * _m_MC_gen_Higgs;
@@ -234,6 +228,7 @@ class Ntuplizer : public edm::EDAnalyzer {
 	double _MC_gen_leptons_pdgid[30];
 	double _MC_gen_leptons_status1_pdgid[30];
 	double _MC_gen_leptons_status2_pdgid[30];
+	double _MC_gen_lepton_mother_pdgid[30];
 
 	int _MC_gen_leptons_status1_FromWZ[30];
 	int _MC_gen_leptons_status1_FromTaus[30];
@@ -244,7 +239,6 @@ class Ntuplizer : public edm::EDAnalyzer {
 	int _MC_flavor[2];
 
     int _MC_TrueNumInteractions;
-	//int _MC_gen_photons_isFSR[5000];
 	
       bool runGsfRefitter;
       std::string GSFTrajColl;
