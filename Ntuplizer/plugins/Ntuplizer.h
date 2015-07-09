@@ -147,8 +147,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       //vector<float> ele_signedEstimateSumPredCKF;
       //vector<float> ele_reducedChi2CKF;
       vector<float> ele_conversionVertexFitProbability;
-    
-
+      vector<int>  mc_ele_isPromptFinalState;
+      vector<int>  mc_ele_isDirectPromptTauDecayProductFinalState;
 
 
       int ele_echarge[50];

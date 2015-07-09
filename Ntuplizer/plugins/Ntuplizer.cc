@@ -383,6 +383,9 @@ void Ntuplizer::beginJob()
   _mytree->Branch ("MC_TrueNumInteractions",&_MC_TrueNumInteractions,"MC_TrueNumInteractions/I");
   _mytree->Branch ("MC_gen_lepton_mother_pdgid",&_MC_gen_lepton_mother_pdgid, "MC_gen_lepton_mother_pdgid[30]/D");
 
+  _mytree->Branch("mc_ele_isPromptFinalState", &mc_ele_isPromptFinalState);
+  _mytree->Branch("mc_ele_isDirectPromptTauDecayProductFinalState", &mc_ele_isDirectPromptTauDecayProductFinalState);
+
 }
 
 
@@ -554,7 +557,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   lastHitPt.clear();
   */
   ele_conversionVertexFitProbability.clear();
-
 
   for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
     if(counter>49) { continue; } 
@@ -960,7 +962,10 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   int counter_daughters   = 0;
   int counter_lep_status2 = 0;
   int counter_lep_status1 = 0;
-  
+
+  mc_ele_isPromptFinalState.clear();
+  mc_ele_isDirectPromptTauDecayProductFinalState.clear();
+
   // ----------------------------
   //      Loop on particles
   // ----------------------------
@@ -987,7 +992,8 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
 	    setMomentum(myvector, p->p4());
 	    new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
 	    _MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->pdgId();
-	
+        mc_ele_isPromptFinalState.push_back(p->isPromptFinalState());
+        mc_ele_isDirectPromptTauDecayProductFinalState.push_back(p->isDirectPromptTauDecayProductFinalState());	
 	
 	    // Let's look at the mothers ... [works really only for electrons...=>eid studies]
 	    if(p->numberOfMothers()>0) {

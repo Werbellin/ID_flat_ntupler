@@ -1,4 +1,4 @@
-mport FWCore.ParameterSet.Config as cms
+import FWCore.ParameterSet.Config as cms
 
 #process.load("RecoTracker.Configuration.python.RecoTracker_cff")
 process = cms.Process("Demo")
@@ -64,7 +64,7 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
 
                                    HLTTag          = cms.InputTag('TriggerResults','','HLT'),
                                    isMC = cms.bool(True),
-                                   ispythia6 = cms.bool(True),
+                                   ispythia6 = cms.bool(False),
                                    #runGsfRefitter      = therunGsfRefitter,
                                    #GSFTrajectoryInput  = theGSFTrajectoryInput,
                                    #runKfWithGsfRefitter = therunKfWithGsfRefitter,
@@ -75,13 +75,14 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
 fileNameForSample = 'ntuple'
 
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.source = cms.Source("PoolSource",
 #    fileNames = cms.untracked.vstring(
         #'root://xrootd.unl.edu//store/user/ppigard/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MODMINIAOD_All/ff0f7a48dd492a8600ee2d8b0c10e377/step2_RAW2DIGI_L1Reco_RECO_100_1_Ngh.root')
 #fileNames = cms.untracked.vstring('root://xrootd.unl.edu//store/user/ppigard/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MODMINIAOD_All/ff0f7a48dd492a8600ee2d8b0c10e377/step2_RAW2DIGI_L1Reco_RECO_103_1_WWl.root')
 
-fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/CMSSW_7_4_1_patch1/src/Analyzer/Ntuplizer/python/0033A97B-8707-E511-9D3B-008CFA1980B8.root')
+#fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/CMSSW_7_2_3/src/Analyzer/Phys14_DY.root')
+fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt50ns_MCRUN2_74_V9A-v2_AODSIM_file1.root')
 #fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/GluGluHToZZTo4L_M125_13TeV_powheg_JHUgen_pythia8_MINIAODSIM.root')
 
 )
@@ -90,7 +91,7 @@ fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/CMSSW_7_4_1_patch1/
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 
 #process.GlobalTag.globaltag = 'PHYS14_25_V1::All'
-process.GlobalTag = GlobalTag(process.GlobalTag, 'PHYS14_25_V1::All', '') # MCRUN2_74_V8
+process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9A', '') # MCRUN2_74_V8
 
 process.TFileService = cms.Service("TFileService", fileName = cms.string(fileNameForSample + '.root') )
 
