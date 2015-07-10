@@ -469,6 +469,11 @@ void Ntuplizer::beginJob()
   _mytree->Branch("mc_ele_isDirectPromptTauDecayProductFinalState", &mc_ele_isDirectPromptTauDecayProductFinalState);
   _mytree->Branch("mc_ele_matchedFromCB", &mc_ele_matchedFromCB);
 
+  _mytree->Branch("ele_dr03EcalRecHitSumEt", &ele_dr03EcalRecHitSumEt);
+  _mytree->Branch("ele_dr03HcalTowerSumEt", &ele_dr03HcalTowerSumEt);
+  _mytree->Branch("ele_dr03TkSumPt", &ele_dr03TkSumPt);
+  _mytree->Branch("ele_pt", &ele_pt);
+
 }
 
 
@@ -640,6 +645,11 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   lastHitPt.clear();
   */
   ele_conversionVertexFitProbability.clear();
+  ele_dr03EcalRecHitSumEt.clear();
+  ele_dr03HcalTowerSumEt.clear();
+  ele_dr03TkSumPt.clear();
+  ele_pt.clear();
+
 
   mc_ele_matchedFromCB.clear();
 
@@ -651,7 +661,10 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
         const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
         mc_ele_matchedFromCB.push_back(matchToTruth(ielectrons, genCandidatesCollection));
-
+        ele_dr03EcalRecHitSumEt.push_back(ielectrons->dr03EcalRecHitSumEt());
+        ele_dr03HcalTowerSumEt.push_back(ielectrons->dr03HcalTowerSumEt());
+        ele_dr03TkSumPt.push_back(ielectrons->dr03TkSumPt());
+        ele_pt.push_back(ielectrons->pt());
 /*
         const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
         edm::LogVerbatim("") << "Processinf track with Pt=" << gsfTrack->pt() << " and eta=" << gsfTrack->eta();
