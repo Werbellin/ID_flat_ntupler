@@ -78,6 +78,84 @@
 using namespace reco;
 using namespace edm;
 
+void findFirstNonElectronMother(const reco::Candidate *particle,
+                         int &ancestorPID, int &ancestorStatus){
+
+  if( particle == 0 ){
+    printf("SimpleElectronNtupler: ERROR! null candidate pointer, this should never happen\n");
+    return;
+  }
+
+  // Is this the first non-electron parent? If yes, return, otherwise
+  // go deeper into recursion
+  if( abs(particle->pdgId()) == 11 ){
+    findFirstNonElectronMother(particle->mother(0), ancestorPID, ancestorStatus);
+  }else{
+    ancestorPID = particle->pdgId();
+    ancestorStatus = particle->status();
+  }
+
+  return;
+}
+
+enum ElectronMatchType {UNMATCHED = 0, 
+              TRUE_PROMPT_ELECTRON, 
+              TRUE_ELECTRON_FROM_TAU,
+              TRUE_NON_PROMPT_ELECTRON}; // The last does not include tau parents
+
+
+int matchToTruth(const edm::Ptr<reco::GsfElectron> el, 
+                  const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
+
+  // 
+  // Explicit loop and geometric matching method (advised by Josh Bendavid)
+  //
+
+  // Find the closest status 1 gen electron to the reco electron
+  double dR = 999;
+  const reco::Candidate *closestElectron = 0;
+  for(size_t i=0; i<prunedGenParticles->size();i++){
+    const reco::Candidate *particle = &(*prunedGenParticles)[i];
+    // Drop everything that is not electron or not status 1
+    if( abs(particle->pdgId()) != 11 || particle->status() != 1 )
+      continue;
+    //
+    double dRtmp = ROOT::Math::VectorUtil::DeltaR( el->p4(), particle->p4() );
+    if( dRtmp < dR ){
+      dR = dRtmp;
+      closestElectron = particle;
+    }
+  }
+  // See if the closest electron (if it exists) is close enough.
+  // If not, no match found.
+  if( !(closestElectron != 0 && dR < 0.1) ) {
+    return UNMATCHED;
+  }
+
+  // 
+  int ancestorPID = -999; 
+  int ancestorStatus = -999;
+  findFirstNonElectronMother(closestElectron, ancestorPID, ancestorStatus);
+
+  if( ancestorPID == -999 && ancestorStatus == -999 ){
+    // No non-electron parent??? This should never happen.
+    // Complain.
+    printf("SimpleElectronNtupler: ERROR! Electron does not apper to have a non-electron parent\n");
+    return UNMATCHED;
+  }
+  
+  if( abs(ancestorPID) > 50 && ancestorStatus == 2 )
+    return TRUE_NON_PROMPT_ELECTRON;
+
+  if( abs(ancestorPID) == 15 && ancestorStatus == 2 )
+    return TRUE_ELECTRON_FROM_TAU;
+
+  // What remains is true prompt electrons
+  return TRUE_PROMPT_ELECTRON;
+}
+
+
+
 // =============================================================================================
 // constructor
 Ntuplizer::Ntuplizer(const edm::ParameterSet& iConfig) :
@@ -129,6 +207,10 @@ MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId"))
     genParticleToken_ = mayConsume<vector<reco::GenParticle> >
                         (iConfig.getParameter<edm::InputTag>
                         ("genParticlesAOD"));
+    genParticlesToken_CB = mayConsume<edm::View<reco::GenParticle> > 
+                        (iConfig.getParameter<edm::InputTag>
+                        ("genParticlesAOD"));
+
 
   }
 
@@ -385,6 +467,7 @@ void Ntuplizer::beginJob()
 
   _mytree->Branch("mc_ele_isPromptFinalState", &mc_ele_isPromptFinalState);
   _mytree->Branch("mc_ele_isDirectPromptTauDecayProductFinalState", &mc_ele_isDirectPromptTauDecayProductFinalState);
+  _mytree->Branch("mc_ele_matchedFromCB", &mc_ele_matchedFromCB);
 
 }
 
@@ -524,8 +607,8 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     dummy = Vertex(p, e, 0, 0, 0);
   }
 
-
-
+  edm::Handle<edm::View<reco::GenParticle> > genCandidatesCollection;
+  iEvent.getByToken(genParticlesToken_CB, genCandidatesCollection);
 
   
   // get the beam spot
@@ -558,9 +641,17 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   */
   ele_conversionVertexFitProbability.clear();
 
-  for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
+  mc_ele_matchedFromCB.clear();
+
+  for (size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
+  //for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
+
     if(counter>49) { continue; } 
         edm::LogVerbatim("") << "Processing new electron";
+
+        const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
+        mc_ele_matchedFromCB.push_back(matchToTruth(ielectrons, genCandidatesCollection));
+
 /*
         const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
         edm::LogVerbatim("") << "Processinf track with Pt=" << gsfTrack->pt() << " and eta=" << gsfTrack->eta();

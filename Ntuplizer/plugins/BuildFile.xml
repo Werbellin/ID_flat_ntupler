@@ -15,6 +15,9 @@
 <use   name="TrackingTools/IPTools"/>
 <use   name="RecoEgamma/EgammaTools"/>
 
+<use   name="PhysicsTools/UtilAlgos"/>
+
+
 <library file="*.cc" name="AnalyzerNtuplizerPlugins">
    <flags EDM_PLUGIN="1"/>
 </library>

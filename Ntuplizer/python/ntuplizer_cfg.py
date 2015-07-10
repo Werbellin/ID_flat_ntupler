@@ -91,7 +91,7 @@ fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJe
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 
 #process.GlobalTag.globaltag = 'PHYS14_25_V1::All'
-process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9A', '') # MCRUN2_74_V8
+process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9', '') # MCRUN2_74_V8
 
 process.TFileService = cms.Service("TFileService", fileName = cms.string(fileNameForSample + '.root') )
 

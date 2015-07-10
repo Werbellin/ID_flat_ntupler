@@ -34,6 +34,7 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TFile.h"
+#include "Math/VectorUtil.h"
 
 // C++
 #include<memory>
@@ -87,7 +88,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
       edm::EDGetToken pfMETToken_;
       edm::EDGetTokenT<vector<reco::GenParticle> > genParticleToken_;
-
+      edm::EDGetTokenT<edm::View<reco::GenParticle> > genParticlesToken_CB;
       //inputTag
       //edm::InputTag MuonTag_;
       //edm::InputTag JetTag_;
@@ -149,7 +150,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<float> ele_conversionVertexFitProbability;
       vector<int>  mc_ele_isPromptFinalState;
       vector<int>  mc_ele_isDirectPromptTauDecayProductFinalState;
-
+      vector<int> mc_ele_matchedFromCB;
 
       int ele_echarge[50];
       double ele_he[50], ele_hebc[50], ele_eseedpout[50] , ele_ep[50] , ele_eseedp[50] , ele_eelepout[50] ;       
