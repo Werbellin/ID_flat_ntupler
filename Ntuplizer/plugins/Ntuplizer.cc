@@ -210,8 +210,9 @@ MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId"))
     genParticlesToken_CB = mayConsume<edm::View<reco::GenParticle> > 
                         (iConfig.getParameter<edm::InputTag>
                         ("genParticlesAOD"));
-
-
+    genEventInfoProductTagToken_ = consumes<GenEventInfoProduct>
+                        (iConfig.getParameter<edm::InputTag>
+                        ("genEventInfoProductAOD"));
   }
 
   if(inFileType == inputFileTypes::MINIAOD) {
@@ -440,6 +441,9 @@ void Ntuplizer::beginJob()
   _mytree->Branch("met_pf_sig",&_met_pf_sig,"met_pf_sig/D");
 
   // Truth Leptons
+
+  _mytree->Branch("mc_event_weight",&_mc_event_weight,"mc_event_weight/D");
+
   _m_MC_gen_V = new TClonesArray ("TLorentzVector");
   _mytree->Branch ("MC_gen_V", "TClonesArray", &_m_MC_gen_V, 256000,0);
   _mytree->Branch ("MC_gen_V_pdgid",&_MC_gen_V_pdgid, "MC_gen_V_pdgid[10]/D");
@@ -1051,6 +1055,14 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   
   }
   _MC_TrueNumInteractions = Tnpv; 
+
+
+  Handle<GenEventInfoProduct> genEvtInfo;
+  iEvent.getByToken(genEventInfoProductTagToken_, genEvtInfo );
+
+
+  _mc_event_weight = genEvtInfo->weight();
+  LogDebug("MC") << "MC generator event weight: " << _mc_event_weight;
  
   edm::Handle<vector<reco::GenParticle> > genCandidatesCollection;
   iEvent.getByToken(genParticleToken_, genCandidatesCollection); //genParticlesPruned

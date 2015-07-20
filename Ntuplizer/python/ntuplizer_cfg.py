@@ -52,6 +52,7 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
                                    verticesAOD = cms.InputTag('offlinePrimaryVertices'),
                                    conversionsAOD = cms.InputTag('allConversions'),
                                    genParticlesAOD = cms.InputTag('genParticles'), 
+                                   genEventInfoProductAOD = cms.InputTag('generator'),
                                    PFMETAOD = cms.InputTag('pfMet'),                                
     
                                    electronsMiniAOD = cms.InputTag('slimmedElectrons'),
@@ -91,7 +92,7 @@ fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJe
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 
 #process.GlobalTag.globaltag = 'PHYS14_25_V1::All'
-process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9', '') # MCRUN2_74_V8
+process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9A', '') # MCRUN2_74_V8
 
 process.TFileService = cms.Service("TFileService", fileName = cms.string(fileNameForSample + '.root') )
 
@@ -107,7 +108,7 @@ process.MessageLogger = cms.Service(
         'critical'
     ),
     LOG = cms.untracked.PSet(
-        threshold  = cms.untracked.string('WARNING'), # DEBUG 
+        threshold  = cms.untracked.string('DEBUG'), # DEBUG 
         filename  = cms.untracked.string(fileNameForSample  + '.log')
     ),
     debugModules = cms.untracked.vstring('*'), # *

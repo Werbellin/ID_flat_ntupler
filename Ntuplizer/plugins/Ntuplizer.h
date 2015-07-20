@@ -13,6 +13,7 @@
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include <DataFormats/HepMCCandidate/interface/GenParticle.h>
+#include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
 
 #include "DataFormats/EgammaCandidates/interface/Conversion.h"
@@ -89,6 +90,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetToken pfMETToken_;
       edm::EDGetTokenT<vector<reco::GenParticle> > genParticleToken_;
       edm::EDGetTokenT<edm::View<reco::GenParticle> > genParticlesToken_CB;
+      edm::EDGetTokenT<GenEventInfoProduct> genEventInfoProductTagToken_;
+
       //inputTag
       //edm::InputTag MuonTag_;
       //edm::InputTag JetTag_;
@@ -119,6 +122,9 @@ class Ntuplizer : public edm::EDAnalyzer {
       int _nEvent, _nRun, _nLumi;
       //pile-up
       int _PU_N;
+
+      double _mc_event_weight;
+
 
       //vertices
       int _vtx_N;
