@@ -235,8 +235,14 @@ MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId"))
 
   }
 
-
-
+  electronEcalPFClusterIsolationProducerToken_ = mayConsume<ValueMap<float>>
+                        (InputTag
+                        ("electronEcalPFClusterIsolationProducer"));
+  
+  electronHcalPFClusterIsolationProducerToken_ = mayConsume<ValueMap<float>>
+                        (InputTag
+                        ("electronHcalPFClusterIsolationProducer"));
+ 
 }
 
 // =============================================================================================
@@ -280,6 +286,10 @@ void Ntuplizer::beginJob()
   
   // Trigger
   _mytree->Branch("trig_fired_names",&trig_fired_names,"trig_fired_names[10000]/C");
+  _mytree->Branch("event_trig_fired", &event_trig_fired);
+  _mytree->Branch("ele_trig_passed_filter", &ele_trig_passed_filter);
+
+
 
   // Vertices
   _mytree->Branch("vtx_N",&_vtx_N,"vtx_N/I");
@@ -478,6 +488,14 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_dr03TkSumPt", &ele_dr03TkSumPt);
   _mytree->Branch("ele_pt", &ele_pt);
 
+
+  //_mytree->Branch("mc_gen_ele_p4", &_mc_gen_ele_p4);
+  //_mytree->Branch("", &);
+  //_mytree->Branch("", &);
+  _mytree->Branch("ele_electronEcalPFClusterIsolationProducer", &ele_electronEcalPFClusterIsolationProducer);
+  _mytree->Branch("ele_electronHcalPFClusterIsolationProducer", &ele_electronHcalPFClusterIsolationProducer);
+
+
 }
 
 
@@ -526,7 +544,7 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 //=============================================================================================
 {
-
+  _selectedObjects.clear();
   _nEvent = iEvent.id().event();
   _nRun   = iEvent.id().run();
   _nLumi  = iEvent.luminosityBlock();
@@ -556,7 +574,8 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
 	{
 	  const char* c_str();
 	  string hlt_string = triggerNames.triggerName(iHLT);
-	  strcat(trig_fired_names_local,hlt_string.c_str());
+	  event_trig_fired.push_back(hlt_string);
+      strcat(trig_fired_names_local,hlt_string.c_str());
 	  strcat(trig_fired_names_local,"*");
 	}
       }
@@ -564,6 +583,27 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
   }
   strcpy(trig_fired_names,trig_fired_names_local);
   
+
+//open the trigger summary
+edm::InputTag triggerSummaryLabel_ = edm::InputTag("hltTriggerSummaryAOD", "", "HLT");
+edm::Handle<trigger::TriggerEvent> triggerSummary;
+iEvent.getByLabel(triggerSummaryLabel_, triggerSummary);
+//trigger object we want to match
+edm::InputTag filterTag = edm::InputTag("hltEle12CaloIdLTrackIdLIsoVLTrackIsoFilter", "", "HLT"); //find the index corresponding to the event
+size_t filterIndex = (*triggerSummary).filterIndex(filterTag);
+trigger::TriggerObjectCollection allTriggerObjects = triggerSummary->getObjects(); //trigger::TriggerObjectCollection selectedObjects;
+if (filterIndex < (*triggerSummary).sizeFilters()) { //check if the trigger object is present ! 
+const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
+    for(size_t j = 0; j < keys.size(); j++) {
+        trigger::TriggerObject foundObject = (allTriggerObjects)[keys[j]];
+        _selectedObjects.push_back(foundObject);
+    }
+}
+
+
+
+
+
 
 } // end of FillEvent
 
@@ -629,7 +669,23 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   if (MVAidCollection_.size()>0 ) iEvent.getByLabel(MVAidCollection_[0] , mapMVAcollection_phys14);
   if (MVAidCollection_.size()>1 ) iEvent.getByLabel(MVAidCollection_[1], mapMVAcollection_phys14fix);
   
+   //electron PF isolation
+  edm::Handle< edm::ValueMap<float> > electronECALIsoMapH;
+
+  iEvent.getByToken(electronEcalPFClusterIsolationProducerToken_, electronECALIsoMapH);
+
+
+
+  //iEvent.getByLabel(ecalPFclusterIsolation_,electronECALIsoMapH);
+  const edm::ValueMap<float> electronECALIsoMap = *(electronECALIsoMapH);
   
+  edm::Handle< edm::ValueMap<float> > electronHCALIsoMapH;
+  
+ 
+  iEvent.getByToken(electronHcalPFClusterIsolationProducerToken_, electronHCALIsoMapH);
+  const edm::ValueMap<float> electronHCALIsoMap = *(electronHCALIsoMapH);
+
+ 
   TClonesArray & electrons = *m_electrons;
   int counter = 0;
   ele_N = electronsColl_h->size();
@@ -655,20 +711,44 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_pt.clear();
 
 
-  mc_ele_matchedFromCB.clear();
+  ele_electronEcalPFClusterIsolationProducer.clear();
+  ele_electronHcalPFClusterIsolationProducer.clear();
 
+  mc_ele_matchedFromCB.clear();
+  ele_trig_passed_filter.clear();
   for (size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
   //for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
 
     if(counter>49) { continue; } 
+    
+
+
         edm::LogVerbatim("") << "Processing new electron";
 
         const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
+        if(ielectrons->pt() < 4.9) continue;
+        bool _ele_trig_passed_filter = false;
+        for(size_t t = 0; t < _selectedObjects.size(); ++t) {
+            float deltaR = sqrt(pow(_selectedObjects[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_selectedObjects[t].phi() - ielectrons->phi())), 2));
+            if(deltaR < 0.1) {//matching successfull
+                _ele_trig_passed_filter = true;
+                continue;
+            }
+        }
+        ele_trig_passed_filter.push_back(_ele_trig_passed_filter);
         mc_ele_matchedFromCB.push_back(matchToTruth(ielectrons, genCandidatesCollection));
         ele_dr03EcalRecHitSumEt.push_back(ielectrons->dr03EcalRecHitSumEt());
         ele_dr03HcalTowerSumEt.push_back(ielectrons->dr03HcalTowerSumEt());
         ele_dr03TkSumPt.push_back(ielectrons->dr03TkSumPt());
         ele_pt.push_back(ielectrons->pt());
+
+        //edm::Ref<reco::GsfElectronCollection> electronRef(electronsCol, i_ele);
+        float ECALIso = electronECALIsoMap[ielectrons];
+        float HCALIso = electronHCALIsoMap[ielectrons];
+
+        ele_electronEcalPFClusterIsolationProducer.push_back(ECALIso);
+        ele_electronHcalPFClusterIsolationProducer.push_back(HCALIso);
+
 /*
         const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
         edm::LogVerbatim("") << "Processinf track with Pt=" << gsfTrack->pt() << " and eta=" << gsfTrack->eta();
@@ -1081,7 +1161,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
   mc_ele_isPromptFinalState.clear();
   mc_ele_isDirectPromptTauDecayProductFinalState.clear();
-
+  _mc_gen_ele_p4.clear();
   // ----------------------------
   //      Loop on particles
   // ----------------------------
@@ -1104,8 +1184,9 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
       
      
         if(p->status()==1) {
-	
 	    setMomentum(myvector, p->p4());
+
+        _mc_gen_ele_p4.push_back(myvector);	
 	    new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
 	    _MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->pdgId();
         mc_ele_isPromptFinalState.push_back(p->isPromptFinalState());

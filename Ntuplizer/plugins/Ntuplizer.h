@@ -21,6 +21,9 @@
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
 #include "DataFormats/METReco/interface/PFMETCollection.h"
 
+#include "DataFormats/HLTReco/interface/TriggerObject.h"
+#include "DataFormats/HLTReco/interface/TriggerEvent.h"
+#include "DataFormats/Common/interface/ValueMap.h"
 
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 #include "DataFormats/Math/interface/LorentzVector.h"
@@ -41,7 +44,13 @@
 #include<memory>
 #include<vector>
 
+
+
+
+
+
 using namespace std;
+using namespace edm;
 using std::vector;
 
 
@@ -91,6 +100,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetTokenT<vector<reco::GenParticle> > genParticleToken_;
       edm::EDGetTokenT<edm::View<reco::GenParticle> > genParticlesToken_CB;
       edm::EDGetTokenT<GenEventInfoProduct> genEventInfoProductTagToken_;
+      edm::EDGetTokenT<ValueMap<float>> electronEcalPFClusterIsolationProducerToken_;
+      edm::EDGetTokenT<ValueMap<float>> electronHcalPFClusterIsolationProducerToken_;
 
       //inputTag
       //edm::InputTag MuonTag_;
@@ -102,6 +113,9 @@ class Ntuplizer : public edm::EDAnalyzer {
       //edm::InputTag MCTag_ ;
       bool isMC_;	
       bool ispythia6_;
+
+      vector<trigger::TriggerObject> _selectedObjects;
+
       //int lepton_setup;
       
       //edm::InputTag MuRhoCorrection_;
@@ -124,7 +138,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       int _PU_N;
 
       double _mc_event_weight;
-
+      vector<TLorentzVector> _mc_gen_ele_p4;
 
       //vertices
       int _vtx_N;
@@ -161,6 +175,12 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<float> ele_dr03HcalTowerSumEt;
       vector<float> ele_dr03TkSumPt;
       vector<float> ele_pt;
+
+      vector<float> ele_electronEcalPFClusterIsolationProducer;
+      vector<float> ele_electronHcalPFClusterIsolationProducer;
+
+      vector<string> event_trig_fired;
+      vector<bool> ele_trig_passed_filter;
 
       int ele_echarge[50];
       double ele_he[50], ele_hebc[50], ele_eseedpout[50] , ele_ep[50] , ele_eseedp[50] , ele_eelepout[50] ;       

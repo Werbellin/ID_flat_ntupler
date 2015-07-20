@@ -108,7 +108,7 @@ process.MessageLogger = cms.Service(
         'critical'
     ),
     LOG = cms.untracked.PSet(
-        threshold  = cms.untracked.string('DEBUG'), # DEBUG 
+        threshold  = cms.untracked.string('WARNING'), # DEBUG 
         filename  = cms.untracked.string(fileNameForSample  + '.log')
     ),
     debugModules = cms.untracked.vstring('*'), # *
