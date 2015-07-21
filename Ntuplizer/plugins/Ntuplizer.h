@@ -138,7 +138,9 @@ class Ntuplizer : public edm::EDAnalyzer {
       int _PU_N;
 
       double _mc_event_weight;
-      vector<TLorentzVector> _mc_gen_ele_p4;
+
+      typedef ROOT::Math::LorentzVector<ROOT::Math::PxPyPzE4D<double>> NewLorentzVector;
+      vector<NewLorentzVector> _mc_gen_ele_p4;
 
       //vertices
       int _vtx_N;

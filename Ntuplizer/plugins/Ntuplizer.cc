@@ -489,7 +489,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_pt", &ele_pt);
 
 
-  //_mytree->Branch("mc_gen_ele_p4", &_mc_gen_ele_p4);
+  _mytree->Branch("mc_gen_ele_p4", &_mc_gen_ele_p4);
   //_mytree->Branch("", &);
   //_mytree->Branch("", &);
   _mytree->Branch("ele_electronEcalPFClusterIsolationProducer", &ele_electronEcalPFClusterIsolationProducer);
@@ -545,6 +545,8 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
 //=============================================================================================
 {
   _selectedObjects.clear();
+  event_trig_fired.clear();
+
   _nEvent = iEvent.id().event();
   _nRun   = iEvent.id().run();
   _nLumi  = iEvent.luminosityBlock();
@@ -1186,7 +1188,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
         if(p->status()==1) {
 	    setMomentum(myvector, p->p4());
 
-        _mc_gen_ele_p4.push_back(myvector);	
+        _mc_gen_ele_p4.push_back(p->p4());	
 	    new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
 	    _MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->pdgId();
         mc_ele_isPromptFinalState.push_back(p->isPromptFinalState());
