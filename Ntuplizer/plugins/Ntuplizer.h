@@ -115,7 +115,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       bool ispythia6_;
 
       vector<trigger::TriggerObject> _selectedObjects;
-
+      vector<trigger::TriggerObject> _hltEle27WP75GsfTrackIsoFilter;
       //int lepton_setup;
       
       //edm::InputTag MuRhoCorrection_;
@@ -153,6 +153,7 @@ class Ntuplizer : public edm::EDAnalyzer {
 
       //electrons
       int ele_N;
+      int ele_N_saved;
       TClonesArray * m_electrons;
 
 
@@ -177,12 +178,14 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<float> ele_dr03HcalTowerSumEt;
       vector<float> ele_dr03TkSumPt;
       vector<float> ele_pt;
-
+      vector<float> ele_trackMomentumAtVtx_R;
       vector<float> ele_electronEcalPFClusterIsolationProducer;
       vector<float> ele_electronHcalPFClusterIsolationProducer;
 
       vector<string> event_trig_fired;
       vector<bool> ele_trig_passed_filter;
+      vector<bool> ele_pass_hltEle27WP75GsfTrackIsoFilter;
+      vector<float> ele_full5x5_hcalOverEcal;
 
       int ele_echarge[50];
       double ele_he[50], ele_hebc[50], ele_eseedpout[50] , ele_ep[50] , ele_eseedp[50] , ele_eelepout[50] ;       

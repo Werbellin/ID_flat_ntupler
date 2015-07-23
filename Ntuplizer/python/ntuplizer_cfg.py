@@ -79,11 +79,10 @@ fileNameForSample = 'ntuple'
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.source = cms.Source("PoolSource",
 #    fileNames = cms.untracked.vstring(
-        #'root://xrootd.unl.edu//store/user/ppigard/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MODMINIAOD_All/ff0f7a48dd492a8600ee2d8b0c10e377/step2_RAW2DIGI_L1Reco_RECO_100_1_Ngh.root')
-#fileNames = cms.untracked.vstring('root://xrootd.unl.edu//store/user/ppigard/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6_Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1_MODMINIAOD_All/ff0f7a48dd492a8600ee2d8b0c10e377/step2_RAW2DIGI_L1Reco_RECO_103_1_WWl.root')
-
 #fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/CMSSW_7_2_3/src/Analyzer/Phys14_DY.root')
-fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt50ns_MCRUN2_74_V9A-v2_AODSIM_file1.root')
+#fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt50ns_MCRUN2_74_V9A-v2_AODSIM_file1.root')
+fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v3_AODSIM_file1.root')
+
 #fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/GluGluHToZZTo4L_M125_13TeV_powheg_JHUgen_pythia8_MINIAODSIM.root')
 
 )
@@ -92,7 +91,7 @@ fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJe
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 
 #process.GlobalTag.globaltag = 'PHYS14_25_V1::All'
-process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9A', '') # MCRUN2_74_V8
+process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9', '') # MCRUN2_74_V8
 
 process.TFileService = cms.Service("TFileService", fileName = cms.string(fileNameForSample + '.root') )
 

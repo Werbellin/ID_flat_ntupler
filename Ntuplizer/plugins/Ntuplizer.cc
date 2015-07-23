@@ -288,6 +288,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch("trig_fired_names",&trig_fired_names,"trig_fired_names[10000]/C");
   _mytree->Branch("event_trig_fired", &event_trig_fired);
   _mytree->Branch("ele_trig_passed_filter", &ele_trig_passed_filter);
+  _mytree->Branch("ele_pass_hltEle27WP75GsfTrackIsoFilter", &ele_pass_hltEle27WP75GsfTrackIsoFilter);
 
 
 
@@ -296,6 +297,8 @@ void Ntuplizer::beginJob()
 
   // Electrons
   _mytree->Branch("ele_N",&ele_N,"ele_N/I");
+  _mytree->Branch("ele_N_saved",&ele_N_saved,"ele_N_saved/I");
+
   m_electrons = new TClonesArray ("TLorentzVector");
   _mytree->Branch ("electrons", "TClonesArray", &m_electrons, 256000,0);
 
@@ -494,6 +497,7 @@ void Ntuplizer::beginJob()
   //_mytree->Branch("", &);
   _mytree->Branch("ele_electronEcalPFClusterIsolationProducer", &ele_electronEcalPFClusterIsolationProducer);
   _mytree->Branch("ele_electronHcalPFClusterIsolationProducer", &ele_electronHcalPFClusterIsolationProducer);
+  _mytree->Branch("ele_full5x5_hcalOverEcal", &ele_full5x5_hcalOverEcal);
 
 
 }
@@ -601,9 +605,18 @@ const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
         _selectedObjects.push_back(foundObject);
     }
 }
-
-
-
+{
+edm::InputTag filterTag = edm::InputTag("hltEle27WP75GsfTrackIsoFilter", "", "HLT"); //find the index corresponding to the event
+size_t filterIndex = (*triggerSummary).filterIndex(filterTag);
+trigger::TriggerObjectCollection allTriggerObjects = triggerSummary->getObjects(); //trigger::TriggerObjectCollection hltEle27WP75GsfTrackIsoFilter;
+if (filterIndex < (*triggerSummary).sizeFilters()) { //check if the trigger object is present ! 
+const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
+    for(size_t j = 0; j < keys.size(); j++) {
+        trigger::TriggerObject foundObject = (allTriggerObjects)[keys[j]];
+        _hltEle27WP75GsfTrackIsoFilter.push_back(foundObject);
+    }
+}
+}
 
 
 
@@ -691,7 +704,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   TClonesArray & electrons = *m_electrons;
   int counter = 0;
   ele_N = electronsColl_h->size();
-
+  ele_N_saved = 0;
   //cout << "ele N = " << ele_N << endl;
   /*
   ele_signedEstimateSumPred.clear();
@@ -711,13 +724,17 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_dr03HcalTowerSumEt.clear();
   ele_dr03TkSumPt.clear();
   ele_pt.clear();
-
+  ele_trackMomentumAtVtx_R.clear();
 
   ele_electronEcalPFClusterIsolationProducer.clear();
   ele_electronHcalPFClusterIsolationProducer.clear();
 
   mc_ele_matchedFromCB.clear();
   ele_trig_passed_filter.clear();
+  ele_pass_hltEle27WP75GsfTrackIsoFilter.clear();
+  ele_full5x5_hcalOverEcal.clear();
+
+
   for (size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
   //for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
 
@@ -729,6 +746,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
         const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
         if(ielectrons->pt() < 4.9) continue;
+        ++ele_N_saved;
         bool _ele_trig_passed_filter = false;
         for(size_t t = 0; t < _selectedObjects.size(); ++t) {
             float deltaR = sqrt(pow(_selectedObjects[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_selectedObjects[t].phi() - ielectrons->phi())), 2));
@@ -738,19 +756,30 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
             }
         }
         ele_trig_passed_filter.push_back(_ele_trig_passed_filter);
+
+        bool _ele_pass_hltEle27WP75GsfTrackIsoFilter = false;
+        for(size_t t = 0; t < _hltEle27WP75GsfTrackIsoFilter.size(); ++t) {
+            float deltaR = sqrt(pow(_hltEle27WP75GsfTrackIsoFilter[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_hltEle27WP75GsfTrackIsoFilter[t].phi() - ielectrons->phi())), 2));
+            if(deltaR < 0.1) {//matching successfull
+                _ele_pass_hltEle27WP75GsfTrackIsoFilter = true;
+                continue;
+            }
+        }
+        ele_pass_hltEle27WP75GsfTrackIsoFilter.push_back(_ele_pass_hltEle27WP75GsfTrackIsoFilter);
+
         mc_ele_matchedFromCB.push_back(matchToTruth(ielectrons, genCandidatesCollection));
         ele_dr03EcalRecHitSumEt.push_back(ielectrons->dr03EcalRecHitSumEt());
         ele_dr03HcalTowerSumEt.push_back(ielectrons->dr03HcalTowerSumEt());
         ele_dr03TkSumPt.push_back(ielectrons->dr03TkSumPt());
         ele_pt.push_back(ielectrons->pt());
-
+        ele_trackMomentumAtVtx_R.push_back(ielectrons->trackMomentumAtVtx().R());
         //edm::Ref<reco::GsfElectronCollection> electronRef(electronsCol, i_ele);
         float ECALIso = electronECALIsoMap[ielectrons];
         float HCALIso = electronHCALIsoMap[ielectrons];
 
         ele_electronEcalPFClusterIsolationProducer.push_back(ECALIso);
         ele_electronHcalPFClusterIsolationProducer.push_back(HCALIso);
-
+        ele_full5x5_hcalOverEcal.push_back(ielectrons->full5x5_hcalOverEcal());
 /*
         const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
         edm::LogVerbatim("") << "Processinf track with Pt=" << gsfTrack->pt() << " and eta=" << gsfTrack->eta();
