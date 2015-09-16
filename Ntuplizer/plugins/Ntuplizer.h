@@ -174,6 +174,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<int>  mc_ele_isPromptFinalState;
       vector<int>  mc_ele_isDirectPromptTauDecayProductFinalState;
       vector<int> mc_ele_matchedFromCB;
+      vector<int> mc_ele_matchMother_PDGID;
+
       vector<float> ele_dr03EcalRecHitSumEt;
       vector<float> ele_dr03HcalTowerSumEt;
       vector<float> ele_dr03TkSumPt;

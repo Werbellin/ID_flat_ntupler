@@ -102,8 +102,57 @@ enum ElectronMatchType {UNMATCHED = 0,
               TRUE_PROMPT_ELECTRON, 
               TRUE_ELECTRON_FROM_TAU,
               TRUE_NON_PROMPT_ELECTRON}; // The last does not include tau parents
+/*
+const reco::Candidate* GetFirstNonElectronMother(const edm::Ptr<reco::GsfElectron> el, 
+                  const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
 
+  // 
+  // Explicit loop and geometric matching method (advised by Josh Bendavid)
+  //
 
+  // Find the closest status 1 gen electron to the reco electron
+  double dR = 999;
+  const reco::Candidate *closestElectron = 0;
+  for(size_t i=0; i<prunedGenParticles->size();i++){
+    const reco::Candidate *particle = &(*prunedGenParticles)[i];
+    // Drop everything that is not electron or not status 1
+    if( abs(particle->pdgId()) != 11 || particle->status() != 1 )
+      continue;
+    //
+    double dRtmp = ROOT::Math::VectorUtil::DeltaR( el->p4(), particle->p4() );
+    if( dRtmp < dR ){
+      dR = dRtmp;
+      closestElectron = particle;
+    }
+  }
+  // See if the closest electron (if it exists) is close enough.
+  // If not, no match found.
+  if( !(closestElectron != 0 && dR < 0.1) ) {
+    return nullptr;//UNMATCHED;
+  }
+
+  // 
+  int ancestorPID = -999; 
+  int ancestorStatus = -999;
+  findFirstNonElectronMother(closestElectron, ancestorPID, ancestorStatus);
+
+  if( ancestorPID == -999 && ancestorStatus == -999 ){
+    // No non-electron parent??? This should never happen.
+    // Complain.
+    printf("SimpleElectronNtupler: ERROR! Electron does not apper to have a non-electron parent\n");
+    return nullptr;//UNMATCHED;
+  }
+  
+  if( abs(ancestorPID) > 50 && ancestorStatus == 2 )
+    return particle;//TRUE_NON_PROMPT_ELECTRON;
+
+  if( abs(ancestorPID) == 15 && ancestorStatus == 2 )
+    return nullptr;//TRUE_ELECTRON_FROM_TAU;
+
+  // What remains is true prompt electrons
+  return nullptr;//TRUE_PROMPT_ELECTRON;
+}
+*/
 int matchToTruth(const edm::Ptr<reco::GsfElectron> el, 
                   const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
 
@@ -729,13 +778,12 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_electronEcalPFClusterIsolationProducer.clear();
   ele_electronHcalPFClusterIsolationProducer.clear();
 
-  mc_ele_matchedFromCB.clear();
   ele_trig_passed_filter.clear();
   ele_pass_hltEle27WP75GsfTrackIsoFilter.clear();
   ele_full5x5_hcalOverEcal.clear();
 
 
-  for (size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
+  for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
   //for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
 
     if(counter>49) { continue; } 
@@ -767,7 +815,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
         }
         ele_pass_hltEle27WP75GsfTrackIsoFilter.push_back(_ele_pass_hltEle27WP75GsfTrackIsoFilter);
 
-        mc_ele_matchedFromCB.push_back(matchToTruth(ielectrons, genCandidatesCollection));
         ele_dr03EcalRecHitSumEt.push_back(ielectrons->dr03EcalRecHitSumEt());
         ele_dr03HcalTowerSumEt.push_back(ielectrons->dr03HcalTowerSumEt());
         ele_dr03TkSumPt.push_back(ielectrons->dr03TkSumPt());
@@ -1193,6 +1240,39 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   mc_ele_isPromptFinalState.clear();
   mc_ele_isDirectPromptTauDecayProductFinalState.clear();
   _mc_gen_ele_p4.clear();
+
+  mc_ele_matchedFromCB.clear();
+  mc_ele_matchMother_PDGID.clear();
+
+  Handle<View<GsfElectron>> electronsColl_h;
+  iEvent.getByToken(electronsToken_, electronsColl_h);
+
+  edm::Handle<edm::View<reco::GenParticle> > genCandidatesCollection_CB;
+  iEvent.getByToken(genParticlesToken_CB, genCandidatesCollection_CB);
+
+
+    for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
+        const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
+        if(ielectrons->pt() < 4.9) continue;
+
+        //ElectronMatchType
+        int  matchType = matchToTruth(ielectrons, genCandidatesCollection_CB); 
+
+        mc_ele_matchedFromCB.push_back(matchType);
+
+        const reco::Candidate* mother = nullptr; 
+        //if(matchType == NON_PROMPT_ELECTRON) {
+        //    mother = GetFirstNonElectronMother(ielectrons, genCandidatesCollection_CB);
+        //}
+        int mother_PDGID = 0;
+        if(mother != nullptr) {
+            mother_PDGID = mother->pdgId();    
+        }
+        mc_ele_matchMother_PDGID.push_back(mother_PDGID); 
+    }
+
+
+
   // ----------------------------
   //      Loop on particles
   // ----------------------------
