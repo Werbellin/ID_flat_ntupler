@@ -1,48 +1,18 @@
 import FWCore.ParameterSet.Config as cms
 
-#process.load("RecoTracker.Configuration.python.RecoTracker_cff")
 process = cms.Process("Demo")
 
 process.dump=cms.EDAnalyzer('EventContentAnalyzer')
 process.load("Configuration.StandardSequences.MagneticField_cff")
 
-#process.load("Configuration.StandardSequences.Geometry_cff")
-#process.load('Configuration.Geometry.GeometryIdeal_cff')
 process.load('Configuration.Geometry.GeometryRecoDB_cff')
 process.load('Configuration.EventContent.EventContent_cff')
 
 process.load('Configuration.StandardSequences.Reconstruction_cff')
-#process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-
-
-
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
-
-
-#process.load("RecoTracker.TrackProducer.KfTrackFromGsfTrack_cfi")
-#process.KfTrackFromGsfTrack.src = cms.InputTag("electronGsfTracks")
-#theCKFTrajectoryInput = cms.string('KfTrackFromGsfTrack')
-#process.KFFittingSmootherWithOutliersRejectionAndRK.EstimateCut = 10000
-
-#process.load("RecoTracker.TrackProducer.TrackProducerOwnLast5_cfi")
-#process.TrackProducerOwnLast5.GSFTrajectoryInput  = cms.string('GsfTrackRefitter')
-
-#process.load("RecoTracker.TrackProducer.TrackRefittersMod_cff")
-#process.TrackRefitter.src = cms.InputTag("generalTracks")
-
-#process.load("RecoTracker.TrackProducer.GsfTrackRefitterMod_cff")
-#process.GsfTrackRefitter.src = cms.InputTag("electronGsfTracks")
-#process.GsfTrackRefitter.TrajectoryInEvent = cms.bool(True)
-
-#theGSFTrajectoryInput = cms.string('GsfTrackRefitter')
-
-
-
-#therunGsfRefitter      = cms.bool(True)
-#therunKfWithGsfRefitter = cms.bool(True)
 
 process.ntuple = cms.EDAnalyzer('Ntuplizer',
                                    inputFileFormat = cms.untracked.string('AOD'),
@@ -61,27 +31,16 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
                                    genParticlesMiniAOD = cms.InputTag('prunedGenParticles'), 
                                    PFMETMiniAOD = cms.InputTag('slimmedMETs'),                                
 
-
-
                                    HLTTag          = cms.InputTag('TriggerResults','','HLT'),
                                    isMC = cms.bool(True),
-                                   ispythia6 = cms.bool(False),
-                                   #runGsfRefitter      = therunGsfRefitter,
-                                   #GSFTrajectoryInput  = theGSFTrajectoryInput,
-                                   #runKfWithGsfRefitter = therunKfWithGsfRefitter,
-                                   #CKFTrajectoryInput  = theCKFTrajectoryInput,
-
-                                   MVAId  = cms.VInputTag()#"mvaNonTrigV025nsPHYS14", "mvaNonTrigV025nsPHYS14FIX")
+                                   MVAId  = cms.VInputTag()
 )
 fileNameForSample = 'ntuple'
 
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.source = cms.Source("PoolSource",
-#    fileNames = cms.untracked.vstring(
-#fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/CMSSW_7_2_3/src/Analyzer/Phys14_DY.root')
-#fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt50ns_MCRUN2_74_V9A-v2_AODSIM_file1.root')
-fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v3_AODSIM_file1.root')
+    fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v3_AODSIM_file1.root')
 
 #fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/GluGluHToZZTo4L_M125_13TeV_powheg_JHUgen_pythia8_MINIAODSIM.root')
 
@@ -90,7 +49,6 @@ fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJe
 #process.GlobalTag.globaltag = ' MCRUN2_74_V8::All'
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 
-#process.GlobalTag.globaltag = 'PHYS14_25_V1::All'
 process.GlobalTag = GlobalTag(process.GlobalTag, 'MCRUN2_74_V9', '') # MCRUN2_74_V8
 
 process.TFileService = cms.Service("TFileService", fileName = cms.string(fileNameForSample + '.root') )
@@ -103,17 +61,16 @@ process.MessageLogger.cerr.INFO = cms.untracked.PSet(
 process.MessageLogger = cms.Service(
     "MessageLogger",
     destinations = cms.untracked.vstring(
-        'LOG', #output//' + fileNameForSample + '.log',
+        'LOG',
         'critical'
     ),
     LOG = cms.untracked.PSet(
         threshold  = cms.untracked.string('WARNING'), # DEBUG 
         filename  = cms.untracked.string(fileNameForSample  + '.log')
     ),
-    debugModules = cms.untracked.vstring('*'), # *
+    debugModules = cms.untracked.vstring('*'),
        
-    statistics     = cms.untracked.vstring('STAT'#'output//' + fileNameForSample  + '_stats.log',
-    ),
+    statistics     = cms.untracked.vstring('STAT'),
         STAT = cms.untracked.PSet(
             threshold = cms.untracked.string('WARNING'),
             filename  = cms.untracked.string(fileNameForSample  + '_stats.log')

@@ -1,11 +1,6 @@
 #ifndef Ntuplizer_H
 #define Ntuplizer_H
 
-// Own
-//#include "fBremTest/DemoAnalyzer/interface/TrajectoryAnalysisHelper.h"
-//#include "fBremTest/DemoAnalyzer/interface/RecSimHitMatcher.h"
-
-
 // CMSSW
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 #include "FWCore/Framework/interface/Frameworkfwd.h"
@@ -33,7 +28,6 @@
 #include "TTree.h"
 #include "TLorentzVector.h"
 #include "TClonesArray.h"
-#include "TParticle.h"
 #include "TVector3.h"
 #include "TH1F.h"
 #include "TH2F.h"
@@ -45,14 +39,8 @@
 #include<vector>
 
 
-
-
-
-
 using namespace std;
 using namespace edm;
-using std::vector;
-
 
 enum class inputFileTypes {AOD, MINIAOD, UNDEF};
 
@@ -72,7 +60,6 @@ class Ntuplizer : public edm::EDAnalyzer {
       void FillTruth(const edm::Event&, const edm::EventSetup&);
       void FillMET (const edm::Event& iEvent, const edm::EventSetup& iSetup);
       
-      //void setMomentum(TLorentzVector & myvector, const LorentzVector & mom);
       void setMomentum(TLorentzVector & myvector, const LorentzVector & mom) ;
 
 
@@ -103,31 +90,16 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetTokenT<ValueMap<float>> electronEcalPFClusterIsolationProducerToken_;
       edm::EDGetTokenT<ValueMap<float>> electronHcalPFClusterIsolationProducerToken_;
 
-      //inputTag
-      //edm::InputTag MuonTag_;
-      //edm::InputTag JetTag_;
-      //edm::InputTag PhotonTag_;
+
       // Trigger Stuff
       edm::InputTag HLTTag_; 
-      //edm::InputTag triggerEventTag_;
-      //edm::InputTag MCTag_ ;
       bool isMC_;	
-      bool ispythia6_;
 
       vector<trigger::TriggerObject> _selectedObjects;
       vector<trigger::TriggerObject> _hltEle27WP75GsfTrackIsoFilter;
-      //int lepton_setup;
       
-      //edm::InputTag MuRhoCorrection_;
-      //edm::InputTag EleRhoCorrection_;
-      //edm::InputTag SigmaRhoCorrection_;
       edm::InputTag PileupSrc_;	
       
-      std::vector<edm::InputTag> MVAidCollection_;
-	
-      //std::vector<edm::InputTag > HLT_Filters_;
-      //edm::InputTag SCTag_;
-	
       //tree
       TTree *_mytree;
       TLorentzVector myvector ;  
@@ -157,19 +129,6 @@ class Ntuplizer : public edm::EDAnalyzer {
       TClonesArray * m_electrons;
 
 
-      //vector < vector<int> > trackHitPDGID;
-      //vector <float> lastHitPt;
-
-
-      //vector<bool>  ele_foundGSFTraj;
-      //vector<float> ele_signedEstimateSumPred;
-      //float ele_signedEstimateSumPred_A[50];
-      //vector<float> ele_propagatorSignedEstimateSumPred;
-      //vector<float> ele_signSumPredNormVH;
-
-      //vector<bool>  ele_foundCKFTraj;
-      //vector<float> ele_signedEstimateSumPredCKF;
-      //vector<float> ele_reducedChi2CKF;
       vector<float> ele_conversionVertexFitProbability;
       vector<int>  mc_ele_isPromptFinalState;
       vector<int>  mc_ele_isDirectPromptTauDecayProductFinalState;
@@ -199,7 +158,6 @@ class Ntuplizer : public edm::EDAnalyzer {
       double ele_oldhe[50], ele_oldhebc[50];
 
 
-      //, ele_e33[50] , ele_e2overe9[50] ;
       double ele_pin_mode[50] , ele_pout_mode[50] , ele_pTin_mode[50] , ele_pTout_mode[50] ; 
       //
       double ele_fbrem[50],ele_SCfbrem[50],ele_pfSCfbrem[50], ele_trackfbrem[50];
@@ -229,7 +187,6 @@ class Ntuplizer : public edm::EDAnalyzer {
       double ele_HZZisoTk[50],ele_HZZisoTk5[50],  ele_HZZisoEcal[50], ele_HZZisoHcal[50],ele_HZZisoComb[50] ;
       //
       double ele_pfChargedHadIso[50], ele_pfNeutralHadIso[50], ele_pfPhotonIso[50], ele_pfChargedIso[50], ele_pfSumPUIso[50];
-      //ele_pfChargedHadPUIso[50],ele_pfCombRelIso[50] ;
       //
       double ele_dzPV[50], ele_d0[50], ele_d0err[50];
       double ele_IP[50], ele_IPError[50], ele_SIP[50] ;
@@ -253,36 +210,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       int ele_kfhits[50];
       int ele_gsfhits[50];
 
-      double ele_mvaphys14[50];
-      double ele_mvaphys14fix[50];
       	//MC
-	TClonesArray * _m_MC_gen_V;
-	TClonesArray * _m_MC_gen_Higgs;
-	//TClonesArray * _m_MC_gen_photons;
-	TClonesArray * _m_MC_gen_leptons;
-	TClonesArray * _m_MC_gen_leptons_status1;
-	TClonesArray * _m_MC_gen_leptons_status2;
-	double _MC_gen_V_pdgid[10];
-	double _MC_gen_leptons_pdgid[30];
-	double _MC_gen_leptons_status1_pdgid[30];
-	double _MC_gen_leptons_status2_pdgid[30];
-	double _MC_gen_lepton_mother_pdgid[30];
-
-	int _MC_gen_leptons_status1_FromWZ[30];
-	int _MC_gen_leptons_status1_FromTaus[30];
-	int _MC_gen_leptons_status1_FromNonPrompt[30];
-	int _MC_gen_leptons_status1_FromBC[30];
-
-	//double _MC_pthat;
-	int _MC_flavor[2];
-
     int _MC_TrueNumInteractions;
-	
-      bool runGsfRefitter;
-      std::string GSFTrajColl;
-
-      bool runKfWithGsfRefitter;
-      std::string CKFTrajColl;
-
 };
 #endif

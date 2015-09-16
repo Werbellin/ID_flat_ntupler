@@ -16,7 +16,6 @@
 //
 //
 
-
 // MY include
 #include "Ntuplizer.h"
 
@@ -24,14 +23,8 @@
 #include <memory>
 
 // CMSSW include
-#include "FWCore/Framework/interface/MakerMacros.h"
-
-#include "FWCore/Framework/interface/ESHandle.h"
-#include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
-#include "FWCore/Framework/interface/Event.h"
-#include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
@@ -39,20 +32,14 @@
 //
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 //
-#include "RecoEcal/EgammaCoreTools/interface/EcalClusterTools.h"
 #include "RecoEcal/EgammaCoreTools/interface/EcalClusterLazyTools.h"
-#include "FWCore/Utilities/interface/isFinite.h"
 #include "DataFormats/GsfTrackReco/interface/GsfTrack.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectronFwd.h"
 //"
 // MET
 #include "DataFormats/METReco/interface/MET.h"
-#include "DataFormats/METReco/interface/METFwd.h"
-#include "DataFormats/METReco/interface/PFMET.h"
-#include "DataFormats/METReco/interface/PFMETFwd.h"
 //
 #include "DataFormats/BeamSpot/interface/BeamSpot.h"
-#include "RecoVertex/PrimaryVertexProducer/interface/PrimaryVertexSorter.h"
 
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
 #include "TrackingTools/Records/interface/TransientTrackRecord.h"
@@ -69,6 +56,11 @@
 //
 // constants, enums and typedefs
 //
+
+enum ElectronMatchType {UNMATCHED = 0, 
+              TRUE_PROMPT_ELECTRON, 
+              TRUE_ELECTRON_FROM_TAU,
+              TRUE_NON_PROMPT_ELECTRON}; // The last does not include tau parents
 
 //
 // static data member definitions
@@ -98,10 +90,6 @@ void findFirstNonElectronMother(const reco::Candidate *particle,
   return;
 }
 
-enum ElectronMatchType {UNMATCHED = 0, 
-              TRUE_PROMPT_ELECTRON, 
-              TRUE_ELECTRON_FROM_TAU,
-              TRUE_NON_PROMPT_ELECTRON}; // The last does not include tau parents
 /*
 const reco::Candidate* GetFirstNonElectronMother(const edm::Ptr<reco::GsfElectron> el, 
                   const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
@@ -214,16 +202,7 @@ conf(iConfig),
 inFileType(inputFileTypes::UNDEF),
 HLTTag_(iConfig.getParameter<edm::InputTag> ("HLTTag")),
 isMC_ (iConfig.getParameter<bool>("isMC")),
-ispythia6_ (iConfig.getParameter<bool>("ispythia6")),
-PileupSrc_ ("addPileupInfo"),
-MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId"))
-//runGsfRefitter (iConfig.getParameter<bool>("runGsfRefitter")),
-//GSFTrajColl (iConfig.getParameter<std::string>("GSFTrajectoryInput")),
-//runKfWithGsfRefitter (iConfig.getParameter<bool>("runKfWithGsfRefitter")),
-//CKFTrajColl (iConfig.getParameter<std::string>("CKFTrajectoryInput"))
-
-
-// std::vector<edm::InputTag> MVAidCollection_;
+PileupSrc_ ("addPileupInfo")
 {
 
   std::string inFileType_s = iConfig.getUntrackedParameter<std::string>("inputFileFormat");
@@ -237,7 +216,6 @@ MVAidCollection_ (iConfig.getParameter<std::vector<edm::InputTag> >("MVAId"))
                         (iConfig.getParameter <edm::InputTag>
                         ("beamSpot"));
 
-  
 
   if(inFileType == inputFileTypes::AOD) {
     electronsToken_ = mayConsume<edm::View<reco::GsfElectron> >
@@ -302,16 +280,6 @@ Ntuplizer::~Ntuplizer()
   // do anything here that needs to be done at desctruction time
   // (e.g. close files, deallocate resources etc.)
   delete m_electrons ;
- 
-  if(isMC_ ) {
-    delete _m_MC_gen_V;
-    delete _m_MC_gen_leptons;
-    delete _m_MC_gen_Higgs;
-    delete _m_MC_gen_leptons_status1;
-    delete _m_MC_gen_leptons_status2;
-  } // if MC
-  
-  
 }
 
 // =============================================================================================
@@ -351,22 +319,6 @@ void Ntuplizer::beginJob()
   m_electrons = new TClonesArray ("TLorentzVector");
   _mytree->Branch ("electrons", "TClonesArray", &m_electrons, 256000,0);
 
-
-/*
-  _mytree->Branch("ele_trackHitPDGID",&trackHitPDGID);
-  _mytree->Branch("ele_lastHitPt",&lastHitPt);
-
-  _mytree->Branch("ele_foundGSFTraj", &ele_foundGSFTraj);
-  _mytree->Branch("ele_foundCKFTraj", &ele_foundCKFTraj);
-
-  _mytree->Branch("ele_signedEstimateSumPred", &ele_signedEstimateSumPred);//;&ele_signedEstimateSumPred,"ele_signedEstimateSumPred[50]/D");
-  //_mytree->Branch("ele_signedEstimateSumPred_A", &ele_signedEstimateSumPred_A,"ele_signedEstimateSumPred_A[50]/F");
-  _mytree->Branch("ele_propagatorSignedEstimateSumPred", &ele_propagatorSignedEstimateSumPred);
-  _mytree->Branch("ele_signSumPredNormVH", &ele_signSumPredNormVH);
-
-  _mytree->Branch("ele_signedEstimateSumPredCKF", &ele_signedEstimateSumPredCKF);
-  _mytree->Branch("ele_reducedChi2CKF", &ele_reducedChi2CKF);
-*/
   _mytree->Branch("ele_conversionVertexFitProbability", &ele_conversionVertexFitProbability);
 
   _mytree->Branch("ele_echarge",&ele_echarge,"ele_echarge[50]/I");
@@ -484,52 +436,16 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_combErr",   &ele_combErr,   "ele_combErr[50]/D");
   _mytree->Branch("ele_PFcombErr", &ele_PFcombErr, "ele_PFcombErr[50]/D");
   
-  // Electron ID
-  _mytree->Branch("ele_mvaphys14",   &ele_mvaphys14,   "ele_mvaphys14[50]/D");
-  _mytree->Branch("ele_mvaphys14fix",   &ele_mvaphys14fix,   "ele_mvaphys14fix[50]/D");
-    
   _mytree->Branch("ele_kfchi2",&ele_kfchi2,"ele_kfchi2[50]/D");
   _mytree->Branch("ele_kfhits",&ele_kfhits,"ele_kfhits[50]/I");
   _mytree->Branch("ele_gsfhits",&ele_gsfhits,"ele_gsfhits[50]/I");
    
-
   
-  // PFMET
-  _mytree->Branch("met_pf_et",&_met_pf_et,"met_pf_et/D");
-  _mytree->Branch("met_pf_px",&_met_pf_px,"met_pf_px/D");
-  _mytree->Branch("met_pf_py",&_met_pf_py,"met_pf_py/D");
-  _mytree->Branch("met_pf_phi",&_met_pf_phi,"met_pf_phi/D");
-  _mytree->Branch("met_pf_set",&_met_pf_set,"met_pf_set/D");
-  _mytree->Branch("met_pf_sig",&_met_pf_sig,"met_pf_sig/D");
-
   // Truth Leptons
 
   _mytree->Branch("mc_event_weight",&_mc_event_weight,"mc_event_weight/D");
-
-  _m_MC_gen_V = new TClonesArray ("TLorentzVector");
-  _mytree->Branch ("MC_gen_V", "TClonesArray", &_m_MC_gen_V, 256000,0);
-  _mytree->Branch ("MC_gen_V_pdgid",&_MC_gen_V_pdgid, "MC_gen_V_pdgid[10]/D");
   //
-  _m_MC_gen_Higgs = new TClonesArray ("TLorentzVector");
-  _mytree->Branch ("MC_gen_Higgs", "TClonesArray", &_m_MC_gen_Higgs, 256000,0);
-  //
-  _m_MC_gen_leptons         = new TClonesArray ("TLorentzVector");
-  _m_MC_gen_leptons_status1 = new TClonesArray ("TLorentzVector");
-  _m_MC_gen_leptons_status2 = new TClonesArray ("TLorentzVector");
-  _mytree->Branch ("MC_gen_leptons", "TClonesArray", &_m_MC_gen_leptons, 256000,0);
-  _mytree->Branch ("MC_gen_leptons_status1", "TClonesArray", &_m_MC_gen_leptons_status1, 256000,0);
-  _mytree->Branch ("MC_gen_leptons_status2", "TClonesArray", &_m_MC_gen_leptons_status2, 256000,0);
-  _mytree->Branch ("MC_gen_leptons_pdgid",&_MC_gen_leptons_pdgid, "MC_gen_leptons_pdgid[30]/D");
-  _mytree->Branch ("MC_gen_leptons_status1_pdgid",&_MC_gen_leptons_status1_pdgid, "MC_gen_leptons_status1_pdgid[30]/D");
-  _mytree->Branch ("MC_gen_leptons_status1_FromWZ",&_MC_gen_leptons_status1_FromWZ, "MC_gen_leptons_status1_FromWZ[30]/I");
-  _mytree->Branch ("MC_gen_leptons_status1_FromTaus",&_MC_gen_leptons_status1_FromTaus, "MC_gen_leptons_status1_FromTaus[30]/I");
-  _mytree->Branch ("MC_gen_leptons_status1_FromNonPrompt",&_MC_gen_leptons_status1_FromNonPrompt, "MC_gen_leptons_status1_FromNonPrompt[30]/I");
-  _mytree->Branch ("MC_gen_leptons_status1_FromBC",&_MC_gen_leptons_status1_FromBC, "MC_gen_leptons_status1_FromBC[30]/I");
-  _mytree->Branch ("MC_gen_leptons_status2_pdgid",&_MC_gen_leptons_status2_pdgid, "MC_gen_leptons_status2_pdgid[30]/D");
-  _mytree->Branch ("MC_flavor",&_MC_flavor,"MC_flavor[2]/I");
-  
   _mytree->Branch ("MC_TrueNumInteractions",&_MC_TrueNumInteractions,"MC_TrueNumInteractions/I");
-  _mytree->Branch ("MC_gen_lepton_mother_pdgid",&_MC_gen_lepton_mother_pdgid, "MC_gen_lepton_mother_pdgid[30]/D");
 
   _mytree->Branch("mc_ele_isPromptFinalState", &mc_ele_isPromptFinalState);
   _mytree->Branch("mc_ele_isDirectPromptTauDecayProductFinalState", &mc_ele_isDirectPromptTauDecayProductFinalState);
@@ -542,7 +458,6 @@ void Ntuplizer::beginJob()
 
 
   _mytree->Branch("mc_gen_ele_p4", &_mc_gen_ele_p4);
-  //_mytree->Branch("", &);
   //_mytree->Branch("", &);
   _mytree->Branch("ele_electronEcalPFClusterIsolationProducer", &ele_electronEcalPFClusterIsolationProducer);
   _mytree->Branch("ele_electronHcalPFClusterIsolationProducer", &ele_electronHcalPFClusterIsolationProducer);
@@ -560,11 +475,8 @@ void Ntuplizer::beginJob()
 void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 // =============================================================================================
 {
-   using namespace edm;
 
    Init();
-
-   //cout << "salut" << endl;
 
    FillEvent(iEvent, iSetup);
    LogDebug("") << "After FillEvent"; 
@@ -580,11 +492,6 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    if(isMC_ ) {
      _MC_TrueNumInteractions = 0;
-     _m_MC_gen_V->Clear();
-     _m_MC_gen_Higgs->Clear();
-     _m_MC_gen_leptons->Clear();
-     _m_MC_gen_leptons_status1->Clear();
-     _m_MC_gen_leptons_status2->Clear();
      FillTruth(iEvent, iSetup);
      LogDebug("") << "After FillTruth";
    }
@@ -607,7 +514,6 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
   // ----------------
   // Fired Triggers
   // ----------------
-  //cout << "fired" << endl;
   Handle<edm::TriggerResults> triggerResultsHandle;
   iEvent.getByLabel (HLTTag_,triggerResultsHandle);
   const edm::TriggerNames & triggerNames = iEvent.triggerNames(*triggerResultsHandle);
@@ -687,7 +593,6 @@ void Ntuplizer::FillVertices(const edm::Event& iEvent, const edm::EventSetup& iS
 void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 //=============================================================================================
 {
-  LogVerbatim("") << "Running FillElectrons";
   LogDebug("") << "Ntuplizer::FillElectrons";
 
   edm::ESHandle<TransientTrackBuilder> builder;
@@ -696,10 +601,10 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
   //load the conversion collection
 
-      edm::Handle<edm::View<reco::GsfElectron>> electronsColl_h;
-      edm::Handle<reco::VertexCollection> primaryVertexColl_h;
-      edm::Handle<reco::ConversionCollection> conversions_h;
-      edm::Handle<reco::BeamSpot> beamspot_h;
+  edm::Handle<edm::View<reco::GsfElectron>> electronsColl_h;
+  edm::Handle<reco::VertexCollection> primaryVertexColl_h;
+  edm::Handle<reco::ConversionCollection> conversions_h;
+  edm::Handle<reco::BeamSpot> beamspot_h;
 
 
   iEvent.getByToken(electronsToken_, electronsColl_h);
@@ -727,12 +632,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   // get the beam spot
   const reco::BeamSpot &beamSpot = *(beamspot_h.product());
 
-  // get the value map for eiD
-  edm::Handle<edm::ValueMap<float> >  mapMVAcollection_phys14;
-  edm::Handle<edm::ValueMap<float> >  mapMVAcollection_phys14fix;
-  if (MVAidCollection_.size()>0 ) iEvent.getByLabel(MVAidCollection_[0] , mapMVAcollection_phys14);
-  if (MVAidCollection_.size()>1 ) iEvent.getByLabel(MVAidCollection_[1], mapMVAcollection_phys14fix);
-  
    //electron PF isolation
   edm::Handle< edm::ValueMap<float> > electronECALIsoMapH;
 
@@ -754,20 +653,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   int counter = 0;
   ele_N = electronsColl_h->size();
   ele_N_saved = 0;
-  //cout << "ele N = " << ele_N << endl;
-  /*
-  ele_signedEstimateSumPred.clear();
-  ele_propagatorSignedEstimateSumPred.clear();
-  ele_signSumPredNormVH.clear();
 
-  ele_signedEstimateSumPredCKF.clear();
-  ele_reducedChi2CKF.clear();
-  ele_foundGSFTraj.clear();
-  ele_foundCKFTraj.clear();
- 
-  trackHitPDGID.clear();
-  lastHitPt.clear();
-  */
   ele_conversionVertexFitProbability.clear();
   ele_dr03EcalRecHitSumEt.clear();
   ele_dr03HcalTowerSumEt.clear();
@@ -784,128 +670,46 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
 
   for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
-  //for (auto ielectrons=electronsColl_h->begin(); ielectrons != electronsColl_h->end(); ++ielectrons) {
-
     if(counter>49) { continue; } 
-    
 
+    LogDebug("") << "Processing new electron";
 
-        edm::LogVerbatim("") << "Processing new electron";
-
-        const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
-        if(ielectrons->pt() < 4.9) continue;
-        ++ele_N_saved;
-        bool _ele_trig_passed_filter = false;
-        for(size_t t = 0; t < _selectedObjects.size(); ++t) {
-            float deltaR = sqrt(pow(_selectedObjects[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_selectedObjects[t].phi() - ielectrons->phi())), 2));
-            if(deltaR < 0.1) {//matching successfull
-                _ele_trig_passed_filter = true;
-                continue;
-            }
-        }
-        ele_trig_passed_filter.push_back(_ele_trig_passed_filter);
-
-        bool _ele_pass_hltEle27WP75GsfTrackIsoFilter = false;
-        for(size_t t = 0; t < _hltEle27WP75GsfTrackIsoFilter.size(); ++t) {
-            float deltaR = sqrt(pow(_hltEle27WP75GsfTrackIsoFilter[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_hltEle27WP75GsfTrackIsoFilter[t].phi() - ielectrons->phi())), 2));
-            if(deltaR < 0.1) {//matching successfull
-                _ele_pass_hltEle27WP75GsfTrackIsoFilter = true;
-                continue;
-            }
-        }
-        ele_pass_hltEle27WP75GsfTrackIsoFilter.push_back(_ele_pass_hltEle27WP75GsfTrackIsoFilter);
-
-        ele_dr03EcalRecHitSumEt.push_back(ielectrons->dr03EcalRecHitSumEt());
-        ele_dr03HcalTowerSumEt.push_back(ielectrons->dr03HcalTowerSumEt());
-        ele_dr03TkSumPt.push_back(ielectrons->dr03TkSumPt());
-        ele_pt.push_back(ielectrons->pt());
-        ele_trackMomentumAtVtx_R.push_back(ielectrons->trackMomentumAtVtx().R());
-        //edm::Ref<reco::GsfElectronCollection> electronRef(electronsCol, i_ele);
-        float ECALIso = electronECALIsoMap[ielectrons];
-        float HCALIso = electronHCALIsoMap[ielectrons];
-
-        ele_electronEcalPFClusterIsolationProducer.push_back(ECALIso);
-        ele_electronHcalPFClusterIsolationProducer.push_back(HCALIso);
-        ele_full5x5_hcalOverEcal.push_back(ielectrons->full5x5_hcalOverEcal());
-/*
-        const reco::GsfTrack* gsfTrack = ielectrons->gsfTrack().get();
-        edm::LogVerbatim("") << "Processinf track with Pt=" << gsfTrack->pt() << " and eta=" << gsfTrack->eta();
-        RecSimHitMatcher* theRecSimHitMatcher = nullptr;
-        theRecSimHitMatcher = new RecSimHitMatcher(iEvent, iSetup, conf, gsfTrack);
-        theRecSimHitMatcher->InitializeSimTrackRecHitAssociations(true);
-        edm::LogInfo("test") << "After InitializeSimTrackRecHitAssociations";
-        if(!theRecSimHitMatcher->AssociationSucceeded()) {
-            edm::LogWarning("Association failed") << "The Association RecHit<>SimTrack failed";
-            theRecSimHitMatcher = nullptr;
-        }
-
-        std::vector<int> pdgId(gsfTrack->found(), 0);
-        float _lastHitPt = -1.;
-        if(theRecSimHitMatcher != nullptr) {
-            _lastHitPt = theRecSimHitMatcher->GetSimTrackToLastRecHit()->momentum().Pt();            
-            pdgId = theRecSimHitMatcher->GetVectorOfHitPDGID();
-            edm::LogVerbatim("") <<"PDGID list";
-            for(const auto& id :pdgId) edm::LogVerbatim("") <<"PDG ID = " << id; 
-
-        }
-    trackHitPDGID.push_back(pdgId);
-    lastHitPt.push_back(_lastHitPt);
-
-    // variables that rely on GsfRefit
-    float tmp_ele_signedEstimateSumPred = -200.;
-    float tmp_ele_propagatorSignedEstimateSumPred = -200.;
-    float tmp_ele_signSumPredNormVH = -200.;
-    bool foundGSFTraj = false;
-    const Trajectory* theGSFTraj = nullptr;
-    if(runGsfRefitter) {
-        edm::LogInfo("Test") << "GSF refit was run";
-        edm::Handle<std::vector<Trajectory> > GSFTrajCollectionHandle;
-        iEvent.getByLabel(GSFTrajColl, GSFTrajCollectionHandle);
-        theGSFTraj = GetTrajectoryFromTrack(GSFTrajCollectionHandle.product(), ielectrons->gsfTrack().get()); 
-    }
-
-    if(theGSFTraj == nullptr) {
-        edm::LogWarning("No GSF Traj") << " Did not find the GSF Trajectory for track";
-    } else {
-        foundGSFTraj = true;
-        edm::LogInfo("Ntup") << "Found Trajectory with hits " << theGSFTraj->foundHits();
-
-        tmp_ele_signedEstimateSumPred = ReducedChi2AsymmetryNormalizedNValidHits(theGSFTraj, ielectrons->gsfTrack().get());
-        tmp_ele_signSumPredNormVH = SignAsymmetryNormalizedNValidHits(theGSFTraj, gsfTrack);
-        tmp_ele_propagatorSignedEstimateSumPred = GetSignedChiPropagator(theGSFTraj, *ielectrons, iEvent, iSetup);    
-    }
-    ele_foundGSFTraj.push_back(foundGSFTraj);
-    ele_signedEstimateSumPred.push_back(tmp_ele_signedEstimateSumPred);
-    //ele_signedEstimateSumPred_A[counter] = tmp_ele_signedEstimateSumPred;
-    ele_propagatorSignedEstimateSumPred.push_back(tmp_ele_propagatorSignedEstimateSumPred);
-    ele_signSumPredNormVH.push_back(tmp_ele_signSumPredNormVH);
-
-    // variables that rely on KfTrack from GsfTrack fit
-
-    float tmp_ele_signedEstimateSumPredCKF = -200.;
-    float tmp_ele_reducedChi2CKF = -200.;
-    bool foundCKFTraj = false;
-   
-    if(runKfWithGsfRefitter) {
-        edm::Handle<std::vector<Trajectory> > KfWithGsfTrajCollectionHandle;
-        iEvent.getByLabel(CKFTrajColl, KfWithGsfTrajCollectionHandle);
-        edm::LogInfo("Demo") << "Size of trajectory collection " << KfWithGsfTrajCollectionHandle.product()->size(); 
-        //h_NumberKfWithGsfTracks->Fill(KfWithGsfTrajCollectionHandle->size());
-         
-        const Trajectory* theCKFTraj  = GetTrajectoryFromTrack(KfWithGsfTrajCollectionHandle.product(), gsfTrack);
-        if(theCKFTraj == nullptr) {
-            edm::LogWarning("No CKF Traj") << " Did not find the CKF Trajectory for track";
-        } else {
-            foundCKFTraj = true;
-            tmp_ele_reducedChi2CKF = theCKFTraj->chiSquared() / theCKFTraj->ndof();
-            tmp_ele_signedEstimateSumPredCKF = ReducedChi2AsymmetryNormalizedNValidHits(theCKFTraj, gsfTrack);
+    const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
+    if(ielectrons->pt() < 4.9) continue;
+    ++ele_N_saved;
+    bool _ele_trig_passed_filter = false;
+    for(size_t t = 0; t < _selectedObjects.size(); ++t) {
+        float deltaR = sqrt(pow(_selectedObjects[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_selectedObjects[t].phi() - ielectrons->phi())), 2));
+        if(deltaR < 0.1) {//matching successfull
+            _ele_trig_passed_filter = true;
+            continue;
         }
     }
+    ele_trig_passed_filter.push_back(_ele_trig_passed_filter);
 
-    ele_foundCKFTraj.push_back(foundCKFTraj);
-    ele_signedEstimateSumPredCKF.push_back(tmp_ele_signedEstimateSumPredCKF);
-    ele_reducedChi2CKF.push_back(tmp_ele_reducedChi2CKF);
-*/
+    bool _ele_pass_hltEle27WP75GsfTrackIsoFilter = false;
+    for(size_t t = 0; t < _hltEle27WP75GsfTrackIsoFilter.size(); ++t) {
+        float deltaR = sqrt(pow(_hltEle27WP75GsfTrackIsoFilter[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_hltEle27WP75GsfTrackIsoFilter[t].phi() - ielectrons->phi())), 2));
+        if(deltaR < 0.1) {//matching successfull
+            _ele_pass_hltEle27WP75GsfTrackIsoFilter = true;
+            continue;
+        }
+    }
+    ele_pass_hltEle27WP75GsfTrackIsoFilter.push_back(_ele_pass_hltEle27WP75GsfTrackIsoFilter);
+
+    ele_dr03EcalRecHitSumEt.push_back(ielectrons->dr03EcalRecHitSumEt());
+    ele_dr03HcalTowerSumEt.push_back(ielectrons->dr03HcalTowerSumEt());
+    ele_dr03TkSumPt.push_back(ielectrons->dr03TkSumPt());
+    ele_pt.push_back(ielectrons->pt());
+    ele_trackMomentumAtVtx_R.push_back(ielectrons->trackMomentumAtVtx().R());
+    //edm::Ref<reco::GsfElectronCollection> electronRef(electronsCol, i_ele);
+    float ECALIso = electronECALIsoMap[ielectrons];
+    float HCALIso = electronHCALIsoMap[ielectrons];
+
+    ele_electronEcalPFClusterIsolationProducer.push_back(ECALIso);
+    ele_electronHcalPFClusterIsolationProducer.push_back(HCALIso);
+    ele_full5x5_hcalOverEcal.push_back(ielectrons->full5x5_hcalOverEcal());
+
     setMomentum(myvector, ielectrons->p4());
     new (electrons[counter]) TLorentzVector(myvector);
 
@@ -947,13 +751,13 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     edm::InputTag  reducedBarrelRecHitCollection("reducedEcalRecHitsEB");
     edm::InputTag  reducedEndcapRecHitCollection("reducedEcalRecHitsEE");
    
-    ele_oldsigmaetaeta[counter]   =  ielectrons->full5x5_sigmaEtaEta();    //( !edm::isNotFinite(Cov[0]) ) ? sqrt(Cov[0]) : 0;
-    ele_oldsigmaietaieta[counter] =  ielectrons->full5x5_sigmaIetaIeta();   //( !edm::isNotFinite(vCov[0]) ) ? sqrt(vCov[0]) : 0;
-    ele_oldsigmaiphiiphi[counter] =  ielectrons->full5x5_sigmaIphiIphi();   //( !edm::isNotFinite(vCov[2]) ) ? sqrt(vCov[2]) : 0;
-    ele_oldr9[counter]              =  ielectrons->full5x5_r9();  //lazyToolsNoZS.e3x3(*seedCluster) / ielectrons->superCluster()->rawEnergy() ;
-    ele_olde15[counter]           =  ielectrons->full5x5_e1x5(); //lazyToolsNoZS.e1x5(*seedCluster);
-    ele_olde25max[counter]   =  ielectrons->full5x5_e2x5Max(); //lazyToolsNoZS.e2x5Max(*seedCluster);
-    ele_olde55[counter]           =  ielectrons->full5x5_e5x5();       // lazyToolsNoZS.e5x5(*seedCluster);
+    ele_oldsigmaetaeta[counter]   =  ielectrons->full5x5_sigmaEtaEta();    
+    ele_oldsigmaietaieta[counter] =  ielectrons->full5x5_sigmaIetaIeta();  
+    ele_oldsigmaiphiiphi[counter] =  ielectrons->full5x5_sigmaIphiIphi();  
+    ele_oldr9[counter]              =  ielectrons->full5x5_r9();  
+    ele_olde15[counter]           =  ielectrons->full5x5_e1x5();
+    ele_olde25max[counter]   =  ielectrons->full5x5_e2x5Max();
+    ele_olde55[counter]           =  ielectrons->full5x5_e5x5();
     ele_oldhe[counter]             =  ielectrons->full5x5_hcalOverEcal();
     ele_oldhebc[counter]        =  ielectrons->full5x5_hcalOverEcalBc();
 
@@ -1005,18 +809,15 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
     LogDebug("") << "After ctfTrack";
     //
-    // 		ele_dxyB[counter] = ielectrons->gsfTrack()->dxy(bs.position()) ;
     ele_dxy[counter]  = ielectrons->gsfTrack()->dxy() ;
-    // 		ele_dzB[counter]  = ielectrons->gsfTrack()->dz(bs.position()) ;
     ele_dz[counter]   = ielectrons->gsfTrack()->dz() ;
-    // 		ele_dszB[counter] = ielectrons->gsfTrack()->dsz(bs.position()) ;
     ele_dsz[counter]  = ielectrons->gsfTrack()->dsz() ;
     ele_dzPV[counter] = ielectrons->gsfTrack()->dz(pv->position());
     //
 
     // Conversion Rejection
-    ele_conv_dcot[counter]   = ielectrons->convDist(); //userFloat("dcot");
-    ele_conv_dist[counter]   = ielectrons->convDcot(); //ielectrons->userFloat("dist");
+    ele_conv_dcot[counter]   = ielectrons->convDist();
+    ele_conv_dist[counter]   = ielectrons->convDcot();
     ele_conv_radius[counter] = ielectrons->convRadius();
     
     
@@ -1031,13 +832,8 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     double vertexFitProbability = -1.;;
     if(!conv_ref.isNull()) {
         const reco::Vertex &vtx = conv_ref.get()->conversionVertex();
-   
-        //vertex validity
         if (vtx.isValid()) {
-   
-            //fit probability
             vertexFitProbability = TMath::Prob( vtx.chi2(),  vtx.ndof());
-            
         }
     }
     ele_conversionVertexFitProbability.push_back(vertexFitProbability);
@@ -1095,8 +891,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     // -----------------------------------------------------------------
     // Get SuperCluster Informations
     // -----------------------------------------------------------------
-    //cout << " SuperCluster "<< endl;
-    //	if(ielectrons->ecalDrivenSeed()) {
     reco::SuperClusterRef sclRef = ielectrons->superCluster();
    
     double R  = TMath::Sqrt(sclRef->x()*sclRef->x() + sclRef->y()*sclRef->y() +sclRef->z()*sclRef->z());
@@ -1155,11 +949,6 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     // -----------------------------------------------------------------
     // Electron ID electronsCol
     // -----------------------------------------------------------------
-    
-
-    // Does this do anything - doesnt look like it
-    //edm::Ref<reco::GsfElectronCollection> electronRef(electronsColl_h, counter); //electronsCollection,i); i++; //reference to the electron
-
 
     ++counter;
   } // for loop on gsfelectrons
@@ -1174,17 +963,8 @@ void Ntuplizer::FillMET (const edm::Event& iEvent, const edm::EventSetup& iSetup
 {
 	
 
-  edm::Handle< edm::View<reco::MET> > pfMEThandle;
-  iEvent.getByToken(pfMETToken_, pfMEThandle);
-  
-  
-  // PFMET
-  _met_pf_et  = (pfMEThandle->front() ).et();
-  _met_pf_px  = (pfMEThandle->front() ).px();
-  _met_pf_py  = (pfMEThandle->front() ).py();
-  _met_pf_phi = (pfMEThandle->front() ).phi();
-  _met_pf_set = (pfMEThandle->front() ).sumEt();
-  _met_pf_sig = (pfMEThandle->front() ).mEtSig();
+  //edm::Handle< edm::View<reco::MET> > pfMEThandle;
+  //iEvent.getByToken(pfMETToken_, pfMEThandle);
   
 } // end of Fill MET
 
@@ -1224,19 +1004,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
  
   edm::Handle<vector<reco::GenParticle> > genCandidatesCollection;
   iEvent.getByToken(genParticleToken_, genCandidatesCollection); //genParticlesPruned
-  
-  TClonesArray &MC_gen_V               = *_m_MC_gen_V;
-  TClonesArray &MC_gen_Higgs           = *_m_MC_gen_Higgs;
-  TClonesArray &MC_gen_leptons         = *_m_MC_gen_leptons;
-  TClonesArray &MC_gen_leptons_status2 = *_m_MC_gen_leptons_status2;
-  TClonesArray &MC_gen_leptons_status1 = *_m_MC_gen_leptons_status1;
-  
-  int counter             = 0;
-  int counter_higgs       = 0;
-  int counter_daughters   = 0;
-  int counter_lep_status2 = 0;
-  int counter_lep_status1 = 0;
-
+ 
   mc_ele_isPromptFinalState.clear();
   mc_ele_isDirectPromptTauDecayProductFinalState.clear();
   _mc_gen_ele_p4.clear();
@@ -1271,130 +1039,18 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
         mc_ele_matchMother_PDGID.push_back(mother_PDGID); 
     }
 
-
-
-  // ----------------------------
-  //      Loop on particles
-  // ----------------------------
-  for( auto p = genCandidatesCollection->begin();p != genCandidatesCollection->end(); ++ p ) {
-    
-    // %%%%%%%%%%%%%%%%%%
-    // If Higgs
-    // %%%%%%%%%%%%%%%%%%
-    if (p->pdgId() == 25 && p->status()==3) {
-      setMomentum (myvector,p->p4());
-      // 		  cout << "Higgs PdgId=" << p->pdgId() << " Higgs status=" << p->status() << " Mass=" << myvector.M() << endl;
-      new (MC_gen_Higgs[counter_higgs]) TLorentzVector(myvector);
-      counter_higgs++;
-    } // if Higgs
-    
-    // %%%%%%%%%%%%%%%%%%
-    // If Leptons from Z
-    // %%%%%%%%%%%%%%%%%%
-    if(fabs(p->pdgId())==11) { // || fabs(p->pdgId())==13 ||  fabs(p->pdgId())==15) {
-      
-     
-        if(p->status()==1) {
-	    setMomentum(myvector, p->p4());
-
-        _mc_gen_ele_p4.push_back(p->p4());	
-	    new (MC_gen_leptons_status1[counter_lep_status1]) TLorentzVector(myvector);
-	    _MC_gen_leptons_status1_pdgid[counter_lep_status1] = p->pdgId();
-        mc_ele_isPromptFinalState.push_back(p->isPromptFinalState());
-        mc_ele_isDirectPromptTauDecayProductFinalState.push_back(p->isDirectPromptTauDecayProductFinalState());	
+    // To be re-implemented
+    //mc_ele_isPromptFinalState.push_back(p->isPromptFinalState());
+    //mc_ele_isDirectPromptTauDecayProductFinalState.push_back(p->isDirectPromptTauDecayProductFinalState());	
 	
-	    // Let's look at the mothers ... [works really only for electrons...=>eid studies]
-	    if(p->numberOfMothers()>0) {
-	        const reco::Candidate  *Mom = p->mother();
-	        while(Mom!=0) {
-                _MC_gen_lepton_mother_pdgid[counter_lep_status1] = Mom->pdgId();
-	            if(fabs(Mom->pdgId()) == 23 || fabs(Mom->pdgId()) == 24) { 
-	                _MC_gen_leptons_status1_FromWZ[counter_lep_status1] = 1;
-	                break;
-                }
-	            else if(fabs(Mom->pdgId()) == 15) { 
-	                _MC_gen_leptons_status1_FromTaus[counter_lep_status1] = 1;
-	                break;
-                }
-	            else if(fabs(Mom->pdgId()) > 50 ) { 
-	                _MC_gen_leptons_status1_FromNonPrompt[counter_lep_status1] = 1;
 
-	                const reco::Candidate  *GrandMom = Mom; //->mother();
-	                while(GrandMom!=0) {
-	                    for(int unsigned jj=0;jj<GrandMom->numberOfMothers();jj++) {
-	                            if(fabs(GrandMom->mother(jj)->pdgId()) == 4 || fabs(GrandMom->mother(jj)->pdgId()) == 5) { 
-	                                _MC_gen_leptons_status1_FromBC[counter_lep_status1] = 1;
-	                                break;
-                                }
-	                    } // for loop on grand-mothers, when they are more than 1...
-	                    if(fabs(GrandMom->pdgId()) == 4 || fabs(GrandMom->pdgId()) == 5) { 
-	                        _MC_gen_leptons_status1_FromBC[counter_lep_status1] = 1;
-	                        break;
-                        }
-	                    GrandMom = GrandMom ->mother();
-	                } // while loop on grand mom
-	                break;
-                } // if pdgid>50
-	        
-	            Mom = Mom ->mother();
-	        } // while loop on mothers
-	    } // if mother
-	
-	    counter_lep_status1++;
-    } // if status 1
 
-    if(p->status()==3) {
-	    if(p->numberOfMothers()>0) { // Need a mother...
-	        if(p->mother(0)->pdgId()==23) {  // If Mother is a Z 
-	            if(p->numberOfDaughters()>0) { // Need a daughter...
-	      
-	      // Status 2 Leptons
-	                if(p->daughter(0)->pdgId()==p->pdgId() && p->daughter(0)->status()==2) { // if daughter is lepton & status 2
-		                setMomentum(myvector, p->daughter(0)->p4());
-		                new (MC_gen_leptons_status2[counter_lep_status2]) TLorentzVector(myvector);
-		                _MC_gen_leptons_status2_pdgid[counter_lep_status2] = p->daughter(0)->pdgId();
-		                counter_lep_status2++;
-		
-	                } // if Daughter Status = 2
-	            } // Need a daughter
-	        } // if MOther = Z
-	    } // if Nmother (status3) >0
-    } // if hard scatter electron (status3)
-} // if leptons
-   
-    // %%%%%%%%%%%%%%%%%%
-    //     If W or Z
-    // %%%%%%%%%%%%%%%%%%
-    if (p->pdgId() == 23 || fabs(p->pdgId())==24) {
-     
-        bool pass_status=false;
-        if(p->status()==3 && ispythia6_==true) pass_status=true; //{ // if PYTHIA6
-        if(p->status() && p->numberOfDaughters()==2 && ispythia6_==false) pass_status=true; //{ // if PYTHIA 8
-      
-        if(pass_status) {
-	        // Fill truth W,Z
-	        setMomentum (myvector,p->p4());
-	        new (MC_gen_V[counter]) TLorentzVector(myvector);
-	        _MC_gen_V_pdgid[counter] = p->pdgId();
-	        
-	        // Loop on daughters
-	        for(unsigned int i=0;i<p->numberOfDaughters();i++) {
-	            bool islep = false;
-	            if(fabs(p->daughter(i)->pdgId())==11) { _MC_flavor[counter] = 0; islep=true;} // electron
-	            if(fabs(p->daughter(i)->pdgId())==13) { _MC_flavor[counter] = 1; islep=true;} // muon
-	            if(fabs(p->daughter(i)->pdgId())==15) { _MC_flavor[counter] = 2; islep=true;} // taus
-  
-	            if(islep) { // p->daughter(i)->status()==1) { ?!
-	                setMomentum(myvector, p->daughter(i)->p4());
-	                new (MC_gen_leptons[counter_daughters]) TLorentzVector(myvector);
-	                _MC_gen_leptons_pdgid[counter_daughters] = p->daughter(i)->pdgId();
-	                counter_daughters++;
-	            } // if is lepton
-	        } // for loop on daughters
-	        counter++;
-        } // if status stable
-    } // if W or Z
-} // for loop on particles
+    // ----------------------------
+    //      Loop on particles
+    // ----------------------------
+    //for( auto p = genCandidatesCollection->begin();p != genCandidatesCollection->end(); ++ p ) {
+    
+    //} // for loop on particles
 	
 } // end of FillTruth
 
@@ -1463,14 +1119,7 @@ void Ntuplizer::Init()
   _vtx_N = 0;
 
   ele_N = 0;
-  
-  _met_pf_et  = 0.;
-  _met_pf_px  = 0.; 
-  _met_pf_py  = 0.; 
-  _met_pf_phi = 0.; 
-  _met_pf_set = 0.; 
-  _met_pf_sig = 0.; 
-  
+ 
   for (int i = 0 ; i < 50 ; ++i) {
     //electrons
     ele_echarge[i] = 0 ;
@@ -1598,33 +1247,8 @@ void Ntuplizer::Init()
     ele_gsfhits[i] = -1;
     ele_psE[i] = 0.;
 
-    ele_mvaphys14[i] = 0.;
-    ele_mvaphys14fix[i] = 0.;
-
   } // for loop on electrons
 
-
-  // Gen Informations
-  for(int ii=0;ii<10;ii++) {
-    _MC_gen_V_pdgid[ii]               = 0;
-  }
-
-  for(int ii=0;ii<30;ii++) {
-    _MC_gen_leptons_pdgid[ii]         = 0;
-    _MC_gen_lepton_mother_pdgid[ii]   = 0;
-
-    _MC_gen_leptons_status1_pdgid[ii] = 0;
-    _MC_gen_leptons_status2_pdgid[ii] = 0;
-    
-    _MC_gen_leptons_status1_FromWZ[ii]         = 0;
-    _MC_gen_leptons_status1_FromTaus[ii]       = 0;
-    _MC_gen_leptons_status1_FromNonPrompt[ii]  = 0;
-    _MC_gen_leptons_status1_FromBC[ii]         = 0;
-  } // for loop on gen leptons
-  
-  _MC_flavor[0] = 0;
-  _MC_flavor[1] = 0;
-    
 
 }
 
