@@ -1,3 +1,0 @@
-/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/Spring14dr-Flat20to50_POSTLS170_V5-v2/AODSIM
-/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/Spring14dr-PU20bx25_POSTLS170_V5-v1/AODSIM
-/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/Spring14dr-PU_S14_POSTLS170_V6-v1/AODSIM

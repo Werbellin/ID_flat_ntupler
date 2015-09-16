@@ -1,1 +1,0 @@
-cmsRun ntuple.py maxEvents=1000 isMC=1 >& log.txt
