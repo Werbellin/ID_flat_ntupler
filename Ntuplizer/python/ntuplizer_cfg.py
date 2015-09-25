@@ -14,8 +14,33 @@ process.load("FWCore.MessageService.MessageLogger_cfi")
 
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
+from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
+# turn on VID producer, indicate data format  to be
+# DataFormat.AOD or DataFormat.MiniAOD, as appropriate 
+fileFormat = 'AOD'
+
+if fileFormat == 'AOD' :
+    dataFormat = DataFormat.AOD
+else :
+    dataFormat = DataFormat.MiniAOD
+
+switchOnVIDElectronIdProducer(process, dataFormat)
+
+# define which IDs we want to produce
+my_id_modules = [
+                 'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_Trig_V1_cff',
+                 'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_nonTrig_V1_cff',
+                 'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_50ns_Trig_V1_cff',
+                ]
+
+#add them to the VID producer
+for idmod in my_id_modules:
+    setupAllVIDIdsInModule(process,idmod,setupVIDElectronSelection)
+
+
+
 process.ntuple = cms.EDAnalyzer('Ntuplizer',
-                                   inputFileFormat = cms.untracked.string('AOD'),
+                                   inputFileFormat = cms.untracked.string(fileFormat),
                                    beamSpot = cms.InputTag('offlineBeamSpot'),
                                    # input collection names AOD
                                    electronsAOD = cms.InputTag('gedGsfElectrons'),
@@ -33,7 +58,11 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
 
                                    HLTTag          = cms.InputTag('TriggerResults','','HLT'),
                                    isMC = cms.bool(True),
-                                   MVAId  = cms.VInputTag()
+                                   MVAId  = cms.VInputTag(),
+                            
+                                   electronID1 = cms.InputTag('electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig25nsV1Values'),
+                                   electronID2 = cms.InputTag('electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig50nsV1Values'),
+
 )
 fileNameForSample = 'ntuple'
 

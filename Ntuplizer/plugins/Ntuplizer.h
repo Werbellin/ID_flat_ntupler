@@ -90,6 +90,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetTokenT<ValueMap<float>> electronEcalPFClusterIsolationProducerToken_;
       edm::EDGetTokenT<ValueMap<float>> electronHcalPFClusterIsolationProducerToken_;
 
+      edm::EDGetTokenT<ValueMap<float>> electronID1Token_;
+      edm::EDGetTokenT<ValueMap<float>> electronID2Token_;
 
       // Trigger Stuff
       edm::InputTag HLTTag_; 
@@ -142,6 +144,10 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<float> ele_trackMomentumAtVtx_R;
       vector<float> ele_electronEcalPFClusterIsolationProducer;
       vector<float> ele_electronHcalPFClusterIsolationProducer;
+      vector<float> ele_ID1;
+      vector<float> ele_ID2;
+
+      vector<int> ele_index;
 
       vector<string> event_trig_fired;
       vector<bool> ele_trig_passed_filter;

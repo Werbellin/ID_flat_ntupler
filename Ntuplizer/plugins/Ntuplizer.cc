@@ -269,6 +269,14 @@ PileupSrc_ ("addPileupInfo")
   electronHcalPFClusterIsolationProducerToken_ = mayConsume<ValueMap<float>>
                         (InputTag
                         ("electronHcalPFClusterIsolationProducer"));
+
+  electronID1Token_ = mayConsume<ValueMap<float>>
+                        (InputTag
+                        ("electronID1"));
+
+   electronID2Token_ = mayConsume<ValueMap<float>>
+                        (InputTag
+                        ("electronID2"));
  
 }
 
@@ -463,6 +471,10 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_electronHcalPFClusterIsolationProducer", &ele_electronHcalPFClusterIsolationProducer);
   _mytree->Branch("ele_full5x5_hcalOverEcal", &ele_full5x5_hcalOverEcal);
 
+  _mytree->Branch("ele_ID1", &ele_ID1);
+  _mytree->Branch("ele_ID2", &ele_ID2);
+
+  _mytree->Branch("ele_index", &ele_index);
 
 }
 
@@ -637,6 +649,11 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
   iEvent.getByToken(electronEcalPFClusterIsolationProducerToken_, electronECALIsoMapH);
 
+  edm::Handle<edm::ValueMap<float> > ID1_map;
+  iEvent.getByToken(electronID1Token_, ID1_map); 
+
+  edm::Handle<edm::ValueMap<float> > ID2_map;
+  iEvent.getByToken(electronID2Token_, ID2_map); 
 
 
   //iEvent.getByLabel(ecalPFclusterIsolation_,electronECALIsoMapH);
@@ -669,6 +686,11 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_full5x5_hcalOverEcal.clear();
 
 
+  ele_ID1.clear();
+  ele_ID2.clear();
+  ele_index.clear();
+
+
   for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
     if(counter>49) { continue; } 
 
@@ -676,7 +698,14 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
     const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
     if(ielectrons->pt() < 4.9) continue;
+
     ++ele_N_saved;
+
+
+    ele_ID1.push_back((*ID1_map)[ielectrons]);
+    ele_ID2.push_back((*ID2_map)[ielectrons]);
+
+
     bool _ele_trig_passed_filter = false;
     for(size_t t = 0; t < _selectedObjects.size(); ++t) {
         float deltaR = sqrt(pow(_selectedObjects[t].eta() - ielectrons->eta(), 2) + pow(acos(cos(_selectedObjects[t].phi() - ielectrons->phi())), 2));
@@ -696,6 +725,8 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
         }
     }
     ele_pass_hltEle27WP75GsfTrackIsoFilter.push_back(_ele_pass_hltEle27WP75GsfTrackIsoFilter);
+
+    ele_index.push_back(i_ele);
 
     ele_dr03EcalRecHitSumEt.push_back(ielectrons->dr03EcalRecHitSumEt());
     ele_dr03HcalTowerSumEt.push_back(ielectrons->dr03HcalTowerSumEt());
