@@ -257,6 +257,14 @@ PileupSrc_ ("addPileupInfo")
                         (iConfig.getParameter<edm::InputTag>
                         ("electronID2"));
  
+  electronID1_pass_Token_ = mayConsume<ValueMap<bool>>
+                        (iConfig.getParameter<edm::InputTag>
+                        ("electronID1_pass"));
+
+  electronID2_pass_Token_ = mayConsume<ValueMap<bool>>
+                        (iConfig.getParameter<edm::InputTag>
+                        ("electronID2_pass"));
+ 
 }
 
 // =============================================================================================
@@ -454,7 +462,10 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_ID1", &ele_ID1);
   _mytree->Branch("ele_ID2", &ele_ID2);
 
-  _mytree->Branch("ele_index", &ele_index);
+  _mytree->Branch("ele_ID1_pass", &ele_ID1_pass);
+  _mytree->Branch("ele_ID2_pass", &ele_ID2_pass);
+
+ _mytree->Branch("ele_index", &ele_index);
 
 }
 
@@ -635,6 +646,12 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   edm::Handle<edm::ValueMap<float> > ID2_map;
   iEvent.getByToken(electronID2Token_, ID2_map); 
 
+  edm::Handle<edm::ValueMap<bool> > ID1_pass_map;
+  //iEvent.getByToken(electronID1_pass_Token_, ID1_pass_map); 
+
+  edm::Handle<edm::ValueMap<bool> > ID2_pass_map;
+  //iEvent.getByToken(electronID2_pass_Token_, ID2_pass_map); 
+
 
   //iEvent.getByLabel(ecalPFclusterIsolation_,electronECALIsoMapH);
   const edm::ValueMap<float> electronECALIsoMap = *(electronECALIsoMapH);
@@ -669,7 +686,9 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_ID1.clear();
   ele_ID2.clear();
   ele_index.clear();
-
+  ele_ID1_pass.clear();
+  ele_ID2_pass.clear();
+ 
 
   for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
     if(counter>49) { continue; } 
@@ -684,6 +703,9 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
     ele_ID1.push_back((*ID1_map)[ielectrons]);
     ele_ID2.push_back((*ID2_map)[ielectrons]);
+
+    //ele_ID1_pass.push_back((*ID1_pass_map)[ielectrons]);
+    //ele_ID2_pass.push_back((*ID2_pass_map)[ielectrons]);
 
 
     bool _ele_trig_passed_filter = false;

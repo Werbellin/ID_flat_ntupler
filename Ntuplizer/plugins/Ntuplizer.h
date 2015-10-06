@@ -93,6 +93,10 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetTokenT<ValueMap<float>> electronID1Token_;
       edm::EDGetTokenT<ValueMap<float>> electronID2Token_;
 
+      edm::EDGetTokenT<ValueMap<bool>> electronID1_pass_Token_;
+      edm::EDGetTokenT<ValueMap<bool>> electronID2_pass_Token_;
+
+
       // Trigger Stuff
       edm::InputTag HLTTag_; 
       bool isMC_;	
@@ -146,6 +150,10 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<float> ele_electronHcalPFClusterIsolationProducer;
       vector<float> ele_ID1;
       vector<float> ele_ID2;
+
+      vector<int> ele_ID1_pass;
+      vector<int> ele_ID2_pass;
+
 
       vector<int> ele_index;
 
