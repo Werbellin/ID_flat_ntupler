@@ -60,8 +60,8 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
                                    isMC = cms.bool(True),
                                    MVAId  = cms.VInputTag(),
                             
-                                   electronID1 = cms.InputTag('electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig25nsV1Values'),
-                                   electronID2 = cms.InputTag('electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig50nsV1Values'),
+                                   electronID1 = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig25nsV1Values"),
+                                   electronID2 = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig50nsV1Values"),
 
 )
 fileNameForSample = 'ntuple'
@@ -69,9 +69,9 @@ fileNameForSample = 'ntuple'
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/data/testFiles/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v3_AODSIM_file1.root')
+#    fileNames = cms.untracked.vstring(#'/store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0AD4F3AF-CE36-E511-AC8A-008CFA1974CC.root')
 
-#fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/GluGluHToZZTo4L_M125_13TeV_powheg_JHUgen_pythia8_MINIAODSIM.root')
+fileNames = cms.untracked.vstring('file:/home/llr/cms/pigard/TrigTest/CMSSW_7_4_12/src/Analyzer/Ntuplizer/python/005FF8BC-B134-E511-9458-0002C92958E8.root')
 
 )
  
@@ -106,4 +106,4 @@ process.MessageLogger = cms.Service(
     )
 )
 
-process.p = cms.Path(process.ntuple)#*process.dump)
+process.p = cms.Path(process.electronMVAValueMapProducer * process.ntuple)#*process.dump)

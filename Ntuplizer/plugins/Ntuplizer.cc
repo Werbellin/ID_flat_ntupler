@@ -90,8 +90,8 @@ void findFirstNonElectronMother(const reco::Candidate *particle,
   return;
 }
 
-/*
-const reco::Candidate* GetFirstNonElectronMother(const edm::Ptr<reco::GsfElectron> el, 
+
+const reco::Candidate* GetClosestGenParticle(const edm::Ptr<reco::GsfElectron> el, 
                   const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
 
   // 
@@ -100,47 +100,26 @@ const reco::Candidate* GetFirstNonElectronMother(const edm::Ptr<reco::GsfElectro
 
   // Find the closest status 1 gen electron to the reco electron
   double dR = 999;
-  const reco::Candidate *closestElectron = 0;
+  const reco::Candidate *closestParticle = nullptr;
   for(size_t i=0; i<prunedGenParticles->size();i++){
     const reco::Candidate *particle = &(*prunedGenParticles)[i];
     // Drop everything that is not electron or not status 1
-    if( abs(particle->pdgId()) != 11 || particle->status() != 1 )
+    if( particle->status() != 1 )
       continue;
     //
     double dRtmp = ROOT::Math::VectorUtil::DeltaR( el->p4(), particle->p4() );
     if( dRtmp < dR ){
       dR = dRtmp;
-      closestElectron = particle;
+      closestParticle = particle;
     }
   }
-  // See if the closest electron (if it exists) is close enough.
-  // If not, no match found.
-  if( !(closestElectron != 0 && dR < 0.1) ) {
+  if( dR > 0.1 ) {
     return nullptr;//UNMATCHED;
+  } else {
+    return closestParticle;
   }
-
-  // 
-  int ancestorPID = -999; 
-  int ancestorStatus = -999;
-  findFirstNonElectronMother(closestElectron, ancestorPID, ancestorStatus);
-
-  if( ancestorPID == -999 && ancestorStatus == -999 ){
-    // No non-electron parent??? This should never happen.
-    // Complain.
-    printf("SimpleElectronNtupler: ERROR! Electron does not apper to have a non-electron parent\n");
-    return nullptr;//UNMATCHED;
-  }
-  
-  if( abs(ancestorPID) > 50 && ancestorStatus == 2 )
-    return particle;//TRUE_NON_PROMPT_ELECTRON;
-
-  if( abs(ancestorPID) == 15 && ancestorStatus == 2 )
-    return nullptr;//TRUE_ELECTRON_FROM_TAU;
-
-  // What remains is true prompt electrons
-  return nullptr;//TRUE_PROMPT_ELECTRON;
 }
-*/
+
 int matchToTruth(const edm::Ptr<reco::GsfElectron> el, 
                   const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
 
@@ -271,11 +250,11 @@ PileupSrc_ ("addPileupInfo")
                         ("electronHcalPFClusterIsolationProducer"));
 
   electronID1Token_ = mayConsume<ValueMap<float>>
-                        (InputTag
+                        (iConfig.getParameter<edm::InputTag>
                         ("electronID1"));
 
-   electronID2Token_ = mayConsume<ValueMap<float>>
-                        (InputTag
+  electronID2Token_ = mayConsume<ValueMap<float>>
+                        (iConfig.getParameter<edm::InputTag>
                         ("electronID2"));
  
 }
@@ -458,6 +437,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch("mc_ele_isPromptFinalState", &mc_ele_isPromptFinalState);
   _mytree->Branch("mc_ele_isDirectPromptTauDecayProductFinalState", &mc_ele_isDirectPromptTauDecayProductFinalState);
   _mytree->Branch("mc_ele_matchedFromCB", &mc_ele_matchedFromCB);
+  _mytree->Branch("mc_ele_closestGenParticlePDGID", &mc_ele_matchMother_PDGID);
 
   _mytree->Branch("ele_dr03EcalRecHitSumEt", &ele_dr03EcalRecHitSumEt);
   _mytree->Branch("ele_dr03HcalTowerSumEt", &ele_dr03HcalTowerSumEt);
@@ -1059,15 +1039,15 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
         mc_ele_matchedFromCB.push_back(matchType);
 
-        const reco::Candidate* mother = nullptr; 
-        //if(matchType == NON_PROMPT_ELECTRON) {
-        //    mother = GetFirstNonElectronMother(ielectrons, genCandidatesCollection_CB);
-        //}
-        int mother_PDGID = 0;
-        if(mother != nullptr) {
-            mother_PDGID = mother->pdgId();    
+        const reco::Candidate* genParticle = nullptr; 
+        if(matchType == UNMATCHED) {
+            genParticle = GetClosestGenParticle(ielectrons, genCandidatesCollection_CB);
         }
-        mc_ele_matchMother_PDGID.push_back(mother_PDGID); 
+        int GEN_PDGID = 0;
+        if(genParticle != nullptr) {
+            GEN_PDGID = genParticle->pdgId();    
+        }
+        mc_ele_matchMother_PDGID.push_back(GEN_PDGID); 
     }
 
     // To be re-implemented
