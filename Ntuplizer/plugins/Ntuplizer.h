@@ -10,6 +10,7 @@
 #include <DataFormats/HepMCCandidate/interface/GenParticle.h>
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
+#include "DataFormats/PatCandidates/interface/Electron.h"
 
 #include "DataFormats/EgammaCandidates/interface/Conversion.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
@@ -37,7 +38,6 @@
 // C++
 #include<memory>
 #include<vector>
-
 
 using namespace std;
 using namespace edm;
@@ -93,14 +93,21 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetTokenT<ValueMap<float>> electronID1Token_;
       edm::EDGetTokenT<ValueMap<float>> electronID2Token_;
 
+      edm::EDGetTokenT<ValueMap<int>> electronID1CatToken_;
+      edm::EDGetTokenT<ValueMap<int>> electronID2CatToken_;
+
+
+
       edm::EDGetTokenT<ValueMap<bool>> electronID1_pass_Token_;
       edm::EDGetTokenT<ValueMap<bool>> electronID2_pass_Token_;
 
+      string electronID1_name;
+      string electronID2_name;
 
       // Trigger Stuff
       edm::InputTag HLTTag_; 
       bool isMC_;	
-
+      bool ID1_use_userFloat_;
       vector<trigger::TriggerObject> _selectedObjects;
       vector<trigger::TriggerObject> _hltEle27WP75GsfTrackIsoFilter;
       
@@ -154,6 +161,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<int> ele_ID1_pass;
       vector<int> ele_ID2_pass;
 
+      vector<int> ele_ID1_cat;
+      vector<int> ele_ID2_cat;
 
       vector<int> ele_index;
 

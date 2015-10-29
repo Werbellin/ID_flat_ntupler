@@ -170,7 +170,21 @@ int matchToTruth(const edm::Ptr<reco::GsfElectron> el,
   return TRUE_PROMPT_ELECTRON;
 }
 
+string electronIDBaseName(string fullname, string producer_prefix, string producer_suffix) {
 
+        LogError("") << fullname;
+      string::size_type i = fullname.find(producer_prefix);  
+      if(i != std::string::npos)
+          fullname.erase(i, producer_prefix.length());
+        LogError("") << fullname;
+
+      i = fullname.find(producer_suffix);  
+      if(i != std::string::npos)
+          fullname.erase(i, producer_suffix.length());
+         LogError("") << fullname;
+   
+      return fullname;
+}
 
 // =============================================================================================
 // constructor
@@ -181,6 +195,7 @@ conf(iConfig),
 inFileType(inputFileTypes::UNDEF),
 HLTTag_(iConfig.getParameter<edm::InputTag> ("HLTTag")),
 isMC_ (iConfig.getParameter<bool>("isMC")),
+ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat")),
 PileupSrc_ ("addPileupInfo")
 {
 
@@ -190,6 +205,8 @@ PileupSrc_ ("addPileupInfo")
   if(inFileType_s == "MiniAOD") inFileType = inputFileTypes::MINIAOD; 
 
   if(inFileType == inputFileTypes::UNDEF) LogError("") << "Did not recognize input file format!";
+
+  if(inFileType != inputFileTypes::MINIAOD && ID1_use_userFloat_) LogError("") << "Trying to get ID from userFloat but file input is not miniAOD!";
 
   beamSpotToken_    = consumes<reco::BeamSpot> 
                         (iConfig.getParameter <edm::InputTag>
@@ -222,6 +239,7 @@ PileupSrc_ ("addPileupInfo")
   }
 
   if(inFileType == inputFileTypes::MINIAOD) {
+    LogInfo("") << "Running on miniAOD";
     electronsToken_ = mayConsume<edm::View<reco::GsfElectron> >
                         (iConfig.getParameter<edm::InputTag>
                         ("electronsMiniAOD"));
@@ -238,7 +256,13 @@ PileupSrc_ ("addPileupInfo")
     genParticleToken_ = mayConsume<vector<reco::GenParticle> >
                         (iConfig.getParameter<edm::InputTag>
                         ("genParticlesMiniAOD"));
-
+    genParticlesToken_CB = mayConsume<edm::View<reco::GenParticle> > 
+                        (iConfig.getParameter<edm::InputTag>
+                        ("genParticlesMiniAOD"));
+    genEventInfoProductTagToken_ = consumes<GenEventInfoProduct>
+                        (iConfig.getParameter<edm::InputTag>
+                        ("genEventInfoProductMiniAOD"));
+ 
   }
 
   electronEcalPFClusterIsolationProducerToken_ = mayConsume<ValueMap<float>>
@@ -249,22 +273,42 @@ PileupSrc_ ("addPileupInfo")
                         (InputTag
                         ("electronHcalPFClusterIsolationProducer"));
 
-  electronID1Token_ = mayConsume<ValueMap<float>>
-                        (iConfig.getParameter<edm::InputTag>
-                        ("electronID1"));
 
-  electronID2Token_ = mayConsume<ValueMap<float>>
-                        (iConfig.getParameter<edm::InputTag>
-                        ("electronID2"));
- 
+
+  electronID1_name = (iConfig.getParameter<string>("electronID1"));
+  //electronID1_name = electronIDBaseName(electronID1_name, "electronMVAValueMapProducer:", "Values");
+
+  electronID2_name = (iConfig.getParameter<string>("electronID2"));
+  //electronID2_name = electronIDBaseName(electronID2_name, "electronMVAValueMapProducer:", "Values");
+
+
+
+  if(!ID1_use_userFloat_) {
+
+  electronID1Token_ = mayConsume<ValueMap<float>>
+                        (InputTag
+                        ("electronMVAValueMapProducer:" + electronID1_name + "Values"));
+
+  electronID1CatToken_ = mayConsume<ValueMap<int>>
+                        (InputTag
+                        ("electronMVAValueMapProducer:" + electronID1_name + "Categories"));
+
   electronID1_pass_Token_ = mayConsume<ValueMap<bool>>
                         (iConfig.getParameter<edm::InputTag>
                         ("electronID1_pass"));
+  }
+
+  electronID2Token_ = mayConsume<ValueMap<float>>
+                        (InputTag
+                        ("electronMVAValueMapProducer:" + electronID2_name + "Values"));
+
+  electronID2CatToken_ = mayConsume<ValueMap<int>>
+                        (InputTag
+                        ("electronMVAValueMapProducer:" + electronID2_name + "Categories"));
 
   electronID2_pass_Token_ = mayConsume<ValueMap<bool>>
                         (iConfig.getParameter<edm::InputTag>
                         ("electronID2_pass"));
- 
 }
 
 // =============================================================================================
@@ -465,6 +509,10 @@ void Ntuplizer::beginJob()
   _mytree->Branch("ele_ID1_pass", &ele_ID1_pass);
   _mytree->Branch("ele_ID2_pass", &ele_ID2_pass);
 
+  _mytree->Branch("ele_ID1_cat", &ele_ID1_cat);
+  _mytree->Branch("ele_ID2_cat", &ele_ID2_cat);
+
+
  _mytree->Branch("ele_index", &ele_index);
 
 }
@@ -547,7 +595,7 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
   }
   strcpy(trig_fired_names,trig_fired_names_local);
   
-
+if(inFileType == inputFileTypes::AOD) {
 //open the trigger summary
 edm::InputTag triggerSummaryLabel_ = edm::InputTag("hltTriggerSummaryAOD", "", "HLT");
 edm::Handle<trigger::TriggerEvent> triggerSummary;
@@ -575,7 +623,7 @@ const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
     }
 }
 }
-
+}
 
 
 } // end of FillEvent
@@ -641,27 +689,35 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   iEvent.getByToken(electronEcalPFClusterIsolationProducerToken_, electronECALIsoMapH);
 
   edm::Handle<edm::ValueMap<float> > ID1_map;
-  iEvent.getByToken(electronID1Token_, ID1_map); 
+  edm::Handle<edm::ValueMap<int> > ID1_cat_map;
+
+  if(!ID1_use_userFloat_) {
+      iEvent.getByToken(electronID1Token_, ID1_map); 
+      iEvent.getByToken(electronID1CatToken_, ID1_cat_map); 
+
+  //iEvent.getByToken(electronID1_pass_Token_, ID1_pass_map); 
+  }
 
   edm::Handle<edm::ValueMap<float> > ID2_map;
   iEvent.getByToken(electronID2Token_, ID2_map); 
 
-  edm::Handle<edm::ValueMap<bool> > ID1_pass_map;
-  //iEvent.getByToken(electronID1_pass_Token_, ID1_pass_map); 
+  edm::Handle<edm::ValueMap<int> > ID2_cat_map;
+  iEvent.getByToken(electronID2CatToken_, ID2_cat_map); 
 
+  edm::Handle<edm::ValueMap<bool> > ID1_pass_map;
   edm::Handle<edm::ValueMap<bool> > ID2_pass_map;
   //iEvent.getByToken(electronID2_pass_Token_, ID2_pass_map); 
 
 
   //iEvent.getByLabel(ecalPFclusterIsolation_,electronECALIsoMapH);
-  const edm::ValueMap<float> electronECALIsoMap = *(electronECALIsoMapH);
   
   edm::Handle< edm::ValueMap<float> > electronHCALIsoMapH;
   
- 
-  iEvent.getByToken(electronHcalPFClusterIsolationProducerToken_, electronHCALIsoMapH);
-  const edm::ValueMap<float> electronHCALIsoMap = *(electronHCALIsoMapH);
 
+  if(inFileType == inputFileTypes::AOD) { 
+    iEvent.getByToken(electronEcalPFClusterIsolationProducerToken_, electronECALIsoMapH);
+    iEvent.getByToken(electronHcalPFClusterIsolationProducerToken_, electronHCALIsoMapH);
+  }
  
   TClonesArray & electrons = *m_electrons;
   int counter = 0;
@@ -688,6 +744,8 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_index.clear();
   ele_ID1_pass.clear();
   ele_ID2_pass.clear();
+  ele_ID1_cat.clear();
+  ele_ID2_cat.clear();
  
 
   for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
@@ -696,13 +754,38 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     LogDebug("") << "Processing new electron";
 
     const auto ielectrons =  electronsColl_h->ptrAt(i_ele); 
+
+    //const pat::electron pat_ele = nullptr;
+    const edm::Ptr<pat::Electron> elePatPtr(ielectrons);
+
+    if(inFileType != inputFileTypes::MINIAOD && elePatPtr.get() == NULL) {
+        LogError("") << "Failed to get pointer to pat electron!";
+    }
     if(ielectrons->pt() < 4.9) continue;
 
     ++ele_N_saved;
 
 
-    ele_ID1.push_back((*ID1_map)[ielectrons]);
-    ele_ID2.push_back((*ID2_map)[ielectrons]);
+    float ID1_value = 999.;
+    int ID1_cat = 999.; 
+
+    float ID2_value = (*ID2_map)[ielectrons];
+    int ID2_cat = (*ID2_cat_map)[ielectrons];
+
+
+    if(ID1_use_userFloat_) {
+        ID1_value = elePatPtr->userFloat(electronID1_name + "Values"); 
+        ID1_cat = elePatPtr->userInt(electronID1_name + "Categories"); 
+    } else {
+        ID1_value = (*ID1_map)[ielectrons];
+        ID1_cat = (*ID1_cat_map)[ielectrons];
+    }
+
+    ele_ID1.push_back(ID1_value);
+    ele_ID2.push_back(ID2_value);
+
+    ele_ID1_cat.push_back(ID1_cat);
+    ele_ID2_cat.push_back(ID2_cat);
 
     //ele_ID1_pass.push_back((*ID1_pass_map)[ielectrons]);
     //ele_ID2_pass.push_back((*ID2_pass_map)[ielectrons]);
@@ -736,8 +819,19 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     ele_pt.push_back(ielectrons->pt());
     ele_trackMomentumAtVtx_R.push_back(ielectrons->trackMomentumAtVtx().R());
     //edm::Ref<reco::GsfElectronCollection> electronRef(electronsCol, i_ele);
-    float ECALIso = electronECALIsoMap[ielectrons];
-    float HCALIso = electronHCALIsoMap[ielectrons];
+    float ECALIso = 999.;
+    float HCALIso = 999.;
+
+    if(inFileType == inputFileTypes::AOD) {
+        const edm::ValueMap<float> electronHCALIsoMap = *(electronHCALIsoMapH);
+        const edm::ValueMap<float> electronECALIsoMap = *(electronECALIsoMapH);
+ 
+        ECALIso = electronECALIsoMap[ielectrons];
+        HCALIso = electronHCALIsoMap[ielectrons];
+    } else {
+        ECALIso = elePatPtr->ecalPFClusterIso();
+        HCALIso = elePatPtr->hcalPFClusterIso();
+    }
 
     ele_electronEcalPFClusterIsolationProducer.push_back(ECALIso);
     ele_electronHcalPFClusterIsolationProducer.push_back(HCALIso);
@@ -1010,7 +1104,16 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   LogDebug("") << "Ntuplizer::FillTruth"; 
 
   Handle<std::vector< PileupSummaryInfo > >  PupInfo;
-  iEvent.getByLabel(edm::InputTag("addPileupInfo"), PupInfo);
+
+  string PUinfo = "";
+
+  if(inFileType == inputFileTypes::MINIAOD) {
+    PUinfo = "slimmedAddPileupInfo";
+  } else {
+    PUinfo = "addPileupInfo";
+  }
+  
+  iEvent.getByLabel(edm::InputTag(PUinfo), PupInfo);
   
   std::vector<PileupSummaryInfo>::const_iterator PVI;
   

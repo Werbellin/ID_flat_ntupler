@@ -17,7 +17,7 @@ process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
 # turn on VID producer, indicate data format  to be
 # DataFormat.AOD or DataFormat.MiniAOD, as appropriate 
-fileFormat = 'AOD'
+fileFormat = 'MiniAOD'
 
 if fileFormat == 'AOD' :
     dataFormat = DataFormat.AOD
@@ -55,13 +55,16 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
                                    verticesMiniAOD = cms.InputTag('offlineSlimmedPrimaryVertices'),
                                    conversionsMiniAOD = cms.InputTag('reducedEgamma:reducedConversions'),
                                    genParticlesMiniAOD = cms.InputTag('prunedGenParticles'), 
+                                   genEventInfoProductMiniAOD = cms.InputTag('generator'),
                                    PFMETMiniAOD = cms.InputTag('slimmedMETs'),                                
 
                                    HLTTag          = cms.InputTag('TriggerResults','','HLT'),
                                    isMC = cms.bool(True),
                                    MVAId  = cms.VInputTag(),
-                                   electronID1 = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
-                                   electronID2 = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrigvClassic25nsV1Values"),
+                                   ID1_use_userFloat = cms.bool(True),
+                                   electronID1 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrig25nsV1"),
+                                   electronID2 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrig25nsV1"),
+                                   #electronID2 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrigvClassic25nsV1"),
                                    electronID1_pass = cms.InputTag("egmGsfElectronIDs:mvaEleID-Spring15-25ns-nonTrig-V1-wp90"),
                                    electronID2_pass = cms.InputTag("egmGsfElectronIDs:mvaEleID-Spring15-25ns-nonTrig-V1-wp90"),
 
@@ -72,11 +75,13 @@ fileNameForSample = 'ntuple'
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 process.source = cms.Source("PoolSource",
-#    fileNames = cms.untracked.vstring('root://xrootd.unl.edu//store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0071FA3B-5738-E511-8E71-20CF3027A59F.root')
+    fileNames = cms.untracked.vstring('/store/mc/RunIISpring15MiniAODv2/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/74X_mcRun2_asymptotic_v2-v1/60000/02CDE51A-726D-E511-B2C4-0025905C96EA.root')
+
+#root://xrootd.unl.edu//store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0071FA3B-5738-E511-8E71-20CF3027A59F.root')
 
 #/store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0AD4F3AF-CE36-E511-AC8A-008CFA1974CC.root')
 
-fileNames = cms.untracked.vstring('file:test.root')
+#fileNames = cms.untracked.vstring('file:test.root')
 
 )
  
