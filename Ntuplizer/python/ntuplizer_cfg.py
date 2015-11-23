@@ -17,7 +17,7 @@ process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
 # turn on VID producer, indicate data format  to be
 # DataFormat.AOD or DataFormat.MiniAOD, as appropriate 
-fileFormat = 'MiniAOD'
+fileFormat = 'AOD'
 
 if fileFormat == 'AOD' :
     dataFormat = DataFormat.AOD
@@ -28,10 +28,11 @@ switchOnVIDElectronIdProducer(process, dataFormat)
 
 # define which IDs we want to produce
 my_id_modules = [
-                 'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_Trig_V1_cff',
-                 'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_nonTrig_V1_cff',
+#                 'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_Trig_V1_cff',
+#                 'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_nonTrig_V1_cff',
                  'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_nonTrig_vClassic_V1_cff',
                  'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_50ns_Trig_V1_cff',
+                 'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Spring15_50ns_V1_cff',
                 ]
 
 #add them to the VID producer
@@ -61,10 +62,10 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
                                    HLTTag          = cms.InputTag('TriggerResults','','HLT'),
                                    isMC = cms.bool(True),
                                    MVAId  = cms.VInputTag(),
-                                   ID1_use_userFloat = cms.bool(True),
+                                   ID1_use_userFloat = cms.bool(False),
                                    electronID1 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrig25nsV1"),
-                                   electronID2 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrig25nsV1"),
-                                   #electronID2 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrigvClassic25nsV1"),
+                                   #electronID2 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrig25nsV1"),
+                                   electronID2 = cms.string("ElectronMVAEstimatorRun2Spring15NonTrigvClassic25nsV1"),
                                    electronID1_pass = cms.InputTag("egmGsfElectronIDs:mvaEleID-Spring15-25ns-nonTrig-V1-wp90"),
                                    electronID2_pass = cms.InputTag("egmGsfElectronIDs:mvaEleID-Spring15-25ns-nonTrig-V1-wp90"),
 
@@ -73,13 +74,14 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
 fileNameForSample = 'ntuple'
 
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('/store/mc/RunIISpring15MiniAODv2/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/74X_mcRun2_asymptotic_v2-v1/60000/02CDE51A-726D-E511-B2C4-0025905C96EA.root')
+#    fileNames = cms.untracked.vstring('file:/data_CMS/cms/davignon/Trigger_WithThomas/CMSSW_7_6_0_pre7/src/L1Trigger/L1TNtuples/00BEC5EF-1472-E511-806C-02163E0141EA.root')
+fileNames = cms.untracked.vstring('/store/mc/RunIISpring15MiniAODv2/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/74X_mcRun2_asymptotic_v2-v1/60000/02CDE51A-726D-E511-B2C4-0025905C96EA.root')
 
 #root://xrootd.unl.edu//store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0071FA3B-5738-E511-8E71-20CF3027A59F.root')
 
-#/store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0AD4F3AF-CE36-E511-AC8A-008CFA1974CC.root')
+#fileNames = cms.untracked.vstring('/store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0AD4F3AF-CE36-E511-AC8A-008CFA1974CC.root')
 
 #fileNames = cms.untracked.vstring('file:test.root')
 

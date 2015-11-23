@@ -1,7 +1,7 @@
 from WMCore.Configuration import Configuration
 config = Configuration()
 config.section_('General')
-config.General.requestName = 'production-DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1-AODSIM-v6'
+config.General.requestName = 'production-DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1-AODSIM-v7'
 config.General.transferOutputs = True
 
 config.section_('JobType')
@@ -14,7 +14,7 @@ config.section_('Data')
 config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/AODSIM'
 
 config.Data.inputDBS = 'global'
-config.Data.outLFNDirBase = '/store/user/ppigard/eID/MC/Spring15_production/25ns/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1-AODSIM/v6'
+config.Data.outLFNDirBase = '/store/user/ppigard/eID/MC/Spring15_production/25ns/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8-RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1-AODSIM/v7'
 
 config.Data.totalUnits = -1
 config.Data.unitsPerJob = 30

@@ -120,6 +120,34 @@ const reco::Candidate* GetClosestGenParticle(const edm::Ptr<reco::GsfElectron> e
   }
 }
 
+float photon_E_over_electron_E(const edm::Ptr<reco::GsfElectron> el, 
+                               const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles) {
+  // Find the closest status 1 gen electron to the reco electron
+
+ float photon_pt = 0.;
+ for(size_t i=0; i<prunedGenParticles->size();i++){
+    const reco::Candidate *particle = &(*prunedGenParticles)[i];
+    // Drop everything that is not electron or not status 1
+    if( abs(particle->pdgId()) != 22 || particle->status() != 1 )
+      continue;
+    //
+    //
+    float dR_max = 0.1;
+    double dRtmp = ROOT::Math::VectorUtil::DeltaR( el->p4(), particle->p4() );
+    if( dRtmp < dR_max ){
+      photon_pt += particle->pt();
+    }
+  }
+
+  float photon_E_over_electron_E = 0.;
+   if(el->pt() > 0.)
+      photon_E_over_electron_E = photon_pt / el->pt();
+   else photon_E_over_electron_E = -1;
+  
+  return photon_E_over_electron_E;
+}
+
+
 int matchToTruth(const edm::Ptr<reco::GsfElectron> el, 
                   const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
 
@@ -490,6 +518,7 @@ void Ntuplizer::beginJob()
   _mytree->Branch("mc_ele_isDirectPromptTauDecayProductFinalState", &mc_ele_isDirectPromptTauDecayProductFinalState);
   _mytree->Branch("mc_ele_matchedFromCB", &mc_ele_matchedFromCB);
   _mytree->Branch("mc_ele_closestGenParticlePDGID", &mc_ele_matchMother_PDGID);
+  _mytree->Branch("mc_ele_photon_over_ele_pt", &mc_ele_photon_over_ele_pt);
 
   _mytree->Branch("ele_dr03EcalRecHitSumEt", &ele_dr03EcalRecHitSumEt);
   _mytree->Branch("ele_dr03HcalTowerSumEt", &ele_dr03HcalTowerSumEt);
@@ -758,7 +787,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     //const pat::electron pat_ele = nullptr;
     const edm::Ptr<pat::Electron> elePatPtr(ielectrons);
 
-    if(inFileType != inputFileTypes::MINIAOD && elePatPtr.get() == NULL) {
+    if(inFileType == inputFileTypes::MINIAOD && elePatPtr.get() == NULL) {
         LogError("") << "Failed to get pointer to pat electron!";
     }
     if(ielectrons->pt() < 4.9) continue;
@@ -1147,6 +1176,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
   mc_ele_matchedFromCB.clear();
   mc_ele_matchMother_PDGID.clear();
+  mc_ele_photon_over_ele_pt.clear();
 
   Handle<View<GsfElectron>> electronsColl_h;
   iEvent.getByToken(electronsToken_, electronsColl_h);
@@ -1163,6 +1193,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
         int  matchType = matchToTruth(ielectrons, genCandidatesCollection_CB); 
 
         mc_ele_matchedFromCB.push_back(matchType);
+        mc_ele_photon_over_ele_pt.push_back(photon_E_over_electron_E(ielectrons, genCandidatesCollection_CB));
 
         const reco::Candidate* genParticle = nullptr; 
         if(matchType == UNMATCHED) {
