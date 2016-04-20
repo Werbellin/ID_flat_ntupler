@@ -221,16 +221,18 @@ Ntuplizer::Ntuplizer(const edm::ParameterSet& iConfig) :
 
 conf(iConfig),
 inFileType(inputFileTypes::UNDEF),
-HLTTag_(iConfig.getParameter<edm::InputTag> ("HLTTag")),
 isMC_ (iConfig.getParameter<bool>("isMC")),
-ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat")),
-PileupSrc_ ("addPileupInfo")
+ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
 {
 
   std::string inFileType_s = iConfig.getUntrackedParameter<std::string>("inputFileFormat");
 
   if(inFileType_s == "AOD")     inFileType = inputFileTypes::AOD; 
-  if(inFileType_s == "MiniAOD") inFileType = inputFileTypes::MINIAOD; 
+  else {
+      LogError("") << "MINIAOD!";
+      inFileType = inputFileTypes::MINIAOD; 
+  }
+      inFileType = inputFileTypes::MINIAOD; 
 
   if(inFileType == inputFileTypes::UNDEF) LogError("") << "Did not recognize input file format!";
 
@@ -239,7 +241,8 @@ PileupSrc_ ("addPileupInfo")
   beamSpotToken_    = consumes<reco::BeamSpot> 
                         (iConfig.getParameter <edm::InputTag>
                         ("beamSpot"));
-
+  HLTToken = consumes<edm::TriggerResults>(iConfig.getParameter <edm::InputTag>
+                        ("HLTTag")); 
 
   if(inFileType == inputFileTypes::AOD) {
     electronsToken_ = mayConsume<edm::View<reco::GsfElectron> >
@@ -337,6 +340,10 @@ PileupSrc_ ("addPileupInfo")
   electronID2_pass_Token_ = mayConsume<ValueMap<bool>>
                         (iConfig.getParameter<edm::InputTag>
                         ("electronID2_pass"));
+
+  PUinfoToken = mayConsume<std::vector<PileupSummaryInfo>>
+                        (InputTag
+                        ("slimmedAddPileupInfo"));
 }
 
 // =============================================================================================
@@ -595,7 +602,7 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
   // Fired Triggers
   // ----------------
   Handle<edm::TriggerResults> triggerResultsHandle;
-  iEvent.getByLabel (HLTTag_,triggerResultsHandle);
+  iEvent.getByToken (HLTToken, triggerResultsHandle);
   const edm::TriggerNames & triggerNames = iEvent.triggerNames(*triggerResultsHandle);
   
   //Get List of available Triggers
@@ -625,33 +632,33 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
   strcpy(trig_fired_names,trig_fired_names_local);
   
 if(inFileType == inputFileTypes::AOD) {
-//open the trigger summary
-edm::InputTag triggerSummaryLabel_ = edm::InputTag("hltTriggerSummaryAOD", "", "HLT");
-edm::Handle<trigger::TriggerEvent> triggerSummary;
-iEvent.getByLabel(triggerSummaryLabel_, triggerSummary);
-//trigger object we want to match
-edm::InputTag filterTag = edm::InputTag("hltEle12CaloIdLTrackIdLIsoVLTrackIsoFilter", "", "HLT"); //find the index corresponding to the event
-size_t filterIndex = (*triggerSummary).filterIndex(filterTag);
-trigger::TriggerObjectCollection allTriggerObjects = triggerSummary->getObjects(); //trigger::TriggerObjectCollection selectedObjects;
-if (filterIndex < (*triggerSummary).sizeFilters()) { //check if the trigger object is present ! 
-const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
-    for(size_t j = 0; j < keys.size(); j++) {
-        trigger::TriggerObject foundObject = (allTriggerObjects)[keys[j]];
-        _selectedObjects.push_back(foundObject);
+    //open the trigger summary
+    edm::InputTag triggerSummaryLabel_ = edm::InputTag("hltTriggerSummaryAOD", "", "HLT");
+    edm::Handle<trigger::TriggerEvent> triggerSummary;
+    iEvent.getByLabel(triggerSummaryLabel_, triggerSummary);
+    //trigger object we want to match
+    edm::InputTag filterTag = edm::InputTag("hltEle12CaloIdLTrackIdLIsoVLTrackIsoFilter", "", "HLT"); //find the index corresponding to the event
+    size_t filterIndex = (*triggerSummary).filterIndex(filterTag);
+    trigger::TriggerObjectCollection allTriggerObjects = triggerSummary->getObjects(); //trigger::TriggerObjectCollection selectedObjects;
+    if (filterIndex < (*triggerSummary).sizeFilters()) { //check if the trigger object is present ! 
+    const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
+        for(size_t j = 0; j < keys.size(); j++) {
+            trigger::TriggerObject foundObject = (allTriggerObjects)[keys[j]];
+            _selectedObjects.push_back(foundObject);
+        }
     }
-}
-{
-edm::InputTag filterTag = edm::InputTag("hltEle27WP75GsfTrackIsoFilter", "", "HLT"); //find the index corresponding to the event
-size_t filterIndex = (*triggerSummary).filterIndex(filterTag);
-trigger::TriggerObjectCollection allTriggerObjects = triggerSummary->getObjects(); //trigger::TriggerObjectCollection hltEle27WP75GsfTrackIsoFilter;
-if (filterIndex < (*triggerSummary).sizeFilters()) { //check if the trigger object is present ! 
-const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
-    for(size_t j = 0; j < keys.size(); j++) {
-        trigger::TriggerObject foundObject = (allTriggerObjects)[keys[j]];
-        _hltEle27WP75GsfTrackIsoFilter.push_back(foundObject);
+    {
+    edm::InputTag filterTag = edm::InputTag("hltEle27WP75GsfTrackIsoFilter", "", "HLT"); //find the index corresponding to the event
+    size_t filterIndex = (*triggerSummary).filterIndex(filterTag);
+    trigger::TriggerObjectCollection allTriggerObjects = triggerSummary->getObjects(); //trigger::TriggerObjectCollection hltEle27WP75GsfTrackIsoFilter;
+    if (filterIndex < (*triggerSummary).sizeFilters()) { //check if the trigger object is present ! 
+    const trigger::Keys &keys = (*triggerSummary).filterKeys(filterIndex);
+        for(size_t j = 0; j < keys.size(); j++) {
+            trigger::TriggerObject foundObject = (allTriggerObjects)[keys[j]];
+            _hltEle27WP75GsfTrackIsoFilter.push_back(foundObject);
+        }
     }
-}
-}
+    }
 }
 
 
@@ -1133,16 +1140,7 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   LogDebug("") << "Ntuplizer::FillTruth"; 
 
   Handle<std::vector< PileupSummaryInfo > >  PupInfo;
-
-  string PUinfo = "";
-
-  if(inFileType == inputFileTypes::MINIAOD) {
-    PUinfo = "slimmedAddPileupInfo";
-  } else {
-    PUinfo = "addPileupInfo";
-  }
-  
-  iEvent.getByLabel(edm::InputTag(PUinfo), PupInfo);
+  iEvent.getByToken(PUinfoToken, PupInfo);
   
   std::vector<PileupSummaryInfo>::const_iterator PVI;
   

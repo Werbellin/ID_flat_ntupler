@@ -105,14 +105,14 @@ class Ntuplizer : public edm::EDAnalyzer {
       string electronID2_name;
 
       // Trigger Stuff
-      edm::InputTag HLTTag_; 
+      edm::EDGetTokenT<edm::TriggerResults> HLTToken;
       bool isMC_;	
       bool ID1_use_userFloat_;
       vector<trigger::TriggerObject> _selectedObjects;
       vector<trigger::TriggerObject> _hltEle27WP75GsfTrackIsoFilter;
       
       edm::InputTag PileupSrc_;	
-      
+      edm::EDGetTokenT<std::vector<PileupSummaryInfo> >  PUinfoToken; 
       //tree
       TTree *_mytree;
       TLorentzVector myvector ;  
