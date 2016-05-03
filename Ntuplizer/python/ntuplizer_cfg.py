@@ -3,14 +3,23 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process("Demo")
 
 process.dump=cms.EDAnalyzer('EventContentAnalyzer')
-process.load("Configuration.StandardSequences.MagneticField_cff")
+#process.load("Configuration.StandardSequences.MagneticField_cff")
 
-process.load('Configuration.Geometry.GeometryRecoDB_cff')
-process.load('Configuration.EventContent.EventContent_cff')
+#process.load('Configuration.Geometry.GeometryRecoDB_cff')
+#process.load('Configuration.EventContent.EventContent_cff')
 
-process.load('Configuration.StandardSequences.Reconstruction_cff')
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
+#process.load('Configuration.StandardSequences.Reconstruction_cff')
+#process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 process.load("FWCore.MessageService.MessageLogger_cfi")
+
+
+
+# loads from CJLST
+process.load("Configuration.StandardSequences.GeometryDB_cff")
+process.load("Configuration.StandardSequences.MagneticField_38T_cff")
+process.load("TrackingTools.TransientTrack.TransientTrackBuilder_cfi")
+#process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
+process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff")
 
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
@@ -19,7 +28,7 @@ from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
 # DataFormat.AOD or DataFormat.MiniAOD, as appropriate 
 fileFormat = 'AOD'
 
-if fileFormat == 'miniAOD' :
+if fileFormat == 'AOD' :
     dataFormat = DataFormat.AOD
 else :
     dataFormat = DataFormat.MiniAOD
@@ -74,10 +83,15 @@ process.ntuple = cms.EDAnalyzer('Ntuplizer',
 fileNameForSample = 'ntuple'
 
 
+#process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+
 process.source = cms.Source("PoolSource",
 #    fileNames = cms.untracked.vstring('file:/data_CMS/cms/davignon/Trigger_WithThomas/CMSSW_7_6_0_pre7/src/L1Trigger/L1TNtuples/00BEC5EF-1472-E511-806C-02163E0141EA.root')
-fileNames = cms.untracked.vstring('/store/mc/RunIIFall15MiniAODv2/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PU25nsData2015v1_76X_mcRun2_asymptotic_v12-v1/70000/002ABFCA-A0B9-E511-B9BA-0CC47A57CD6A.root')
+fileNames = cms.untracked.vstring(
+#'/store/mc/RunIIFall15DR76/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/PU25nsData2015v1_76X_mcRun2_asymptotic_v12-v1/00000/08DC4220-16A7-E511-AF59-1CC1DE19286E.root')
+
+'/store/mc/RunIIFall15MiniAODv2/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PU25nsData2015v1_76X_mcRun2_asymptotic_v12-v1/70000/002ABFCA-A0B9-E511-B9BA-0CC47A57CD6A.root')
 #/store/mc/RunIISpring15MiniAODv2/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/74X_mcRun2_asymptotic_v2-v1/60000/02CDE51A-726D-E511-B2C4-0025905C96EA.root')
 
 #root://xrootd.unl.edu//store/mc/RunIISpring15DR74/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/AODSIM/Asympt25ns_MCRUN2_74_V9-v1/50000/0071FA3B-5738-E511-8E71-20CF3027A59F.root')
@@ -107,7 +121,7 @@ process.MessageLogger = cms.Service(
         'critical'
     ),
     LOG = cms.untracked.PSet(
-        threshold  = cms.untracked.string('WARNING'), # DEBUG 
+        threshold  = cms.untracked.string('DEBUG'), # DEBUG 
         filename  = cms.untracked.string(fileNameForSample  + '.log')
     ),
     debugModules = cms.untracked.vstring('*'),

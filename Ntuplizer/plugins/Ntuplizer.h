@@ -148,6 +148,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<int> mc_ele_matchedFromCB;
       vector<int> mc_ele_matchMother_PDGID;
       vector<float> mc_ele_photon_over_ele_pt;
+      vector<float> mc_gen_ele_pT;
+      vector<float> mc_gen_ele_eta;
 
       vector<float> ele_dr03EcalRecHitSumEt;
       vector<float> ele_dr03HcalTowerSumEt;

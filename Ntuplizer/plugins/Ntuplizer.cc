@@ -232,7 +232,6 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
       LogError("") << "MINIAOD!";
       inFileType = inputFileTypes::MINIAOD; 
   }
-      inFileType = inputFileTypes::MINIAOD; 
 
   if(inFileType == inputFileTypes::UNDEF) LogError("") << "Did not recognize input file format!";
 
@@ -267,6 +266,9 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
     genEventInfoProductTagToken_ = consumes<GenEventInfoProduct>
                         (iConfig.getParameter<edm::InputTag>
                         ("genEventInfoProductAOD"));
+  PUinfoToken = mayConsume<std::vector<PileupSummaryInfo>>
+                        (InputTag
+                        ("addPileupInfo"));
   }
 
   if(inFileType == inputFileTypes::MINIAOD) {
@@ -293,7 +295,10 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
     genEventInfoProductTagToken_ = consumes<GenEventInfoProduct>
                         (iConfig.getParameter<edm::InputTag>
                         ("genEventInfoProductMiniAOD"));
- 
+    PUinfoToken = mayConsume<std::vector<PileupSummaryInfo>>
+                        (InputTag
+                        ("slimmedAddPileupInfo"));
+
   }
 
   electronEcalPFClusterIsolationProducerToken_ = mayConsume<ValueMap<float>>
@@ -341,10 +346,7 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
                         (iConfig.getParameter<edm::InputTag>
                         ("electronID2_pass"));
 
-  PUinfoToken = mayConsume<std::vector<PileupSummaryInfo>>
-                        (InputTag
-                        ("slimmedAddPileupInfo"));
-}
+ }
 
 // =============================================================================================
 // destructor
@@ -534,6 +536,10 @@ void Ntuplizer::beginJob()
 
 
   _mytree->Branch("mc_gen_ele_p4", &_mc_gen_ele_p4);
+  _mytree->Branch("mc_gen_ele_pT", &mc_gen_ele_pT);
+  _mytree->Branch("mc_gen_ele_eta", &mc_gen_ele_eta);
+
+
   //_mytree->Branch("", &);
   _mytree->Branch("ele_electronEcalPFClusterIsolationProducer", &ele_electronEcalPFClusterIsolationProducer);
   _mytree->Branch("ele_electronHcalPFClusterIsolationProducer", &ele_electronHcalPFClusterIsolationProducer);
@@ -631,7 +637,7 @@ void Ntuplizer::FillEvent(const edm::Event& iEvent, const edm::EventSetup& iSetu
   }
   strcpy(trig_fired_names,trig_fired_names_local);
   
-if(inFileType == inputFileTypes::AOD) {
+if(false) { //inFileType == inputFileTypes::AOD) {
     //open the trigger summary
     edm::InputTag triggerSummaryLabel_ = edm::InputTag("hltTriggerSummaryAOD", "", "HLT");
     edm::Handle<trigger::TriggerEvent> triggerSummary;
@@ -959,13 +965,20 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
 
     bool validKF=false;
     reco::TrackRef myTrackRef = ielectrons->closestCtfTrackRef();
-    LogDebug("") << "After clostste ctdf";
+    //const edm::Ptr<pat::Electron> elePatPtr(eleRecoPtr);
+    // Check if this is really a pat::Electron, and if yes, get the track ref from this new
+    // pointer instead
+    if( elePatPtr.get() != NULL )
+        myTrackRef = elePatPtr->closestCtfTrackRef();
+
+
+    //LogVerbatim("") << "After clostste ctdf";
 
     validKF = myTrackRef.isAvailable();
-    LogDebug("") << "isAvailable : " << validKF;
+    //LogVerbatim("") << "isAvailable : " << validKF;
 
     validKF &= myTrackRef.isNonnull();
-    LogDebug("") << "isNonnull&isAvailable : " << validKF;
+    //LogVerbatim("") << "isNonnull&isAvailable : " << validKF;
   
     ele_kfchi2[counter] = validKF ? myTrackRef->normalizedChi2() : 0 ; //ielectrons->track()->normalizedChi2() : 0 ;
     ele_kfhits[counter] = validKF ? myTrackRef->hitPattern().trackerLayersWithMeasurement() : -1. ; //ielectrons->track()->hitPattern().trackerLayersWithMeasurement() : 0 ;
@@ -1171,7 +1184,8 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   mc_ele_isPromptFinalState.clear();
   mc_ele_isDirectPromptTauDecayProductFinalState.clear();
   _mc_gen_ele_p4.clear();
-
+  mc_gen_ele_pT.clear();
+  mc_gen_ele_eta.clear();
   mc_ele_matchedFromCB.clear();
   mc_ele_matchMother_PDGID.clear();
   mc_ele_photon_over_ele_pt.clear();
@@ -1194,14 +1208,25 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
         mc_ele_photon_over_ele_pt.push_back(photon_E_over_electron_E(ielectrons, genCandidatesCollection_CB));
 
         const reco::Candidate* genParticle = nullptr; 
-        if(matchType == UNMATCHED) {
-            genParticle = GetClosestGenParticle(ielectrons, genCandidatesCollection_CB);
-        }
+        //if(matchType == UNMATCHED) {
+        genParticle = GetClosestGenParticle(ielectrons, genCandidatesCollection_CB);
+        //}
         int GEN_PDGID = 0;
+        NewLorentzVector gen_p4 = NewLorentzVector(0., 0., 0., 0.);
+        
+        float gen_pT = -1;
+        float gen_eta = -999;
         if(genParticle != nullptr) {
             GEN_PDGID = genParticle->pdgId();    
+            gen_p4.SetPxPyPzE(genParticle->p4().Px(),genParticle->p4().Py(), genParticle->p4().Pz(), genParticle->p4().E() ); 
+            gen_pT = genParticle->p4().Pt();
+            gen_eta = genParticle->p4().Eta();
         }
         mc_ele_matchMother_PDGID.push_back(GEN_PDGID); 
+        _mc_gen_ele_p4.push_back(gen_p4);
+        mc_gen_ele_pT.push_back(gen_pT);
+        mc_gen_ele_eta.push_back(gen_eta);
+
     }
 
     // To be re-implemented
