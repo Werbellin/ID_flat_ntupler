@@ -149,7 +149,7 @@ float photon_E_over_electron_E(const edm::Ptr<reco::GsfElectron> el,
 
 
 int matchToTruth(const edm::Ptr<reco::GsfElectron> el, 
-                  const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles){
+                  const edm::Handle<edm::View<reco::GenParticle>> &prunedGenParticles, float max_dR = 0.1){
 
   // 
   // Explicit loop and geometric matching method (advised by Josh Bendavid)
@@ -172,7 +172,7 @@ int matchToTruth(const edm::Ptr<reco::GsfElectron> el,
   }
   // See if the closest electron (if it exists) is close enough.
   // If not, no match found.
-  if( !(closestElectron != 0 && dR < 0.1) ) {
+  if( !(closestElectron != 0 && dR < max_dR) ) {
     return UNMATCHED;
   }
 
@@ -526,6 +526,9 @@ void Ntuplizer::beginJob()
   _mytree->Branch("mc_ele_isPromptFinalState", &mc_ele_isPromptFinalState);
   _mytree->Branch("mc_ele_isDirectPromptTauDecayProductFinalState", &mc_ele_isDirectPromptTauDecayProductFinalState);
   _mytree->Branch("mc_ele_matchedFromCB", &mc_ele_matchedFromCB);
+  _mytree->Branch("mc_ele_matchedFromCB2", &mc_ele_matchedFromCB2);
+  _mytree->Branch("mc_ele_closestGenParticle_status", &mc_ele_matchMother_status);
+
   _mytree->Branch("mc_ele_closestGenParticlePDGID", &mc_ele_matchMother_PDGID);
   _mytree->Branch("mc_ele_photon_over_ele_pt", &mc_ele_photon_over_ele_pt);
 
@@ -556,6 +559,7 @@ void Ntuplizer::beginJob()
 
 
  _mytree->Branch("ele_index", &ele_index);
+ _mytree->Branch("ele_isEBEEGap", &ele_isEBEEGap);
 
 }
 
@@ -789,7 +793,7 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_ID1_cat.clear();
   ele_ID2_cat.clear();
  
-
+  ele_isEBEEGap.clear();
   for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
     if(counter>49) { continue; } 
 
@@ -944,6 +948,8 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     else  ele_isbarrel[counter] = 0 ;
     if (ielectrons->isEE()) ele_isendcap[counter] = 1 ; 
     else  ele_isendcap[counter] = 0 ;
+    ele_isEBEEGap.push_back(ielectrons->isEBEEGap());  
+
     if (ielectrons->isEBEtaGap()) ele_isEBetaGap[counter] = 1 ;  
     if (ielectrons->isEBPhiGap()) ele_isEBphiGap[counter] = 1 ;  
     if (ielectrons->isEEDeeGap()) ele_isEEdeeGap[counter] = 1 ;  
@@ -1187,7 +1193,11 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
   mc_gen_ele_pT.clear();
   mc_gen_ele_eta.clear();
   mc_ele_matchedFromCB.clear();
+  mc_ele_matchedFromCB2.clear();
+
   mc_ele_matchMother_PDGID.clear();
+  mc_ele_matchMother_status.clear();
+
   mc_ele_photon_over_ele_pt.clear();
 
   Handle<View<GsfElectron>> electronsColl_h;
@@ -1203,26 +1213,37 @@ void Ntuplizer::FillTruth(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
         //ElectronMatchType
         int  matchType = matchToTruth(ielectrons, genCandidatesCollection_CB); 
+        int  matchType2 = matchToTruth(ielectrons, genCandidatesCollection_CB, 0.03); 
 
         mc_ele_matchedFromCB.push_back(matchType);
+        mc_ele_matchedFromCB2.push_back(matchType2);
+
         mc_ele_photon_over_ele_pt.push_back(photon_E_over_electron_E(ielectrons, genCandidatesCollection_CB));
 
         const reco::Candidate* genParticle = nullptr; 
+        //const reco::Candidate* genParticleMother = nullptr; 
+        int mother_ID = 0;
+        int mother_status = -1;
+
         //if(matchType == UNMATCHED) {
         genParticle = GetClosestGenParticle(ielectrons, genCandidatesCollection_CB);
+
+        findFirstNonElectronMother(genParticle, mother_ID, mother_status);
         //}
-        int GEN_PDGID = 0;
+        //int GEN_PDGID = 0;
         NewLorentzVector gen_p4 = NewLorentzVector(0., 0., 0., 0.);
         
         float gen_pT = -1;
         float gen_eta = -999;
         if(genParticle != nullptr) {
-            GEN_PDGID = genParticle->pdgId();    
+            //GEN_PDGID = genParticle->pdgId();    
             gen_p4.SetPxPyPzE(genParticle->p4().Px(),genParticle->p4().Py(), genParticle->p4().Pz(), genParticle->p4().E() ); 
             gen_pT = genParticle->p4().Pt();
             gen_eta = genParticle->p4().Eta();
         }
-        mc_ele_matchMother_PDGID.push_back(GEN_PDGID); 
+        mc_ele_matchMother_PDGID.push_back(mother_ID); 
+        mc_ele_matchMother_status.push_back(mother_status); 
+
         _mc_gen_ele_p4.push_back(gen_p4);
         mc_gen_ele_pT.push_back(gen_pT);
         mc_gen_ele_eta.push_back(gen_eta);

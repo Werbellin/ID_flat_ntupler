@@ -141,11 +141,16 @@ class Ntuplizer : public edm::EDAnalyzer {
       int ele_N_saved;
       TClonesArray * m_electrons;
 
+      vector<float> scl_eta;
+      vector<int> ele_isEBEEGap;
 
       vector<float> ele_conversionVertexFitProbability;
       vector<int>  mc_ele_isPromptFinalState;
       vector<int>  mc_ele_isDirectPromptTauDecayProductFinalState;
       vector<int> mc_ele_matchedFromCB;
+      vector<int> mc_ele_matchedFromCB2;
+      vector<int> mc_ele_matchMother_status;
+
       vector<int> mc_ele_matchMother_PDGID;
       vector<float> mc_ele_photon_over_ele_pt;
       vector<float> mc_gen_ele_pT;
