@@ -266,9 +266,21 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
     genEventInfoProductTagToken_ = consumes<GenEventInfoProduct>
                         (iConfig.getParameter<edm::InputTag>
                         ("genEventInfoProductAOD"));
-  PUinfoToken = mayConsume<std::vector<PileupSummaryInfo>>
+    PUinfoToken = mayConsume<std::vector<PileupSummaryInfo>>
                         (InputTag
                         ("addPileupInfo"));
+
+    ebReducedRecHitCollection_        = mayConsume<EcalRecHitCollection>(iConfig.getParameter<edm::InputTag>
+                                       ("ebReducedRecHitCollectionAOD"));
+
+    eeReducedRecHitCollection_        = mayConsume<EcalRecHitCollection>(iConfig.getParameter<edm::InputTag>
+                                       ("eeReducedRecHitCollectionAOD"));
+
+    esReducedRecHitCollection_        = mayConsume<EcalRecHitCollection>(iConfig.getParameter<edm::InputTag>
+                                       ("esReducedRecHitCollectionAOD"));
+
+
+
   }
 
   if(inFileType == inputFileTypes::MINIAOD) {
@@ -560,6 +572,13 @@ void Ntuplizer::beginJob()
 
  _mytree->Branch("ele_index", &ele_index);
  _mytree->Branch("ele_isEBEEGap", &ele_isEBEEGap);
+ _mytree->Branch("ele_isEBEtaGap", &ele_isEBEtaGap);
+ _mytree->Branch("ele_isEBPhiGap", &ele_isEBPhiGap);
+ _mytree->Branch("ele_isEEDeeGap", &ele_isEEDeeGap);
+ _mytree->Branch("ele_isEERingGap", &ele_isEERingGap);
+
+ _mytree->Branch("ele_oldsirir", &ele_oldsirir);
+
 
 }
 
@@ -725,6 +744,13 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   edm::Handle<edm::View<reco::GenParticle> > genCandidatesCollection;
   iEvent.getByToken(genParticlesToken_CB, genCandidatesCollection);
 
+
+  // The object that will compute 5x5 quantities  
+  std::unique_ptr<noZS::EcalClusterLazyTools> lazyToolnoZS = std::unique_ptr<noZS::EcalClusterLazyTools>(new noZS::EcalClusterLazyTools(iEvent, iSetup, 
+                          ebReducedRecHitCollection_,
+                          eeReducedRecHitCollection_,
+                          esReducedRecHitCollection_));
+
   
   // get the beam spot
   const reco::BeamSpot &beamSpot = *(beamspot_h.product());
@@ -794,6 +820,13 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
   ele_ID2_cat.clear();
  
   ele_isEBEEGap.clear();
+  ele_isEBEtaGap.clear();
+  ele_isEBPhiGap.clear();
+  ele_isEEDeeGap.clear();
+  ele_isEERingGap.clear();
+
+  ele_oldsirir.clear();
+
   for(size_t i_ele = 0;  i_ele <  electronsColl_h->size(); ++i_ele) {
     if(counter>49) { continue; } 
 
@@ -946,9 +979,15 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     //
     if (ielectrons->isEB()) ele_isbarrel[counter] = 1 ; 
     else  ele_isbarrel[counter] = 0 ;
-    if (ielectrons->isEE()) ele_isendcap[counter] = 1 ; 
-    else  ele_isendcap[counter] = 0 ;
+    if (ielectrons->isEE()) {
+        ele_oldsirir.push_back(lazyToolnoZS->eseffsirir( *(ielectrons->superCluster())));
+        ele_isendcap[counter] = 1 ; 
+    } else  ele_isendcap[counter] = 0 ;
     ele_isEBEEGap.push_back(ielectrons->isEBEEGap());  
+    ele_isEBEtaGap.push_back(ielectrons->isEBEtaGap());  
+    ele_isEBPhiGap.push_back(ielectrons->isEBPhiGap());  
+    ele_isEEDeeGap.push_back(ielectrons->isEEDeeGap());  
+    ele_isEERingGap.push_back(ielectrons->isEERingGap());  
 
     if (ielectrons->isEBEtaGap()) ele_isEBetaGap[counter] = 1 ;  
     if (ielectrons->isEBPhiGap()) ele_isEBphiGap[counter] = 1 ;  

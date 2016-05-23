@@ -104,6 +104,12 @@ class Ntuplizer : public edm::EDAnalyzer {
       string electronID1_name;
       string electronID2_name;
 
+      edm::EDGetTokenT<EcalRecHitCollection> ebReducedRecHitCollection_;
+      edm::EDGetTokenT<EcalRecHitCollection> eeReducedRecHitCollection_;
+      edm::EDGetTokenT<EcalRecHitCollection> esReducedRecHitCollection_;
+
+
+
       // Trigger Stuff
       edm::EDGetTokenT<edm::TriggerResults> HLTToken;
       bool isMC_;	
@@ -173,6 +179,12 @@ class Ntuplizer : public edm::EDAnalyzer {
       vector<int> ele_ID2_cat;
 
       vector<int> ele_index;
+      vector<int> ele_isEBEtaGap;
+      vector<int> ele_isEBPhiGap;
+      vector<int> ele_isEEDeeGap;
+      vector<int> ele_isEERingGap;
+      vector<float> ele_oldsirir;
+
 
       vector<string> event_trig_fired;
       vector<bool> ele_trig_passed_filter;
