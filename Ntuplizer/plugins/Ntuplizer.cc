@@ -378,7 +378,11 @@ void Ntuplizer::beginJob()
   // Book histograms
   edm::Service<TFileService> fs ;
   _mytree  = fs->make <TTree>("simpleRootTree","simpleRootTree"); 
-  
+ 
+//  edm::Service<TFileService> fs_2("output.root");
+//  fs_2->make <TTree>("simpleRootTree2","simpleRootTree2");
+///   _mytree2->Branch("nEvent",&_nEvent,"nEvent/I");
+
   //// Counters
   
   // Global
@@ -613,7 +617,7 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    }
 
    _mytree->Fill();
-
+   //_mytree2->Fill();
 }
 
 // =============================================================================================
@@ -982,7 +986,10 @@ void Ntuplizer::FillElectrons(const edm::Event& iEvent, const edm::EventSetup& i
     if (ielectrons->isEE()) {
         ele_oldsirir.push_back(lazyToolnoZS->eseffsirir( *(ielectrons->superCluster())));
         ele_isendcap[counter] = 1 ; 
-    } else  ele_isendcap[counter] = 0 ;
+    } else {
+        ele_isendcap[counter] = 0 ;
+        ele_oldsirir.push_back(-1);
+    }
     ele_isEBEEGap.push_back(ielectrons->isEBEEGap());  
     ele_isEBEtaGap.push_back(ielectrons->isEBEtaGap());  
     ele_isEBPhiGap.push_back(ielectrons->isEBPhiGap());  

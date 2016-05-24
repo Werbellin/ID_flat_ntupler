@@ -121,6 +121,8 @@ class Ntuplizer : public edm::EDAnalyzer {
       edm::EDGetTokenT<std::vector<PileupSummaryInfo> >  PUinfoToken; 
       //tree
       TTree *_mytree;
+      TTree *_mytree2;
+
       TLorentzVector myvector ;  
 
       //global variables

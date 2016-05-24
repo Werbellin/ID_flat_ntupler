@@ -268,6 +268,7 @@ class MyBatchManager:
        scriptFileName = jobDir+'/batchScript.sh'
 #       scriptFile = open(scriptFileName,'w')
 #       scriptFile.write( batch_LLR( value, jobDir ) )
+       cluster = 'LLR'
        batch_LLR(value, jobDir)
 #       scriptFile.write( batchScriptCERN( value ) )
 #       scriptFile.close()
@@ -301,6 +302,14 @@ class MyBatchManager:
        process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
        
        # try to determine whether its miniAOD or AOD
+       if cluster == 'LLR' :
+            STORAGE_PATH = '/data/DATA/temp_pigard/eID/'
+            job_dir_name = os.path.basename(os.path.normpath(jobDir))
+            #print 'job_dir_name ', job_dir_name
+            full_job_storage_path = STORAGE_PATH + self.options_.outputDir + '/' + job_dir_name + "/"
+            os.system('mkdir -p %s'%full_job_storage_path)
+            print 'full_job_storage_path ', full_job_storage_path
+            process.TFileService.fileName=cms.string(full_job_storage_path + 'ntuple.root')
 
        ex_file_name = splitComponents[value].files[0]
        if ex_file_name.find('/AODSIM') > 1 :
