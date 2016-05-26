@@ -177,7 +177,7 @@ class MyBatchManager:
 
         self.parser_.add_option("-i", "--input", dest="cfgFileName",
                                 help="input cfg",
-                                default="ntuplizer_cfg.py")
+                                default="run_cfg.py")
 
         self.parser_.add_option("-d", "--debug", action="store_true",
                                 dest="verbose",default =False,

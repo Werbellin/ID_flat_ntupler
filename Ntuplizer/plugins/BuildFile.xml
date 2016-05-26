@@ -16,7 +16,7 @@
 <use   name="RecoEgamma/EgammaTools"/>
 <use   name="PhysicsTools/UtilAlgos"/>
 
-
+<use   name="LeptonIsolationHelper/Helper"/>
 <library file="*.cc" name="AnalyzerNtuplizerPlugins">
    <flags EDM_PLUGIN="1"/>
 </library>
