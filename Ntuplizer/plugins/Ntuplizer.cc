@@ -415,11 +415,12 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
                         ("photonMVAValueMapProducer:" + photonID2_name + "Values"));
 
   outputFile   = iConfig.getParameter<std::string>("outputFile");
+  outputPath   = iConfig.getParameter<std::string>("outputPath");
 
   string postfix;
   if(do_signal) postfix = "_signal";
   else postfix = "_background";
-  file = TFile::Open((outputFile + postfix + ".root").c_str(),"RECREATE");
+  file = TFile::Open((outputPath + outputFile + postfix + ".root").c_str(),"RECREATE");
 
  }
 

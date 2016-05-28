@@ -187,6 +187,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       TFile* file;
       TTree *_mytree;
       string outputFile;
+      string outputPath;
       TLorentzVector myvector ;  
 
       //global variables

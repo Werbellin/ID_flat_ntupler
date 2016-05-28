@@ -290,6 +290,14 @@ class MyBatchManager:
        
        variables['SAMPLENAME'] = splitComponents[value].samplename
        variables['XSEC'] = splitComponents[value].xsec 
+       STORAGE_PATH = '/data/DATA/temp_pigard/eID/'
+       job_dir_name = os.path.basename(os.path.normpath(jobDir))
+       #print 'job_dir_name ', job_dir_name
+       full_job_storage_path = STORAGE_PATH + self.options_.outputDir + '/' + job_dir_name + "/"
+       os.system('mkdir -p %s'%full_job_storage_path)
+       print 'full_job_storage_path ', full_job_storage_path
+ 
+       variables['OUTPUTPATH'] = full_job_storage_path 
        #variables = {'IsMC':IsMC, 'PD':PD, 'MCFILTER':MCFILTER, 'SUPERMELA_MASS':SUPERMELA_MASS, 'SAMPLENAME':SAMPLENAME, 'XSEC':XSEC, 'SKIM_REQUIRED':SKIM_REQUIRED}
 
        print "\tParameters: ", variables
@@ -302,14 +310,15 @@ class MyBatchManager:
        process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
        
        # try to determine whether its miniAOD or AOD
-       if cluster == 'LLR' :
-            STORAGE_PATH = '/data/DATA/temp_pigard/eID/'
-            job_dir_name = os.path.basename(os.path.normpath(jobDir))
+       #if cluster == 'LLR' :
+            #STORAGE_PATH = '/data/DATA/temp_pigard/eID/'
+            #job_dir_name = os.path.basename(os.path.normpath(jobDir))
             #print 'job_dir_name ', job_dir_name
-            full_job_storage_path = STORAGE_PATH + self.options_.outputDir + '/' + job_dir_name + "/"
-            os.system('mkdir -p %s'%full_job_storage_path)
-            print 'full_job_storage_path ', full_job_storage_path
-            process.TFileService.fileName=cms.string(full_job_storage_path + 'ntuple.root')
+            #full_job_storage_path = STORAGE_PATH + self.options_.outputDir + '/' + job_dir_name + "/"
+            #os.system('mkdir -p %s'%full_job_storage_path)
+            #print 'full_job_storage_path ', full_job_storage_path
+            #print "path: ", full_job_storage_path
+            #process.TFileService.fileName=cms.string(full_job_storage_path)
 
        ex_file_name = splitComponents[value].files[0]
        if ex_file_name.find('/AODSIM') > 1 :
