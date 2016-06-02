@@ -86,6 +86,11 @@ def listFiles(sample, path, rec = False, full_info = False):
     # -- listing on the local filesystem --
 
     result = []
+    # files from file list
+    if path=="list" :
+        with open(sample) as f:
+            result = f.readlines()
+        return result
 
     # listing from dbs
     if path=="dbs" :
@@ -93,6 +98,7 @@ def listFiles(sample, path, rec = False, full_info = False):
         for line in files.split('\n'):
 #            result.append("root://cms-xrd-global.cern.ch//"+line)
             result.append(line)
+            #print "line: ", line
         return result
 
     # listing from local dir
