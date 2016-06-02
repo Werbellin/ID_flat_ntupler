@@ -91,7 +91,7 @@ class Ntuplizer : public edm::EDAnalyzer {
       const edm::ParameterSet&  conf;
         
       inputFileTypes inFileType;   
-      
+      bool isAOD; 
       edm::EDGetToken electronsToken_;
       edm::EDGetToken photonsToken_;
       edm::Handle<edm::View<reco::Photon>> photonsColl_h;

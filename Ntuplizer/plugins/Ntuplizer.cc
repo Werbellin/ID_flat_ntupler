@@ -242,10 +242,13 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
 
   std::string inFileType_s = iConfig.getUntrackedParameter<std::string>("inputFileFormat");
 
-  if(inFileType_s == "AOD")     inFileType = inputFileTypes::AOD; 
-  else {
+  if(inFileType_s == "AOD") {
+     inFileType = inputFileTypes::AOD; 
+     isAOD = true;
+  } else {
       LogError("") << "MINIAOD!";
       inFileType = inputFileTypes::MINIAOD; 
+    isAOD = false;
   }
 
   if(inFileType == inputFileTypes::UNDEF) LogError("") << "Did not recognize input file format!";
@@ -377,9 +380,10 @@ ID1_use_userFloat_ (iConfig.getParameter<bool>("ID1_use_userFloat"))
   electronID2_name = (iConfig.getParameter<string>("electronID2"));
   //electronID2_name = electronIDBaseName(electronID2_name, "electronMVAValueMapProducer:", "Values");
 
-  photonID1_name = (iConfig.getParameter<string>("photonID1"));
-  photonID2_name = (iConfig.getParameter<string>("photonID2"));
-
+  if(iConfig.exists("photonID1") && iConfig.exists("photonID2")) {
+    photonID1_name = (iConfig.getParameter<string>("photonID1"));
+    photonID2_name = (iConfig.getParameter<string>("photonID2"));
+  }
 
   if(!ID1_use_userFloat_) {
 
@@ -706,7 +710,7 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
   iEvent.getByToken(electronsToken_, electronsColl_h);
 
-  if(do_TLE) {
+  if(do_TLE&&!isAOD) {
       iEvent.getByToken(photonsToken_, photonsColl_h);
       iEvent.getByToken(phoNeutralHadronIsolation_CITKToken_, phoNeutralHadronIsolation_CITK_map);
       iEvent.getByToken(phoChargedIsolation_CITKToken_, phoChargedIsolation_CITK_map);
@@ -757,9 +761,10 @@ void Ntuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
   iEvent.getByToken(electronID2CatToken_, ele_ID2_cat_map); 
 
+  if(!isAOD) {
   iEvent.getByToken(photonID1Token_, pho_ID1_map);
   iEvent.getByToken(photonID2Token_, pho_ID2_map);
-
+  }
 
   if(isMC_) {
     iEvent.getByToken(PUinfoToken, PupInfo);
@@ -1010,17 +1015,15 @@ void Ntuplizer::FillPhoton(const edm::Ptr<reco::Photon> iphoton)
     }
  
 
-    float iso = 999;
     float fsr = 0;
     
-    iso = LeptonIsoHelper::combRelIsoPF(sampleType, setup, ele_rho, *iphoton, fsr);
+    ele_HZZ_iso = isAOD ? -1 : LeptonIsoHelper::combRelIsoPF(sampleType, setup, ele_rho, *iphoton, fsr);
   //  LogPrint("") << "-Werror=unused-but-set-variabl:" << rhoForEle;
-    ele_HZZ_iso = iso;
     //float pog_iso = 0;//(*ISO_map)[iphotons];
 
-    float phoChargedIsolation_CITK = (*phoChargedIsolation_CITK_map)[iphoton];
-    float phoNeutralHadronIsolation_CITK = (*phoNeutralHadronIsolation_CITK_map)[iphoton];
-    float phoPhotonIsolation_CITK = (*phoPhotonIsolation_CITK_map)[iphoton];
+    float phoChargedIsolation_CITK = isAOD ? -1 :(*phoChargedIsolation_CITK_map)[iphoton];
+    float phoNeutralHadronIsolation_CITK = isAOD ? -1 : (*phoNeutralHadronIsolation_CITK_map)[iphoton];
+    float phoPhotonIsolation_CITK = isAOD ? -1 : (*phoPhotonIsolation_CITK_map)[iphoton];
 
     pho_phoPhotonIsolation_CITK = phoPhotonIsolation_CITK;
     pho_phoNeutralHadronIsolation_CITK = phoNeutralHadronIsolation_CITK;
@@ -1034,8 +1037,8 @@ void Ntuplizer::FillPhoton(const edm::Ptr<reco::Photon> iphoton)
     pho_hasConversionTracks = iphoton->hasConversionTracks();
    //ele_POG_iso = pog_iso;
 
-    pho_ID1_value = (*pho_ID1_map)[iphoton];
-    pho_ID2_value = (*pho_ID2_map)[iphoton];
+    pho_ID1_value = isAOD ? -1 : (*pho_ID1_map)[iphoton];
+    pho_ID2_value = isAOD ? -1 : (*pho_ID2_map)[iphoton];
    //    ele_ID1_cat = (*ele_ID1_cat_map)[ielectron];
     
 
@@ -1059,11 +1062,15 @@ void Ntuplizer::FillElectron(const edm::Ptr<reco::GsfElectron> ielectron)
     LogDebug("") << "Processing new electron";
 
 
-    //const pat::electron pat_ele = nullptr;
-    const edm::Ptr<pat::Electron> elePatPtr(ielectron);
-
-    if(inFileType == inputFileTypes::MINIAOD && elePatPtr.get() == NULL) {
-        LogError("") << "Failed to get pointer to pat electron!";
+    const pat::Electron* pat_ele = nullptr;
+    
+    if(!isAOD) {
+      const edm::Ptr<pat::Electron> elePatPtr(ielectron);
+      if(elePatPtr.get() == NULL) {
+          LogError("") << "Failed to get pointer to pat electron!";
+      } else {
+          pat_ele = elePatPtr.get();
+      }
     }
 
  //   ++ele_N_saved;
@@ -1076,9 +1083,9 @@ void Ntuplizer::FillElectron(const edm::Ptr<reco::GsfElectron> ielectron)
     int ele_ID2_cat = (*ele_ID2_cat_map)[ielectron];
 
 
-    if(ID1_use_userFloat_) {
-        ele_ID1_value = elePatPtr->userFloat(electronID1_name + "Values"); 
-        ele_ID1_cat = elePatPtr->userInt(electronID1_name + "Categories"); 
+    if(!isAOD&&ID1_use_userFloat_) {
+        ele_ID1_value = pat_ele->userFloat(electronID1_name + "Values"); 
+        ele_ID1_cat = pat_ele->userInt(electronID1_name + "Categories"); 
     } else {
         ele_ID1_value = (*ID1_map)[ielectron];
         ele_ID1_cat = (*ele_ID1_cat_map)[ielectron];
@@ -1098,7 +1105,7 @@ void Ntuplizer::FillElectron(const edm::Ptr<reco::GsfElectron> ielectron)
 
     float fsr = 0;
 
-    ele_HZZ_iso = LeptonIsoHelper::combRelIsoPF(sampleType, setup, ele_rho, *ielectron, fsr);
+    ele_HZZ_iso = isAOD ?-1 :LeptonIsoHelper::combRelIsoPF(sampleType, setup, ele_rho, *ielectron, fsr);
   //  LogPrint("") << "-Werror=unused-but-set-variabl:" << rhoForEle;
   //      ele_HZZ_iso = iso;
   //
@@ -1201,8 +1208,8 @@ void Ntuplizer::FillElectron(const edm::Ptr<reco::GsfElectron> ielectron)
     //const edm::Ptr<pat::Electron> elePatPtr(eleRecoPtr);
     // Check if this is really a pat::Electron, and if yes, get the track ref from this new
     // pointer instead
-    if( elePatPtr.get() != NULL )
-        myTrackRef = elePatPtr->closestCtfTrackRef();
+    if( pat_ele != nullptr )
+        myTrackRef = pat_ele->closestCtfTrackRef();
 
 
     //LogVerbatim("") << "After clostste ctdf";
